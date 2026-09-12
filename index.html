@@ -51,6 +51,18 @@
     </div>
     <div class="hero-seam"></div>
 
+    <!-- dynamic background: cultural icons drifting, representative of both upbringings -->
+    <div class="floaters" aria-hidden="true">
+      <span class="floater" style="top:15%; left:12%; --dur:7s; --delay:0s; --rot:-6deg;">🔔</span>
+      <span class="floater" style="top:62%; left:22%; --dur:9s; --delay:1.2s; --rot:8deg;">🦅</span>
+      <span class="floater" style="top:40%; left:6%; --dur:8s; --delay:.6s; --rot:-4deg;">🥨</span>
+      <span class="floater" style="top:78%; left:14%; --dur:10s; --delay:2s; --rot:5deg;">🏈</span>
+      <span class="floater" style="top:20%; right:12%; --dur:8s; --delay:.3s; --rot:6deg;">🏮</span>
+      <span class="floater" style="top:58%; right:20%; --dur:7.5s; --delay:1.6s; --rot:-7deg;">🐉</span>
+      <span class="floater" style="top:44%; right:6%; --dur:9.5s; --delay:.9s; --rot:4deg;">🥟</span>
+      <span class="floater" style="top:75%; right:16%; --dur:8.5s; --delay:2.3s; --rot:-5deg;">🥠</span>
+    </div>
+
     <!-- Y2K scrapbook sticker scatter -->
     <div class="sticker sticker--flag-us" style="--rot:-10deg">🇺🇸</div>
     <div class="sticker sticker--flag-cn" style="--rot:9deg">🇨🇳</div>
@@ -89,14 +101,14 @@
     </figure>
 
     <div class="hero-content">
-      <div class="tile-word" aria-label="Identity">
+      <div class="tile-word stagger-in" style="--i:0" aria-label="Identity">
         <span class="tile-letter" style="--r:-6deg">I</span><span class="tile-letter" style="--r:4deg">D</span><span class="tile-letter" style="--r:-3deg">E</span><span class="tile-letter" style="--r:5deg">N</span><span class="tile-letter" style="--r:-4deg">T</span><span class="tile-letter" style="--r:3deg">I</span><span class="tile-letter" style="--r:-5deg">T</span><span class="tile-letter" style="--r:6deg">Y</span>
       </div>
-      <h1 class="hero-title">
+      <h1 class="hero-title stagger-in" style="--i:1">
         <span class="hero-title__part hero-title__part--us">Yicheng</span><span class="hero-title__part hero-title__part--cn">Long</span>
       </h1>
-      <p class="hero-sub">Born in Pennsylvania. Raised in Shanghai.<br>Never quite either one &mdash; always both.</p>
-      <a href="#origin" class="scrollcue" aria-label="Scroll to begin the story">
+      <p class="hero-sub stagger-in" style="--i:2">Born in Pennsylvania. Raised in Shanghai.<br>Never quite either one &mdash; always both.</p>
+      <a href="#origin" class="scrollcue stagger-in" style="--i:3" aria-label="Scroll to begin the story">
         <span>Scroll to begin</span>
         <svg width="16" height="24" viewBox="0 0 16 24" fill="none"><path d="M8 0V22M8 22L2 16M8 22L14 16" stroke="currentColor" stroke-width="1.5"/></svg>
       </a>
@@ -161,8 +173,8 @@
         <h2 class="chapter-title">Built From Scratch</h2>
         <p class="chapter-text">So I built a life there. I learned the language until it became native. I learned the codes that don't show up in any textbook. In sixth grade I picked up competitive debate &mdash; one of the most influential things I've ever done &mdash; and stuck with it all the way through, eventually becoming nationally ranked. Ten years is not a short time. By sixteen, Shanghai wasn't just where I lived. It was who I was becoming.</p>
         <div class="statrow">
-          <div class="stat"><span class="stat-num">10</span><span class="stat-label">years built</span></div>
-          <div class="stat"><span class="stat-num">1</span><span class="stat-label">language mastered</span></div>
+          <div class="vintage-tag" style="--rot:-4deg"><span class="vt-num">10</span><span class="vt-label">years built</span></div>
+          <div class="vintage-tag" style="--rot:3deg"><span class="vt-num">1</span><span class="vt-label">language mastered</span></div>
           <div class="ribbon" style="--rot:6deg">
             <div class="ribbon-circle">1<sup>st</sup></div>
             <div class="ribbon-tails"></div>
@@ -171,6 +183,13 @@
         </div>
       </div>
       <div class="panel-visual panel-visual--collage">
+        <div class="moodboard-arrow" aria-hidden="true">
+          <svg viewBox="0 0 120 70" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M5 55 Q 40 62 65 32 Q 80 14 108 16" stroke-linecap="round"/>
+            <path d="M94 8 L110 15 L98 27" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="moodboard-arrow-label">the years<br>that made me</span>
+        </div>
         <figure class="photo photo--tape" style="--rot:-6deg;">
           <div class="photo-frame"><div class="photo-placeholder"><svg viewBox="0 0 24 24" class="cam"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="13" r="3.2" fill="none" stroke="currentColor" stroke-width="1.4"/></svg><span>developing&hellip;</span></div></div>
           <figcaption>debate, Shanghai</figcaption>

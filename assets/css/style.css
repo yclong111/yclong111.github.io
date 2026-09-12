@@ -200,6 +200,67 @@ a{color:inherit;}
 .sticker--mic{ top:18%; left:22%; font-size:1.6rem; }
 @media(max-width:700px){ .sticker{ display:none; } }
 
+/* ---------- dynamic background: drifting cultural icons ---------- */
+.floaters{ position:absolute; inset:0; z-index:1; pointer-events:none; }
+.floater{
+  position:absolute;
+  font-size:1.8rem;
+  opacity:.4;
+  filter:drop-shadow(0 3px 5px rgba(0,0,0,.3));
+  animation:floaty var(--dur,8s) ease-in-out infinite;
+  animation-delay:var(--delay,0s);
+  transform:rotate(var(--rot,0deg));
+}
+@keyframes floaty{
+  0%,100%{ transform:translateY(0) rotate(var(--rot,0deg)); }
+  50%{ transform:translateY(-22px) rotate(calc(var(--rot,0deg) + 5deg)); }
+}
+@media(max-width:700px){ .floaters{ display:none; } }
+@media(prefers-reduced-motion:reduce){ .floater{ animation:none; } }
+
+/* ---------- staggered entrance motion (hero load-in) ---------- */
+.stagger-in{
+  opacity:0;
+  animation:fadeUp .8s cubic-bezier(.25,.1,.25,1) forwards;
+  animation-delay:calc(.2s + var(--i,0) * .16s);
+}
+@keyframes fadeUp{
+  from{ opacity:0; transform:translateY(26px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+@media(prefers-reduced-motion:reduce){ .stagger-in{ animation:none; opacity:1; } }
+
+/* ---------- vintage moodboard accents ---------- */
+.vintage-tag{
+  display:inline-flex; flex-direction:column; align-items:center;
+  background:#efe6d3; color:#2c2114;
+  border:2px solid #2c2114;
+  padding:.5rem 1.2rem;
+  transform:rotate(var(--rot,-3deg));
+  box-shadow:4px 4px 0 rgba(0,0,0,.28);
+  font-family:var(--serif);
+}
+.vintage-tag .vt-num{ font-size:1.7rem; font-weight:800; line-height:1; }
+.vintage-tag .vt-label{ font-size:.62rem; text-transform:uppercase; letter-spacing:.1em; margin-top:.25rem; opacity:.75; }
+
+.moodboard-arrow{
+  position:relative;
+  color:currentColor;
+  opacity:.8;
+  width:120px;
+  margin:0 auto .5rem;
+  text-align:center;
+}
+.moodboard-arrow svg{ width:100%; height:auto; }
+.moodboard-arrow-label{
+  display:block;
+  font-family:var(--hand);
+  font-size:1.05rem;
+  line-height:1.15;
+  margin-top:-.3rem;
+}
+@media(max-width:820px){ .moodboard-arrow{ display:none; } }
+
 /* ---------- Y2K poster stickers: glitter, scribbles, tile lettering ---------- */
 .glit{
   position:absolute; z-index:3;
