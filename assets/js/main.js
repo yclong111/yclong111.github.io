@@ -10,7 +10,7 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   });
 });
 
-// Reveal on scroll
+// Reveal on scroll (post-story sections only)
 const revealEls = document.querySelectorAll('.reveal');
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -50,3 +50,42 @@ const stageObserver = new IntersectionObserver((entries) => {
   updateActiveDot();
 }, { threshold: 0, rootMargin: '-45% 0px -45% 0px' });
 stageList.forEach(s => stageObserver.observe(s));
+
+// Sticky-stack "page turn" depth effect: as the next panel slides up to
+// cover the current one, the current panel very slightly shrinks and dims,
+// giving the cover transition a sense of depth instead of a flat hard cut.
+const isMobileStack = () => window.matchMedia('(max-width: 700px)').matches;
+const panels = Array.from(document.querySelectorAll('.stack .panel'));
+let depthTicking = false;
+
+function updateDepth() {
+  if (!isMobileStack()) {
+    const vh = window.innerHeight;
+    panels.forEach((panel, i) => {
+      const next = panels[i + 1];
+      if (!next) {
+        panel.style.transform = '';
+        panel.style.filter = '';
+        return;
+      }
+      const nextTop = next.getBoundingClientRect().top;
+      const progress = 1 - Math.min(Math.max(nextTop / vh, 0), 1);
+      panel.style.transform = `scale(${1 - progress * 0.08})`;
+      panel.style.filter = `brightness(${1 - progress * 0.35})`;
+    });
+  } else {
+    panels.forEach(panel => { panel.style.transform = ''; panel.style.filter = ''; });
+  }
+  depthTicking = false;
+}
+
+function requestDepthUpdate() {
+  if (!depthTicking) {
+    depthTicking = true;
+    requestAnimationFrame(updateDepth);
+  }
+}
+
+window.addEventListener('scroll', requestDepthUpdate, { passive: true });
+window.addEventListener('resize', requestDepthUpdate);
+requestDepthUpdate();
