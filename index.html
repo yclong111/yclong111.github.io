@@ -31,20 +31,15 @@
     top:0;
     height:100vh;
     overflow:hidden;
+    perspective:1400px;
   }
   .zoom-layer{
     position:relative;
     width:100%;
     height:100%;
     will-change:transform;
-  }
-  .zoom-overlay{
-    position:absolute;
-    inset:0;
-    background:var(--light);
-    opacity:0;
-    pointer-events:none;
-    z-index:2;
+    transform-style:preserve-3d;
+    backface-visibility:hidden;
   }
   .scroll-hint{
     position:absolute;
@@ -243,7 +238,6 @@
       </div>
 
       <div class="scroll-hint" id="scrollHint">Scroll to continue</div>
-      <div class="zoom-overlay" id="zoomOverlay"></div>
     </div>
   </div>
 
@@ -385,32 +379,84 @@
 
   /* ============ scroll-driven zoom into the light half ============
    * The zoom layer scales up around a fixed point inside the light
-   * half's bulge (dead centre of it, in the 200x200 viewBox), so the
-   * frame ends up filled with clean white rather than crossing into
-   * the dark half. Because position:fixed descendants are re-contained
-   * by a transformed ancestor, the corridor (position:absolute inside
-   * the layer) scales right along with the symbol instead of staying
-   * pinned to the viewport. A white overlay fades in alongside the
-   * scale so the transition lands on a clean colour instead of a
-   * pixelated edge, then the next (white) section is already sitting
-   * right below.
+   * half's bulge (dead centre of it, in the 200x200 viewBox), so by
+   * the end of the scroll that flat white region alone has grown to
+   * cover the whole frame — no cross-fade needed. A rotateY twist
+   * rides along with the scale (mirroring the corridor cards' own
+   * turnBirth -> turnExit sweep) so the zoom reads as a camera turning
+   * in, not a flat scale. Because position:fixed descendants are
+   * re-contained by a transformed ancestor, the corridor
+   * (position:absolute inside the layer) scales and twists right along
+   * with the symbol instead of staying pinned to the viewport.
    */
   var heroScroll = document.getElementById('heroScroll');
   var zoomLayer = document.getElementById('zoomLayer');
-  var zoomOverlay = document.getElementById('zoomOverlay');
-  var heroTitle = document.getElementById('heroTitle');
-  var scrollHint = document.getElementById('scrollHint');
-  var yyEl = document.querySelector('.yy');
+  var svgEl = document.querySelector('.yy svg');
 
-  var ORIGIN_FRACTION = { x: 0.5, y: 0.25 }; // dead centre of the light bulge (100,50 in the 200x200 viewBox), far from the light/dark boundary
-  var MAX_SCALE = 16;
+  // Deepest inscribed point of the light half, in the SVG's own 200x200
+  // viewBox space (found by rendering the SVG to a canvas and searching
+  // for the white pixel farthest from any non-white pixel). Using the
+  // SVG's own coordinate space — via getScreenCTM() below — rather than a
+  // plain bounding-box fraction matters because the symbol keeps spinning
+  // right up until scroll starts: a screen-pixel fraction would silently
+  // go stale the moment the rotation moved on, landing the "safe" point
+  // over the dark half instead.
+  var SAFE_POINT = { x: 58, y: 76 };
+  var SAFE_RADIUS_UNITS = 35; // clearance from SAFE_POINT to the nearest non-white pixel, in viewBox units (measured by sampling the rendered SVG)
+  var SAFE_MARGIN = 0.8; // use only 80% of the measured clearance, so anti-aliasing/gradient softness at the boundary never shows
+  var MAX_SCALE = 12; // recomputed from real measurements in updateOrigin(); this is just a safe fallback before the first measurement
+  var TURN_START = 4;   // deg, matches the corridor's turnBirth
+  var TURN_END = 26;    // deg, matches the corridor's turnExit
 
+  var spinFrozen = false;
+  function freezeSpin() {
+    if (spinFrozen) return;
+    spinFrozen = true;
+    svgEl.style.animationPlayState = 'paused';
+  }
+  function unfreezeSpin() {
+    if (!spinFrozen) return;
+    spinFrozen = false;
+    svgEl.style.animationPlayState = '';
+  }
+
+  // transform-origin must be expressed in the element's own LOCAL,
+  // untransformed coordinate space. getScreenCTM() reports the SVG's
+  // position after every ancestor transform is applied — including
+  // zoomLayer's own current scale/rotate — so this briefly resets that
+  // transform to measure cleanly, then restores it. Calling it while
+  // already mid-zoom would otherwise feed a post-transform screen
+  // position back in as the pre-transform origin, a circular reference
+  // that made the maths blow up.
   function updateOrigin() {
-    var rect = yyEl.getBoundingClientRect();
+    var prevTransform = zoomLayer.style.transform;
+    zoomLayer.style.transform = 'none';
+    void zoomLayer.offsetHeight; // force reflow before measuring
+    var pt = svgEl.createSVGPoint();
+    pt.x = SAFE_POINT.x;
+    pt.y = SAFE_POINT.y;
+    var ctm = svgEl.getScreenCTM();
+    var screenPt = pt.matrixTransform(ctm);
     var layerRect = zoomLayer.getBoundingClientRect();
-    var originX = (rect.left - layerRect.left) + rect.width * ORIGIN_FRACTION.x;
-    var originY = (rect.top - layerRect.top) + rect.height * ORIGIN_FRACTION.y;
+    var originX = screenPt.x - layerRect.left;
+    var originY = screenPt.y - layerRect.top;
     zoomLayer.style.transformOrigin = originX + 'px ' + originY + 'px';
+
+    // pxPerUnit: ctm.a/ctm.d scale the SVG's local x/y axes to screen px.
+    // Work out how far the origin sits from each viewport edge, take the
+    // largest (the far corner the zoom has to cover), and size MAX_SCALE
+    // so the light half's own safe clearance — not a guessed constant —
+    // is exactly what has to stretch that far.
+    var pxPerUnit = (Math.abs(ctm.a) + Math.abs(ctm.d)) / 2;
+    var safePx = SAFE_RADIUS_UNITS * SAFE_MARGIN * pxPerUnit;
+    var originScreenX = originX + layerRect.left;
+    var originScreenY = originY + layerRect.top;
+    var reachX = Math.max(originScreenX, window.innerWidth - originScreenX);
+    var reachY = Math.max(originScreenY, window.innerHeight - originScreenY);
+    var reach = Math.sqrt(reachX * reachX + reachY * reachY);
+    MAX_SCALE = Math.max(4, reach / safePx);
+
+    zoomLayer.style.transform = prevTransform;
   }
 
   var ticking = false;
@@ -422,24 +468,29 @@
       var scrollable = heroScroll.offsetHeight - window.innerHeight;
       var progress = scrollable > 0 ? Math.min(Math.max(-rect.top / scrollable, 0), 1) : 0;
 
+      if (progress > 0) {
+        if (!spinFrozen) {
+          freezeSpin();
+          updateOrigin();
+        }
+      } else {
+        unfreezeSpin();
+      }
+
       var scale = 1 + progress * (MAX_SCALE - 1);
-      zoomLayer.style.transform = 'scale(' + scale.toFixed(3) + ')';
-
-      var fadeOut = 1 - Math.min(progress / 0.35, 1);
-      heroTitle.style.opacity = fadeOut;
-      scrollHint.style.opacity = fadeOut;
-
-      var overlayIn = Math.max(0, (progress - 0.15) / 0.45);
-      zoomOverlay.style.opacity = Math.min(overlayIn, 1);
+      var turn = TURN_START + (TURN_END - TURN_START) * progress;
+      zoomLayer.style.transform = 'scale(' + scale.toFixed(3) + ') rotateY(' + turn.toFixed(2) + 'deg)';
 
       ticking = false;
     });
   }
 
-  updateOrigin();
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', function () { updateOrigin(); onScroll(); });
+  window.addEventListener('resize', function () {
+    if (spinFrozen) updateOrigin();
+    onScroll();
+  });
 })();
 </script>
 </body>
