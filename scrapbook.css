@@ -9,7 +9,7 @@ html,body{ margin:0; min-height:100%; }
 body{
   background:var(--paper);
   color:var(--ink);
-  font-family:"Times New Roman", Times, serif;
+  font-family:"Libre Baskerville", Baskerville, "Times New Roman", serif;
   overflow-x:hidden;
 }
 
@@ -78,7 +78,7 @@ body{
 .tiles{ display:flex; flex-wrap:wrap; justify-content:center; gap:.9rem 1.8rem; filter:drop-shadow(1px 4px 3px rgba(0,0,0,.35)); }
 .word{ display:flex; gap:.35rem; }
 .tile{
-  width:clamp(50px,11.5vw,98px); aspect-ratio:.82; display:grid; place-items:center;
+  font-weight:700; width:clamp(50px,11.5vw,98px); aspect-ratio:.82; display:grid; place-items:center;
   background:#fdfdfb; color:#111; font-size:clamp(36px,8.4vw,72px); line-height:1;
   transform:rotate(var(--tr,0deg)); clip-path:polygon(2% 5%,97% 0,100% 9%,96% 97%,88% 100%,3% 96%,0 50%);
 }

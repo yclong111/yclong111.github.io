@@ -4,6 +4,9 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>The Story of My Life</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet" />
 <style>
   :root{
     --bg:#07070a;
@@ -11,14 +14,14 @@
     --white:#f4f2f1;
     --dark:#0c0c0e;
     --lightglow:#7dd3fc;
-    --darkglow:#c084fc;
+    --darkglow:#ff3b3b;
   }
   *{ box-sizing:border-box; }
   html,body{ margin:0; padding:0; }
   body{
     background:radial-gradient(ellipse at 50% 30%, #14141a 0%, #07070a 60%);
     min-height:100vh;
-    font-family:"Times New Roman", Times, serif;
+    font-family:"Libre Baskerville", Baskerville, "Times New Roman", serif;
     overflow-x:hidden;
   }
 
@@ -113,7 +116,7 @@
   }
   h1{
     margin:0;
-    font-weight:500;
+    font-weight:700;
     font-size:clamp(28px,5vw,48px);
     letter-spacing:0.02em;
     color:#f5f5f5;
@@ -126,7 +129,7 @@
   .yy svg{ display:block; overflow:visible; animation:spin 22s linear infinite; }
   .half{ cursor:pointer; transition:filter .35s ease; transform-box:fill-box; transform-origin:center; }
   .light{ filter:drop-shadow(0 0 8px #7dd3fc70) drop-shadow(0 0 20px #7dd3fc35) drop-shadow(var(--shx,0px) var(--shy,14px) 24px rgba(0,0,0,0.55)); }
-  .dark{ filter:drop-shadow(0 0 8px #c084fc70) drop-shadow(0 0 20px #c084fc35) drop-shadow(var(--shx,0px) var(--shy,14px) 24px rgba(0,0,0,0.6)); }
+  .dark{ filter:drop-shadow(0 0 8px #ff3b3b70) drop-shadow(0 0 20px #ff3b3b35) drop-shadow(var(--shx,0px) var(--shy,14px) 24px rgba(0,0,0,0.6)); }
   .half:hover{ filter:drop-shadow(0 0 14px currentColor) drop-shadow(0 0 34px currentColor) drop-shadow(var(--shx,0px) var(--shy,14px) 24px rgba(0,0,0,0.6)); }
   .caption{
     font-size:15px;
@@ -134,7 +137,7 @@
     text-transform:uppercase;
     min-height:22px;
     color:#e6e6e6;
-    font-weight:500;
+    font-weight:700;
     text-shadow:0 0 10px currentColor, 0 0 24px currentColor;
     opacity:0;
     transition:opacity .25s ease;
@@ -164,7 +167,7 @@
   }
   .stage3-section h2{
     margin:0;
-    font-weight:500;
+    font-weight:700;
     font-size:clamp(24px,4.5vw,42px);
     letter-spacing:0.06em;
     text-transform:uppercase;
@@ -226,7 +229,7 @@
               </defs>
 
               <circle id="lightHalf" class="half light" cx="100" cy="100" r="98" fill="url(#lightGrad)" style="color:#7dd3fc" role="button" tabindex="0" aria-label="Stage 1: the US"></circle>
-              <path id="darkHalf" class="half dark" d="M100,2 A98,98 0 0,1 100,198 A49,49 0 0,1 100,100 A49,49 0 0,0 100,2 Z" fill="url(#darkGrad)" style="color:#c084fc" role="button" tabindex="0" aria-label="Stage 2: china"></path>
+              <path id="darkHalf" class="half dark" d="M100,2 A98,98 0 0,1 100,198 A49,49 0 0,1 100,100 A49,49 0 0,0 100,2 Z" fill="url(#darkGrad)" style="color:#ff3b3b" role="button" tabindex="0" aria-label="Stage 2: china"></path>
 
               <circle id="darkDotEl" cx="100" cy="51" r="15" fill="url(#darkDot)" pointer-events="none"></circle>
               <circle id="lightDotEl" cx="100" cy="149" r="15" fill="url(#lightDot)" pointer-events="none"></circle>
