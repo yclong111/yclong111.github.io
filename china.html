@@ -4,36 +4,58 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Stage 2: China</title>
+<link rel="stylesheet" href="scrapbook.css" />
 <style>
-  *{ box-sizing:border-box; }
-  html,body{ margin:0; min-height:100vh; }
-  body{
-    background:#0c0c0e;
-    color:#f2eafe;
-    font-family:"Times New Roman", Times, serif;
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    gap:1.25rem; text-align:center; padding:4rem 1.5rem;
-  }
-  .flag{ font-size:64px; line-height:1; }
-  h1{
-    margin:0; font-weight:500; font-size:clamp(28px,6vw,56px);
-    letter-spacing:0.06em; text-transform:uppercase;
-    text-shadow:0 0 10px rgba(196,132,252,0.65), 0 0 26px rgba(196,132,252,0.4), 0 0 52px rgba(196,132,252,0.25);
-  }
-  p{ margin:0; max-width:36rem; font-size:17px; line-height:1.6; color:#c9c6d1; }
-  a{
-    margin-top:1rem; color:#f2eafe; text-decoration:none; font-size:13px;
-    letter-spacing:0.12em; text-transform:uppercase;
-    border:1px solid #c084fc; padding:0.7rem 1.4rem; border-radius:999px;
-    transition:background .2s, color .2s;
-  }
-  a:hover, a:focus-visible{ background:#c084fc; color:#0c0c0e; }
+  :root{ --paper:#cc2229; --scrib:#ffffff; }
 </style>
 </head>
 <body>
-  <div class="flag" aria-hidden="true">🇨🇳</div>
-  <h1>Stage 2: China</h1>
-  <p>The next chapter — life in Shanghai. Swap this copy and add photos for your years in China.</p>
-  <a href="./">Back to the yin and yang</a>
+<div class="board">
+  <svg class="st " style="--x:3%;--y:5%;--s:22vmin;--r:-8deg;color:#ffd23f" aria-hidden="true"><use href="scrapbook.svg#sun" width="100%" height="100%"/></svg>
+  <svg class="st " style="--x:44%;--y:2%;--s:12vmin;--r:8deg;color:#ff8fa3" aria-hidden="true"><use href="scrapbook.svg#heart" width="100%" height="100%"/></svg>
+  <svg class="st " style="--x:72%;--y:3%;--s:13vmin;--r:12deg;color:#fff3b0" aria-hidden="true"><use href="scrapbook.svg#star" width="100%" height="100%"/></svg>
+  <svg class="st opt" style="--x:27%;--y:9%;--s:16vmin;--r:-12deg;color:#ffd23f" aria-hidden="true"><use href="scrapbook.svg#butterfly" width="100%" height="100%"/></svg>
+  <svg class="st opt" style="--x:60%;--y:9%;--s:7vmin;--r:0deg;color:#fff" aria-hidden="true"><use href="scrapbook.svg#sparkle" width="100%" height="100%"/></svg>
+  <svg class="st scrib opt" style="--x:66%;--y:12%;--s:17vmin;--r:0deg" aria-hidden="true"><use href="scrapbook.svg#ball1" width="100%" height="100%"/></svg>
+  <i class="glit " style="--x:2%;--y:31%;--s:9vmin;--c:#d4a017" aria-hidden="true"></i>
+  <i class="glit " style="--x:88%;--y:6%;--s:8vmin;--c:#7a0c14" aria-hidden="true"></i>
+  <i class="glit opt" style="--x:91%;--y:40%;--s:10vmin;--c:#ff6b3d" aria-hidden="true"></i>
+  <i class="glit opt" style="--x:5%;--y:64%;--s:8vmin;--c:#9b0f1a" aria-hidden="true"></i>
+  <svg class="st opt" style="--x:89%;--y:24%;--s:10vmin;--r:-10deg;color:#ffd23f" aria-hidden="true"><use href="scrapbook.svg#star" width="100%" height="100%"/></svg>
+  <svg class="st " style="--x:3%;--y:46%;--s:13vmin;--r:-10deg;color:#7a0c14" aria-hidden="true"><use href="scrapbook.svg#heart" width="100%" height="100%"/></svg>
+  <svg class="st scrib opt" style="--x:2%;--y:56%;--s:17vmin;--r:0deg" aria-hidden="true"><use href="scrapbook.svg#diamond" width="100%" height="100%"/></svg>
+  <svg class="st " style="--x:82%;--y:60%;--s:17vmin;--r:15deg;color:#ff9fb2" aria-hidden="true"><use href="scrapbook.svg#butterfly" width="100%" height="100%"/></svg>
+  <svg class="st front" style="--x:1%;--y:82%;--s:16vmin;--r:-14deg;color:#fff3b0" aria-hidden="true"><use href="scrapbook.svg#butterfly" width="100%" height="100%"/></svg>
+  <svg class="st " style="--x:76%;--y:82%;--s:15vmin;--r:6deg;color:#ffe9a8" aria-hidden="true"><use href="scrapbook.svg#flower" width="100%" height="100%"/></svg>
+  <svg class="st opt" style="--x:88%;--y:78%;--s:11vmin;--r:12deg;color:#ffd23f" aria-hidden="true"><use href="scrapbook.svg#heart" width="100%" height="100%"/></svg>
+  <svg class="st " style="--x:18%;--y:86%;--s:12vmin;--r:-15deg;color:#ffd23f" aria-hidden="true"><use href="scrapbook.svg#star" width="100%" height="100%"/></svg>
+  <svg class="st opt" style="--x:36%;--y:90%;--s:8vmin;--r:0deg;color:#ffd23f" aria-hidden="true"><use href="scrapbook.svg#sparkle" width="100%" height="100%"/></svg>
+  <svg class="st scrib opt" style="--x:50%;--y:90%;--s:16vmin;--r:-6deg" aria-hidden="true"><use href="scrapbook.svg#scrib1" width="100%" height="100%"/></svg>
+  <svg class="st scrib opt" style="--x:24%;--y:2%;--s:15vmin;--r:8deg" aria-hidden="true"><use href="scrapbook.svg#scrib2" width="100%" height="100%"/></svg>
+  <i class="gem " style="--x:92%;--y:70%;--s:7vmin;--c:#ffd23f" aria-hidden="true"></i>
+  <i class="gem " style="--x:3%;--y:90%;--s:8vmin;--c:#ff8fa3" aria-hidden="true"></i>
+  <i class="gem opt" style="--x:60%;--y:91%;--s:6vmin;--c:#f28c28" aria-hidden="true"></i>
+  <i class="gem opt" style="--x:34%;--y:1%;--s:6vmin;--c:#fff3b0" aria-hidden="true"></i>
+  <span class="st emo opt" style="--x:87%;--y:84%;--s:14vmin;--r:8deg" aria-hidden="true">🏮</span>
+  <span class="st emo opt" style="--x:13%;--y:30%;--s:9vmin;--r:-12deg" aria-hidden="true">🥟</span>
+  <span class="st emo opt" style="--x:55%;--y:3%;--s:12vmin;--r:6deg" aria-hidden="true">🧧</span>
+
+  <main class="center">
+    <div class="title-wrap">
+      <svg class="st scrib orbit" aria-hidden="true"><use href="scrapbook.svg#orbit" width="100%" height="100%"/></svg>
+      <span class="label">Stage 2</span>
+      <div class="tiles"><div class="word"><span class="tile">C</span><span class="tile">H</span><span class="tile">I</span><span class="tile">N</span><span class="tile">A</span></div></div>
+      <div class="flag-sticker" aria-hidden="true">🇨🇳</div>
+    </div>
+
+    <div class="row">
+      <figure class="polaroid" style="--r:-6deg;--a:#ffd6a0;--b:#ff9a7a"><span class="tape"></span><div class="pic">📷</div><figcaption>Shanghai</figcaption></figure>
+      <div class="note"><span class="tape"></span><p>The next chapter — life in Shanghai. Swap this copy and add photos for your years in China.</p></div>
+      <figure class="polaroid" style="--r:5deg;--a:#ffe9a3;--b:#f28c8c"><span class="tape"></span><div class="pic">📷</div><figcaption>add a photo</figcaption></figure>
+    </div>
+
+    <a class="back" href="./">&larr; back to the yin and yang</a>
+  </main>
+</div>
 </body>
 </html>
