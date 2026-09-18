@@ -41,7 +41,7 @@
   .zoom-overlay{
     position:absolute;
     inset:0;
-    background:var(--dark);
+    background:var(--light);
     opacity:0;
     pointer-events:none;
     z-index:2;
@@ -152,12 +152,12 @@
     .corridor-card{ animation-play-state:paused !important; }
   }
 
-  /* ---- stage 2 page (revealed after the zoom) ---- */
-  .stage2-section{
+  /* ---- stage 1 page (revealed after the zoom) ---- */
+  .stage1-section{
     position:relative;
     z-index:1;
     min-height:100vh;
-    background:var(--dark);
+    background:var(--light);
     display:flex;
     flex-direction:column;
     align-items:center;
@@ -166,24 +166,24 @@
     text-align:center;
     padding:4rem 1.5rem;
   }
-  .stage2-section h2{
+  .stage1-section h2{
     margin:0;
     font-weight:500;
     font-size:clamp(24px,4.5vw,42px);
     letter-spacing:0.06em;
     text-transform:uppercase;
-    color:#f2eafe;
+    color:#1c2b33;
     text-shadow:
-      0 0 10px rgba(196,132,252,0.65),
-      0 0 26px rgba(196,132,252,0.4),
-      0 0 52px rgba(196,132,252,0.25);
+      0 0 10px rgba(125,211,252,0.55),
+      0 0 26px rgba(125,211,252,0.35),
+      0 0 52px rgba(125,211,252,0.2);
   }
-  .stage2-section p{
+  .stage1-section p{
     margin:0;
     max-width:36rem;
     font-size:16px;
     line-height:1.6;
-    color:#c9c6d1;
+    color:#4a4a4a;
   }
 </style>
 </head>
@@ -247,8 +247,8 @@
     </div>
   </div>
 
-  <section class="stage2-section" id="stage2">
-    <h2>Stage 2: China</h2>
+  <section class="stage1-section" id="stage1">
+    <h2>Stage 1: The US</h2>
     <p>The story continues here. Swap this section's copy, photos, and links for whatever comes next in your life story — the zoom hands off seamlessly into this page.</p>
   </section>
 
@@ -383,15 +383,17 @@
     }
   });
 
-  /* ============ scroll-driven zoom into the dark half ============
-   * The zoom layer scales up around a fixed point inside the dark
-   * half's bulge (roughly (135,155) in the 200x200 viewBox). Because
-   * position:fixed descendants are re-contained by a transformed
-   * ancestor, the corridor (position:absolute inside the layer) scales
-   * right along with the symbol instead of staying pinned to the
-   * viewport. A dark overlay fades in alongside the scale so the
-   * transition lands on a clean colour instead of a pixelated edge,
-   * then the next section is already sitting right below.
+  /* ============ scroll-driven zoom into the light half ============
+   * The zoom layer scales up around a fixed point inside the light
+   * half's bulge (dead centre of it, in the 200x200 viewBox), so the
+   * frame ends up filled with clean white rather than crossing into
+   * the dark half. Because position:fixed descendants are re-contained
+   * by a transformed ancestor, the corridor (position:absolute inside
+   * the layer) scales right along with the symbol instead of staying
+   * pinned to the viewport. A white overlay fades in alongside the
+   * scale so the transition lands on a clean colour instead of a
+   * pixelated edge, then the next (white) section is already sitting
+   * right below.
    */
   var heroScroll = document.getElementById('heroScroll');
   var zoomLayer = document.getElementById('zoomLayer');
@@ -400,7 +402,7 @@
   var scrollHint = document.getElementById('scrollHint');
   var yyEl = document.querySelector('.yy');
 
-  var ORIGIN_FRACTION = { x: 0.5, y: 0.75 }; // dead centre of the dark bulge (100,150 in the 200x200 viewBox), far from the light/dark boundary
+  var ORIGIN_FRACTION = { x: 0.5, y: 0.25 }; // dead centre of the light bulge (100,50 in the 200x200 viewBox), far from the light/dark boundary
   var MAX_SCALE = 16;
 
   function updateOrigin() {
