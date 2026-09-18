@@ -268,6 +268,16 @@
   darkHalf.addEventListener('mouseleave', hide);
   darkHalf.addEventListener('blur', hide);
 
+  function go(url) { return function (e) {
+    if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return;
+    e.preventDefault();
+    window.location.href = url;
+  }; }
+  lightHalf.addEventListener('click', go('us.html'));
+  lightHalf.addEventListener('keydown', go('us.html'));
+  darkHalf.addEventListener('click', go('china.html'));
+  darkHalf.addEventListener('keydown', go('china.html'));
+
   /* ============ image corridor ============
    * Ported from the ImageStreamHero geometry: cards ride two mirrored
    * rails from far behind the screen toward the viewer. Depth is
