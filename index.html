@@ -405,6 +405,28 @@
   var svgEl = document.querySelector('.yy svg');
   var scrollHint = document.getElementById('scrollHint');
 
+  // As the zoom progresses, the light half's gradient stops blend toward the
+  // next page's colour, so the frame is already exactly that colour by the
+  // time it fills the screen and the handoff has no visible seam.
+  var TARGET_WHITE = [244, 242, 241]; // #f4f2f1, matches --white
+  var LIGHT_STOP_ELS = Array.prototype.slice.call(document.querySelectorAll('#lightGrad stop, #lightDot stop'));
+  function hexToRgb(h) {
+    h = h.replace('#', '');
+    return [parseInt(h.substr(0, 2), 16), parseInt(h.substr(2, 2), 16), parseInt(h.substr(4, 2), 16)];
+  }
+  var LIGHT_STOP_ORIGINALS = LIGHT_STOP_ELS.map(function (el) { return hexToRgb(el.getAttribute('stop-color')); });
+  var BLEND_DONE_AT = 0.9; // fully blended a little before the end, so the last stretch of zoom is one flat colour
+  function blendLightStops(progress) {
+    var t = Math.min(progress / BLEND_DONE_AT, 1);
+    LIGHT_STOP_ELS.forEach(function (el, i) {
+      var o = LIGHT_STOP_ORIGINALS[i];
+      var r = Math.round(o[0] + (TARGET_WHITE[0] - o[0]) * t);
+      var g = Math.round(o[1] + (TARGET_WHITE[1] - o[1]) * t);
+      var b = Math.round(o[2] + (TARGET_WHITE[2] - o[2]) * t);
+      el.setAttribute('stop-color', 'rgb(' + r + ',' + g + ',' + b + ')');
+    });
+  }
+
   // Deepest inscribed point of the light half, in the SVG's own 200x200
   // viewBox space (found by rendering the SVG to a canvas and searching
   // for the white pixel farthest from any non-white pixel). Using the
@@ -490,6 +512,7 @@
       }
 
       scrollHint.style.visibility = progress > 0.02 ? 'hidden' : '';
+      blendLightStops(progress);
       var scale = 1 + progress * (MAX_SCALE - 1);
       var turn = TURN_START + (TURN_END - TURN_START) * progress;
       zoomLayer.style.transform = 'scale(' + scale.toFixed(3) + ') rotateY(' + turn.toFixed(2) + 'deg)';
