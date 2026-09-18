@@ -125,9 +125,9 @@
   .yy{ position:relative; }
   .yy svg{ display:block; overflow:visible; animation:spin 22s linear infinite; }
   .half{ cursor:pointer; transition:filter .35s ease; transform-box:fill-box; transform-origin:center; }
-  .light{ filter:drop-shadow(0 0 8px #7dd3fc70) drop-shadow(0 0 20px #7dd3fc35) drop-shadow(0 14px 24px rgba(0,0,0,0.55)); }
-  .dark{ filter:drop-shadow(0 0 8px #c084fc70) drop-shadow(0 0 20px #c084fc35) drop-shadow(0 14px 24px rgba(0,0,0,0.6)); }
-  .half:hover{ filter:drop-shadow(0 0 14px currentColor) drop-shadow(0 0 34px currentColor) drop-shadow(0 14px 24px rgba(0,0,0,0.6)); }
+  .light{ filter:drop-shadow(0 0 8px #7dd3fc70) drop-shadow(0 0 20px #7dd3fc35) drop-shadow(var(--shx,0px) var(--shy,14px) 24px rgba(0,0,0,0.55)); }
+  .dark{ filter:drop-shadow(0 0 8px #c084fc70) drop-shadow(0 0 20px #c084fc35) drop-shadow(var(--shx,0px) var(--shy,14px) 24px rgba(0,0,0,0.6)); }
+  .half:hover{ filter:drop-shadow(0 0 14px currentColor) drop-shadow(0 0 34px currentColor) drop-shadow(var(--shx,0px) var(--shy,14px) 24px rgba(0,0,0,0.6)); }
   .caption{
     font-size:15px;
     letter-spacing:0.08em;
@@ -228,8 +228,8 @@
               <circle id="lightHalf" class="half light" cx="100" cy="100" r="98" fill="url(#lightGrad)" style="color:#7dd3fc" role="button" tabindex="0" aria-label="Stage 1: the US"></circle>
               <path id="darkHalf" class="half dark" d="M100,2 A98,98 0 0,1 100,198 A49,49 0 0,1 100,100 A49,49 0 0,0 100,2 Z" fill="url(#darkGrad)" style="color:#c084fc" role="button" tabindex="0" aria-label="Stage 2: china"></path>
 
-              <circle cx="100" cy="51" r="15" fill="url(#darkDot)" pointer-events="none"></circle>
-              <circle cx="100" cy="149" r="15" fill="url(#lightDot)" pointer-events="none"></circle>
+              <circle id="darkDotEl" cx="100" cy="51" r="15" fill="url(#darkDot)" pointer-events="none"></circle>
+              <circle id="lightDotEl" cx="100" cy="149" r="15" fill="url(#lightDot)" pointer-events="none"></circle>
 
               <circle cx="100" cy="100" r="98" fill="url(#rim)" pointer-events="none"></circle>
             </svg>
@@ -426,6 +426,60 @@
       el.setAttribute('stop-color', 'rgb(' + r + ',' + g + ',' + b + ')');
     });
   }
+
+  // ---- fixed lighting on a spinning disc ----
+  // The gradients (and the drop shadow) live in the SVG's own coordinate
+  // space, so they'd spin with it and the "sun" would circle the ball. To
+  // keep the light fixed on screen, read the disc's current rotation every
+  // frame and counter-rotate each gradient (and the shadow offset) by it.
+  // Gradients are converted to userSpaceOnUse first: objectBoundingBox
+  // units skew a rotation whenever a shape's bounding box isn't square
+  // (the dark half's isn't). Because it's driven by the live angle, it
+  // stays correct whether the disc is spinning, frozen mid-scroll, or
+  // stopped by prefers-reduced-motion.
+  var LIGHTING = [
+    { id: 'lightGrad', shape: lightHalf, cx: 0.38, cy: 0.32, r: 0.75, pivotOnSvg: true },
+    { id: 'darkGrad', shape: darkHalf, cx: 0.62, cy: 0.68, r: 0.80, pivotOnSvg: true },
+    { id: 'lightDot', shape: document.getElementById('lightDotEl'), cx: 0.35, cy: 0.30, r: 0.75, pivotOnSvg: false },
+    { id: 'darkDot', shape: document.getElementById('darkDotEl'), cx: 0.35, cy: 0.30, r: 0.75, pivotOnSvg: false }
+  ];
+  LIGHTING.forEach(function (l) {
+    var g = document.getElementById(l.id);
+    var bb = l.shape.getBBox();
+    var cx = bb.x + l.cx * bb.width;
+    var cy = bb.y + l.cy * bb.height;
+    g.setAttribute('gradientUnits', 'userSpaceOnUse');
+    g.setAttribute('cx', cx);
+    g.setAttribute('cy', cy);
+    g.setAttribute('fx', cx);
+    g.setAttribute('fy', cy);
+    g.setAttribute('r', l.r * (bb.width + bb.height) / 2);
+    l.el = g;
+    l.px = l.pivotOnSvg ? 100 : bb.x + bb.width / 2;
+    l.py = l.pivotOnSvg ? 100 : bb.y + bb.height / 2;
+  });
+
+  var SHADOW_DISTANCE = 14; // matches the original 0 14px drop shadow, straight down on screen
+  function applyLighting(angleDeg) {
+    LIGHTING.forEach(function (l) {
+      l.el.setAttribute('gradientTransform', 'rotate(' + (-angleDeg).toFixed(2) + ' ' + l.px + ' ' + l.py + ')');
+    });
+    var rad = angleDeg * Math.PI / 180;
+    svgEl.style.setProperty('--shx', (SHADOW_DISTANCE * Math.sin(rad)).toFixed(2) + 'px');
+    svgEl.style.setProperty('--shy', (SHADOW_DISTANCE * Math.cos(rad)).toFixed(2) + 'px');
+  }
+
+  var lastLightingAngle = null;
+  function lightingLoop() {
+    var m = new DOMMatrixReadOnly(getComputedStyle(svgEl).transform);
+    var angle = Math.atan2(m.b, m.a) * 180 / Math.PI;
+    if (lastLightingAngle === null || Math.abs(angle - lastLightingAngle) > 0.05) {
+      applyLighting(angle);
+      lastLightingAngle = angle;
+    }
+    requestAnimationFrame(lightingLoop);
+  }
+  lightingLoop();
 
   // Deepest inscribed point of the light half, in the SVG's own 200x200
   // viewBox space (found by rendering the SVG to a canvas and searching
