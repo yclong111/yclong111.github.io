@@ -11,7 +11,7 @@
   :root{
     --bg:#07070a;
     --light:#f2f0e8;
-    --white:#f4f2f1;
+    --stage3:#0c0c0e;
     --dark:#0c0c0e;
     --lightglow:#7dd3fc;
     --darkglow:#ff3b3b;
@@ -156,7 +156,7 @@
     position:relative;
     z-index:1;
     min-height:100vh;
-    background:var(--white);
+    background:var(--stage3);
     display:flex;
     flex-direction:column;
     align-items:center;
@@ -171,18 +171,18 @@
     font-size:clamp(24px,4.5vw,42px);
     letter-spacing:0.06em;
     text-transform:uppercase;
-    color:#1c2b33;
+    color:#f5f5f4;
     text-shadow:
-      0 0 10px rgba(125,211,252,0.55),
-      0 0 26px rgba(125,211,252,0.35),
-      0 0 52px rgba(125,211,252,0.2);
+      0 0 10px rgba(255,255,255,0.45),
+      0 0 26px rgba(255,255,255,0.25),
+      0 0 52px rgba(255,255,255,0.15);
   }
   .stage3-section p{
     margin:0;
     max-width:36rem;
     font-size:16px;
     line-height:1.6;
-    color:#4a4a4a;
+    color:#c9c6d1;
   }
 </style>
 </head>
@@ -391,10 +391,10 @@
     }
   });
 
-  /* ============ scroll-driven zoom into the light half ============
-   * The zoom layer scales up around a fixed point inside the light
-   * half's bulge (dead centre of it, in the 200x200 viewBox), so by
-   * the end of the scroll that flat white region alone has grown to
+  /* ============ scroll-driven zoom into the dark half ============
+   * The zoom layer scales up around a fixed point inside the dark
+   * half (its deepest inscribed point, in the 200x200 viewBox), so by
+   * the end of the scroll that flat black region alone has grown to
    * cover the whole frame — no cross-fade needed. A rotateY twist
    * rides along with the scale (mirroring the corridor cards' own
    * turnBirth -> turnExit sweep) so the zoom reads as a camera turning
@@ -408,24 +408,24 @@
   var svgEl = document.querySelector('.yy svg');
   var scrollHint = document.getElementById('scrollHint');
 
-  // As the zoom progresses, the light half's gradient stops blend toward the
+  // As the zoom progresses, the dark half's gradient stops blend toward the
   // next page's colour, so the frame is already exactly that colour by the
   // time it fills the screen and the handoff has no visible seam.
-  var TARGET_WHITE = [244, 242, 241]; // #f4f2f1, matches --white
-  var LIGHT_STOP_ELS = Array.prototype.slice.call(document.querySelectorAll('#lightGrad stop, #lightDot stop'));
+  var TARGET_COLOR = [12, 12, 14]; // #0c0c0e, matches --stage3
+  var BLEND_STOP_ELS = Array.prototype.slice.call(document.querySelectorAll('#darkGrad stop'));
   function hexToRgb(h) {
     h = h.replace('#', '');
     return [parseInt(h.substr(0, 2), 16), parseInt(h.substr(2, 2), 16), parseInt(h.substr(4, 2), 16)];
   }
-  var LIGHT_STOP_ORIGINALS = LIGHT_STOP_ELS.map(function (el) { return hexToRgb(el.getAttribute('stop-color')); });
+  var BLEND_STOP_ORIGINALS = BLEND_STOP_ELS.map(function (el) { return hexToRgb(el.getAttribute('stop-color')); });
   var BLEND_DONE_AT = 0.9; // fully blended a little before the end, so the last stretch of zoom is one flat colour
-  function blendLightStops(progress) {
+  function blendStops(progress) {
     var t = Math.min(progress / BLEND_DONE_AT, 1);
-    LIGHT_STOP_ELS.forEach(function (el, i) {
-      var o = LIGHT_STOP_ORIGINALS[i];
-      var r = Math.round(o[0] + (TARGET_WHITE[0] - o[0]) * t);
-      var g = Math.round(o[1] + (TARGET_WHITE[1] - o[1]) * t);
-      var b = Math.round(o[2] + (TARGET_WHITE[2] - o[2]) * t);
+    BLEND_STOP_ELS.forEach(function (el, i) {
+      var o = BLEND_STOP_ORIGINALS[i];
+      var r = Math.round(o[0] + (TARGET_COLOR[0] - o[0]) * t);
+      var g = Math.round(o[1] + (TARGET_COLOR[1] - o[1]) * t);
+      var b = Math.round(o[2] + (TARGET_COLOR[2] - o[2]) * t);
       el.setAttribute('stop-color', 'rgb(' + r + ',' + g + ',' + b + ')');
     });
   }
@@ -484,16 +484,16 @@
   }
   lightingLoop();
 
-  // Deepest inscribed point of the light half, in the SVG's own 200x200
+  // Deepest inscribed point of the dark half, in the SVG's own 200x200
   // viewBox space (found by rendering the SVG to a canvas and searching
-  // for the white pixel farthest from any non-white pixel). Using the
+  // for the dark pixel farthest from any non-dark pixel). Using the
   // SVG's own coordinate space — via getScreenCTM() below — rather than a
   // plain bounding-box fraction matters because the symbol keeps spinning
   // right up until scroll starts: a screen-pixel fraction would silently
   // go stale the moment the rotation moved on, landing the "safe" point
   // over the dark half instead.
-  var SAFE_POINT = { x: 58, y: 76 };
-  var SAFE_RADIUS_UNITS = 35; // clearance from SAFE_POINT to the nearest non-white pixel, in viewBox units (measured by sampling the rendered SVG)
+  var SAFE_POINT = { x: 150, y: 126 };
+  var SAFE_RADIUS_UNITS = 41; // clearance from SAFE_POINT to the nearest non-dark pixel, in viewBox units (measured by sampling the rendered SVG)
   var SAFE_MARGIN = 0.5; // use only half the measured clearance: covers anti-aliasing/gradient softness at the boundary AND the rotateY twist, which foreshortens one side of the frame so it needs extra scale to still reach the edge
   var MAX_SCALE = 12; // recomputed from real measurements in updateOrigin(); this is just a safe fallback before the first measurement
   var TURN_START = 4;   // deg, matches the corridor's turnBirth
@@ -536,7 +536,7 @@
     // pxPerUnit: ctm.a/ctm.d scale the SVG's local x/y axes to screen px.
     // Work out how far the origin sits from each viewport edge, take the
     // largest (the far corner the zoom has to cover), and size MAX_SCALE
-    // so the light half's own safe clearance — not a guessed constant —
+    // so the dark half's own safe clearance — not a guessed constant —
     // is exactly what has to stretch that far.
     var pxPerUnit = (Math.abs(ctm.a) + Math.abs(ctm.d)) / 2;
     var safePx = SAFE_RADIUS_UNITS * SAFE_MARGIN * pxPerUnit;
@@ -569,7 +569,7 @@
       }
 
       scrollHint.style.visibility = progress > 0.02 ? 'hidden' : '';
-      blendLightStops(progress);
+      blendStops(progress);
       var scale = 1 + progress * (MAX_SCALE - 1);
       var turn = TURN_START + (TURN_END - TURN_START) * progress;
       zoomLayer.style.transform = 'scale(' + scale.toFixed(3) + ') rotateY(' + turn.toFixed(2) + 'deg)';
