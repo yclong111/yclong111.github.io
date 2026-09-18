@@ -4,10 +4,14 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>The Story of My Life</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;700&display=swap" rel="stylesheet" />
 <style>
   :root{
     --bg:#07070a;
     --light:#f2f0e8;
+    --white:#fbfbf8;
     --dark:#0c0c0e;
     --lightglow:#7dd3fc;
     --darkglow:#c084fc;
@@ -17,7 +21,7 @@
   body{
     background:radial-gradient(ellipse at 50% 30%, #14141a 0%, #07070a 60%);
     min-height:100vh;
-    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family:"Proxima Nova", "proxima-nova", "Mulish", "Helvetica Neue", Arial, sans-serif;
     overflow-x:hidden;
   }
 
@@ -148,11 +152,11 @@
   }
 
   /* ---- stage 1 page (revealed after the zoom) ---- */
-  .stage1-section{
+  .stage3-section{
     position:relative;
     z-index:1;
     min-height:100vh;
-    background:var(--light);
+    background:var(--white);
     display:flex;
     flex-direction:column;
     align-items:center;
@@ -161,7 +165,7 @@
     text-align:center;
     padding:4rem 1.5rem;
   }
-  .stage1-section h2{
+  .stage3-section h2{
     margin:0;
     font-weight:500;
     font-size:clamp(24px,4.5vw,42px);
@@ -173,7 +177,7 @@
       0 0 26px rgba(125,211,252,0.35),
       0 0 52px rgba(125,211,252,0.2);
   }
-  .stage1-section p{
+  .stage3-section p{
     margin:0;
     max-width:36rem;
     font-size:16px;
@@ -241,9 +245,9 @@
     </div>
   </div>
 
-  <section class="stage1-section" id="stage1">
-    <h2>Stage 1: The US</h2>
-    <p>The story continues here. Swap this section's copy, photos, and links for whatever comes next in your life story — the zoom hands off seamlessly into this page.</p>
+  <section class="stage3-section" id="stage3">
+    <h2>Stage 3: The Present</h2>
+    <p>Where the story lands today. Swap this copy and add photos for what you're doing now.</p>
   </section>
 
 <script>
@@ -402,6 +406,7 @@
   var heroScroll = document.getElementById('heroScroll');
   var zoomLayer = document.getElementById('zoomLayer');
   var svgEl = document.querySelector('.yy svg');
+  var scrollHint = document.getElementById('scrollHint');
 
   // Deepest inscribed point of the light half, in the SVG's own 200x200
   // viewBox space (found by rendering the SVG to a canvas and searching
@@ -413,7 +418,7 @@
   // over the dark half instead.
   var SAFE_POINT = { x: 58, y: 76 };
   var SAFE_RADIUS_UNITS = 35; // clearance from SAFE_POINT to the nearest non-white pixel, in viewBox units (measured by sampling the rendered SVG)
-  var SAFE_MARGIN = 0.8; // use only 80% of the measured clearance, so anti-aliasing/gradient softness at the boundary never shows
+  var SAFE_MARGIN = 0.5; // use only half the measured clearance: covers anti-aliasing/gradient softness at the boundary AND the rotateY twist, which foreshortens one side of the frame so it needs extra scale to still reach the edge
   var MAX_SCALE = 12; // recomputed from real measurements in updateOrigin(); this is just a safe fallback before the first measurement
   var TURN_START = 4;   // deg, matches the corridor's turnBirth
   var TURN_END = 26;    // deg, matches the corridor's turnExit
@@ -487,6 +492,7 @@
         unfreezeSpin();
       }
 
+      scrollHint.style.visibility = progress > 0.02 ? 'hidden' : '';
       var scale = 1 + progress * (MAX_SCALE - 1);
       var turn = TURN_START + (TURN_END - TURN_START) * progress;
       zoomLayer.style.transform = 'scale(' + scale.toFixed(3) + ') rotateY(' + turn.toFixed(2) + 'deg)';
