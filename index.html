@@ -30,6 +30,10 @@
     position:relative;
     height:340vh;
   }
+  .hero-scroll::before{
+    content:""; position:absolute; left:0; right:0; top:0; height:45vh; z-index:0; pointer-events:none;
+    background:linear-gradient(#000, rgba(0,0,0,0));
+  }
   .hero-sticky{
     position:sticky;
     top:0;
@@ -62,43 +66,51 @@
     50%{ transform:translate(-50%,6px); opacity:1; }
   }
 
-  /* ---- image corridor (background) ---- */
-  .corridor-wrap{
-    position:absolute;
-    inset:0;
-    overflow:hidden;
-    container-type: inline-size;
-    z-index:0;
+
+  /* ---- pop-in animation ---- */
+  @keyframes pop{
+    0%{ opacity:0; transform:scale(.4) translateY(34px); }
+    60%{ opacity:1; transform:scale(1.1) translateY(-5px); }
+    100%{ opacity:1; transform:none; }
   }
-  .corridor-perspective{
-    position:absolute;
-    inset:0;
-    pointer-events:none;
+  .pop-scroll{ opacity:0; }
+  .pop-scroll.in{ animation:pop .75s cubic-bezier(.2,1.4,.4,1) both; animation-delay:var(--d,0s); }
+
+  /* ---- quote page (first page) ---- */
+  .quote-page{
+    position:relative; min-height:100vh; min-height:100svh;
+    background:#000; color:#f5f5f4;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:5rem 1.5rem 6rem; text-align:center;
   }
-  .corridor-stage{
-    position:absolute;
-    inset:0;
-    transform-style:preserve-3d;
+  .quote-text{
+    margin:0; max-width:17em;
+    font-weight:700; font-size:clamp(32px,6vw,78px); line-height:1.22; letter-spacing:.005em;
+    text-shadow:0 0 14px rgba(255,255,255,.35), 0 0 42px rgba(255,255,255,.14);
   }
-  .corridor-card{
-    position:absolute;
-    overflow:hidden;
-    background-size:cover;
-    background-position:center;
-    backface-visibility:hidden;
-    box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  .quote-author{
+    margin:clamp(1.5rem,4vw,2.75rem) 0 0;
+    font-style:italic; font-weight:400; font-size:clamp(22px,3.6vw,44px); color:#d9d9d6;
   }
-  .corridor-card img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
+  .w{
+    display:inline-block; opacity:0;
+    animation:pop .8s cubic-bezier(.2,1.5,.4,1) forwards;
+    animation-delay:calc(.35s + var(--i) * .2s);
   }
-  .corridor-fade{
-    position:absolute;
-    inset:0;
-    background:radial-gradient(ellipse at 50% 55%, transparent 0%, rgba(7,7,10,0.55) 55%, rgba(7,7,10,0.92) 100%);
-    pointer-events:none;
+  .quote-cue{
+    position:absolute; left:0; right:0; bottom:2.2rem;
+    display:flex; flex-direction:column; align-items:center; gap:.5rem;
+    font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:#8d8d8d;
+    opacity:0; animation:pop .8s cubic-bezier(.2,1.5,.4,1) forwards; animation-delay:calc(.35s + var(--i) * .2s);
+  }
+  .quote-cue::after{
+    content:""; width:9px; height:9px; border-right:2px solid #8d8d8d; border-bottom:2px solid #8d8d8d;
+    transform:rotate(45deg); animation:cue-bob 1.6s ease-in-out infinite; animation-delay:3.5s;
+  }
+  @keyframes cue-bob{ 0%,100%{ transform:translateY(0) rotate(45deg); } 50%{ transform:translateY(6px) rotate(45deg); } }
+  @media (prefers-reduced-motion: reduce){
+    .w, .quote-cue, .pop-scroll{ opacity:1; animation:none !important; }
+    .quote-cue::after{ animation:none; }
   }
 
   /* ---- foreground content ---- */
@@ -148,7 +160,6 @@
   @keyframes spin{ to{ transform:rotate(360deg); } }
   @media (prefers-reduced-motion: reduce){
     .yy svg{ animation:none; }
-    .corridor-card{ animation-play-state:paused !important; }
   }
 
   /* ---- stage 1 page (revealed after the zoom) ---- */
@@ -188,20 +199,21 @@
 </head>
 <body>
 
+  <section class="quote-page" id="quote">
+    <blockquote style="margin:0">
+      <p class="quote-text"><span class="w" style="--i:0">“I</span> <span class="w" style="--i:1">live</span> <span class="w" style="--i:2">in</span> <span class="w" style="--i:3">two</span> <span class="w" style="--i:4">worlds,</span> <span class="w" style="--i:5">neither</span> <span class="w" style="--i:6">of</span> <span class="w" style="--i:7">which</span> <span class="w" style="--i:8">is</span> <span class="w" style="--i:9">entirely</span> <span class="w" style="--i:10">mine.”</span></p>
+      <footer class="quote-author"><span class="w" style="--i:12">—</span> <span class="w" style="--i:13">Jhumpa</span> <span class="w" style="--i:14">Lahiri</span></footer>
+    </blockquote>
+    <div class="quote-cue" style="--i:16" aria-hidden="true">Scroll</div>
+  </section>
+
   <div class="hero-scroll" id="heroScroll">
     <div class="hero-sticky">
       <div class="zoom-layer" id="zoomLayer">
-        <div class="corridor-wrap" id="corridorWrap" aria-hidden="true">
-          <div class="corridor-perspective" id="corridorPerspective">
-            <div class="corridor-stage" id="corridorStage"></div>
-          </div>
-          <div class="corridor-fade"></div>
-        </div>
-
         <div class="page">
-          <h1 id="heroTitle">The Story of My Life</h1>
+          <h1 id="heroTitle" class="pop-scroll">The Story of My Life</h1>
 
-          <div class="yy">
+          <div class="yy pop-scroll" style="--d:.15s">
             <svg viewBox="0 0 200 200" width="280" height="280" role="group" aria-label="Yin yang, stages of life">
               <defs>
                 <radialGradient id="lightGrad" cx="38%" cy="32%" r="75%">
@@ -246,12 +258,26 @@
   </div>
 
   <section class="stage3-section" id="stage3">
-    <h2>Stage 3: The Present</h2>
-    <p>Where the story lands today. Swap this copy and add photos for what you're doing now.</p>
+    <h2 class="pop-scroll">Stage 3: The Present</h2>
+    <p class="pop-scroll" style="--d:.2s">Where the story lands today. Swap this copy and add photos for what you're doing now.</p>
   </section>
 
 <script>
 (function () {
+
+  /* ============ pop elements in as they scroll into view ============ */
+  var popEls = document.querySelectorAll('.pop-scroll');
+  if ('IntersectionObserver' in window) {
+    var popObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); popObserver.unobserve(e.target); }
+      });
+    }, { threshold: 0.35 });
+    popEls.forEach(function (el) { popObserver.observe(el); });
+  } else {
+    popEls.forEach(function (el) { el.classList.add('in'); });
+  }
+
   /* ============ yin-yang hover captions ============ */
   var lightHalf = document.getElementById('lightHalf');
   var darkHalf = document.getElementById('darkHalf');
@@ -282,126 +308,13 @@
   darkHalf.addEventListener('click', go('china.html'));
   darkHalf.addEventListener('keydown', go('china.html'));
 
-  /* ============ image corridor ============
-   * Ported from the ImageStreamHero geometry: cards ride two mirrored
-   * rails from far behind the screen toward the viewer. Depth is
-   * authored as geometric apparent size so the ribbon stays solid at
-   * both ends; a negative birth offset means each card is born across
-   * the centre axis, so the corridor's throat never blinks open.
-   *
-   * Drop your own photos in images/photo1.jpg ... photo12.jpg (or edit
-   * the IMAGES array below) — placeholders are used until you do.
-   */
-  var IMAGES = [
-    "images/photo1.jpg",
-    "images/photo2.jpg",
-    "images/photo3.jpg",
-    "images/photo4.jpg",
-    "images/photo5.jpg",
-    "images/photo6.jpg",
-    "images/photo7.jpg",
-    "images/photo8.jpg",
-    "images/photo9.jpg",
-    "images/photo10.jpg",
-    "images/photo11.jpg",
-    "images/photo12.jpg"
-  ];
-  // Placeholder fallbacks (used automatically if a local photo fails to load)
-  var PLACEHOLDER_SEEDS = ["life1","life2","life3","life4","life5","life6","life7","life8","life9","life10","life11","life12"];
-
-  var PATH = {
-    perspective: 30,
-    cardWidth: 18,
-    cardHeight: 25,
-    cardRadius: 0.6,
-    birthHeight: 2.6,
-    exitHeight: 46,
-    railBirth: -11,
-    railExit: 44,
-    fan: 3.3,
-    turnBirth: 6,
-    turnExit: 28,
-    stops: 24
-  };
-  var CARDS = 9;
-  var SPEED = 20;
-  var AXIS = 55;
-
-  function keyframes(dir, name, p) {
-    var steps = [];
-    for (var s = 0; s <= p.stops; s++) {
-      var u = s / p.stops;
-      var scale = (p.birthHeight / p.cardHeight) * Math.pow(p.exitHeight / p.birthHeight, u);
-      var z = p.perspective * (1 - 1 / scale);
-      var rail = p.railExit - (p.railExit - p.railBirth) * Math.pow(1 - u, p.fan);
-      var turn = p.turnBirth + (p.turnExit - p.turnBirth) * u;
-      steps.push(
-        (u * 100).toFixed(2) + '%{transform:translate3d(' +
-        (dir * rail).toFixed(2) + 'cqw,0,' + z.toFixed(2) + 'cqw) rotateY(' +
-        (-dir * turn).toFixed(2) + 'deg)}'
-      );
-    }
-    return '@keyframes ' + name + '{' + steps.join('') + '}';
-  }
-
-  var perspectiveEl = document.getElementById('corridorPerspective');
-  var stageEl = document.getElementById('corridorStage');
-
-  perspectiveEl.style.perspective = PATH.perspective + 'cqw';
-  perspectiveEl.style.perspectiveOrigin = '50% ' + AXIS + '%';
-
-  var right = 'ish-r';
-  var left = 'ish-l';
-  var css = keyframes(1, right, PATH) + keyframes(-1, left, PATH);
-  var styleTag = document.createElement('style');
-  styleTag.textContent = css;
-  document.head.appendChild(styleTag);
-
-  [right, left].forEach(function (name) {
-    for (var i = 0; i < CARDS; i++) {
-      var src = IMAGES[i % IMAGES.length];
-      var seed = PLACEHOLDER_SEEDS[i % PLACEHOLDER_SEEDS.length];
-      var card = document.createElement('div');
-      card.className = 'corridor-card';
-      card.style.left = '50%';
-      card.style.top = AXIS + '%';
-      card.style.width = PATH.cardWidth + 'cqw';
-      card.style.height = PATH.cardHeight + 'cqw';
-      card.style.marginLeft = (-PATH.cardWidth / 2) + 'cqw';
-      card.style.marginTop = (-PATH.cardHeight / 2) + 'cqw';
-      card.style.borderRadius = PATH.cardRadius + 'cqw';
-      card.style.animation = name + ' ' + SPEED + 's linear infinite';
-      card.style.animationDelay = (-(i * SPEED) / CARDS) + 's';
-
-      var img = document.createElement('img');
-      img.loading = 'lazy';
-      img.decoding = 'async';
-      img.draggable = false;
-      img.alt = '';
-      img.src = src;
-      img.onerror = function (seedForThis) {
-        return function () {
-          this.onerror = null;
-          this.src = 'https://picsum.photos/seed/' + seedForThis + '/400/560';
-        };
-      }(seed);
-
-      card.appendChild(img);
-      stageEl.appendChild(card);
-    }
-  });
-
   /* ============ scroll-driven zoom into the dark half ============
    * The zoom layer scales up around a fixed point inside the dark
    * half (its deepest inscribed point, in the 200x200 viewBox), so by
    * the end of the scroll that flat black region alone has grown to
    * cover the whole frame — no cross-fade needed. A rotateY twist
-   * rides along with the scale (mirroring the corridor cards' own
-   * turnBirth -> turnExit sweep) so the zoom reads as a camera turning
-   * in, not a flat scale. Because position:fixed descendants are
-   * re-contained by a transformed ancestor, the corridor
-   * (position:absolute inside the layer) scales and twists right along
-   * with the symbol instead of staying pinned to the viewport.
+   * rides along with the scale so the zoom reads as a camera turning
+   * in, not a flat scale.
    */
   var heroScroll = document.getElementById('heroScroll');
   var zoomLayer = document.getElementById('zoomLayer');
@@ -496,8 +409,8 @@
   var SAFE_RADIUS_UNITS = 41; // clearance from SAFE_POINT to the nearest non-dark pixel, in viewBox units (measured by sampling the rendered SVG)
   var SAFE_MARGIN = 0.5; // use only half the measured clearance: covers anti-aliasing/gradient softness at the boundary AND the rotateY twist, which foreshortens one side of the frame so it needs extra scale to still reach the edge
   var MAX_SCALE = 12; // recomputed from real measurements in updateOrigin(); this is just a safe fallback before the first measurement
-  var TURN_START = 4;   // deg, matches the corridor's turnBirth
-  var TURN_END = 26;    // deg, matches the corridor's turnExit
+  var TURN_START = 4;   // deg
+  var TURN_END = 26;    // deg
 
   var spinFrozen = false;
   function freezeSpin() {
@@ -520,6 +433,9 @@
   // position back in as the pre-transform origin, a circular reference
   // that made the maths blow up.
   function updateOrigin() {
+    zoomLayer.getAnimations({ subtree: true }).forEach(function (a) {
+      if (a.animationName === 'pop') a.finish();
+    });
     var prevTransform = zoomLayer.style.transform;
     zoomLayer.style.transform = 'none';
     void zoomLayer.offsetHeight; // force reflow before measuring
