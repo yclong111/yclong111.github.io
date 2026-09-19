@@ -9,7 +9,8 @@ html,body{ margin:0; min-height:100%; }
 body{
   background:var(--paper);
   color:var(--ink);
-  font-family:"Libre Baskerville", Baskerville, "Times New Roman", serif;
+  font-family:"Archivo", "Arial Black", "Helvetica Neue", Arial, sans-serif;
+  font-stretch:expanded;
   overflow-x:hidden;
 }
 
@@ -69,7 +70,7 @@ body{
   transform:translate(-50%,-50%) rotate(-3deg); z-index:-1;
 }
 .label{
-  display:inline-block; background:var(--label); color:#111; font-weight:700;
+  display:inline-block; background:var(--label); color:#111; font-weight:900;
   font-size:clamp(13px,2.6vw,18px); letter-spacing:.3em; text-transform:uppercase;
   padding:.4rem 1rem .4rem 1.3rem; transform:rotate(-3deg);
   border:2px dashed rgba(0,0,0,.45); outline:4px solid var(--label);
@@ -78,14 +79,14 @@ body{
 .tiles{ display:flex; flex-wrap:wrap; justify-content:center; gap:.9rem 1.8rem; filter:drop-shadow(1px 4px 3px rgba(0,0,0,.35)); }
 .word{ display:flex; gap:.35rem; }
 .tile{
-  font-weight:700; width:clamp(50px,11.5vw,98px); aspect-ratio:.82; display:grid; place-items:center;
-  background:#fdfdfb; color:#111; font-size:clamp(36px,8.4vw,72px); line-height:1;
+  font-weight:900; width:clamp(50px,11.5vw,98px); aspect-ratio:.82; display:grid; place-items:center;
+  background:#fdfdfb; color:#111; font-size:clamp(30px,7vw,60px); line-height:1;
   transform:rotate(var(--tr,0deg)); clip-path:polygon(2% 5%,97% 0,100% 9%,96% 97%,88% 100%,3% 96%,0 50%);
 }
 .tile:nth-child(2n){ clip-path:polygon(0 3%,94% 0,100% 45%,98% 100%,8% 96%,2% 88%); }
-.tile:nth-child(3n){ clip-path:polygon(4% 0,100% 6%,97% 55%,100% 96%,5% 100%,0 40%); font-weight:700; }
+.tile:nth-child(3n){ clip-path:polygon(4% 0,100% 6%,97% 55%,100% 96%,5% 100%,0 40%); font-weight:900; }
 .tile:nth-child(4n+1){ font-style:italic; }
-.tile:nth-child(5n){ font-weight:700; font-size:clamp(40px,9.4vw,80px); }
+.tile:nth-child(5n){ font-weight:900; font-size:clamp(32px,7.6vw,66px); }
 .tile:nth-child(1){ --tr:-6deg; } .tile:nth-child(2){ --tr:4deg; } .tile:nth-child(3){ --tr:-3deg; }
 .tile:nth-child(4){ --tr:7deg; } .tile:nth-child(5){ --tr:-5deg; } .tile:nth-child(6){ --tr:3deg; }
 
