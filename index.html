@@ -19,7 +19,7 @@
   *{ box-sizing:border-box; }
   html,body{ margin:0; padding:0; }
   body{
-    background:radial-gradient(ellipse at 50% 30%, #14141a 0%, #07070a 60%);
+    background:#000;
     min-height:100vh;
     font-family:"Archivo", "Arial Black", "Helvetica Neue", Arial, sans-serif;
     font-stretch:expanded;
@@ -29,11 +29,7 @@
   /* ---- scroll-zoom hero ---- */
   .hero-scroll{
     position:relative;
-    height:250vh;
-  }
-  .hero-scroll::before{
-    content:""; position:absolute; left:0; right:0; top:0; height:45vh; z-index:0; pointer-events:none;
-    background:linear-gradient(#000, rgba(0,0,0,0));
+    height:265vh; /* 100vh pinned + 15vh rest + 150vh of zoom */
   }
   .hero-sticky{
     position:sticky;
@@ -102,18 +98,11 @@
   /* ---- foreground content ---- */
   .page{
     position:relative; z-index:1; height:100%;
-    display:grid; grid-template-rows:auto minmax(0,1fr) auto; gap:clamp(.5rem,2vh,1.4rem);
+    display:grid; grid-template-rows:auto minmax(0,1fr); gap:clamp(.5rem,2vh,1.4rem);
     padding:clamp(.9rem,2.8vh,1.9rem) clamp(1rem,3vw,2.6rem) clamp(.8rem,2.4vh,1.6rem);
     text-align:left;
   }
-  .page::before{
-    content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
-    background:linear-gradient(90deg, rgba(125,211,252,.11), rgba(125,211,252,0) 46%, rgba(255,59,59,0) 54%, rgba(255,59,59,.13));
-  }
-  .page::after{
-    content:""; position:absolute; left:50%; top:5%; bottom:5%; width:1px; z-index:-1; pointer-events:none;
-    background:linear-gradient(transparent, rgba(255,255,255,.28), transparent);
-  }
+  .page-head{ margin:clamp(.8rem,3.2vh,2.4rem) 0 0 clamp(.8rem,2.8vw,2.8rem); }
   h1, .title{
     margin:0;
     font-weight:900;
@@ -121,41 +110,27 @@
     line-height:1;
     letter-spacing:0.01em;
     color:#f5f5f5;
-    text-shadow:
-      0 0 8px rgba(255,255,255,0.55),
-      0 0 22px rgba(196,181,253,0.45),
-      0 0 46px rgba(125,211,252,0.3);
+    text-shadow:0 0 12px rgba(255,255,255,.35);
   }
-  .intro{ margin:.7rem 0 0; max-width:30rem; font-size:clamp(11px,1.05vw,15px); line-height:1.5; color:#c4c4c4; }
   .stage-grid{
     display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
-    gap:clamp(1rem,3vw,3.2rem); align-items:center; min-height:0;
+    gap:clamp(1rem,3vw,3.2rem); align-items:start; align-content:center; min-height:0;
   }
   .side{ max-width:25rem; min-width:0; }
   .side-us{ justify-self:end; }
   .side-cn{ justify-self:start; }
-  .center-col{ display:flex; flex-direction:column; align-items:center; gap:.7rem; text-align:center; }
+  .center-col{ align-self:center; display:flex; flex-direction:column; align-items:center; gap:.7rem; text-align:center; }
   .click-hint{
-    margin:0; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:#8b8b8b;
+    margin:0; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:#fff; opacity:.6;
   }
   .ph{
     aspect-ratio:16/9; max-height:22vh; width:100%; border-radius:8px; display:flex; flex-direction:column;
-    align-items:center; justify-content:center; gap:.3rem; border:1px dashed rgba(255,255,255,.3);
-    color:rgba(255,255,255,.72); font-size:11px; letter-spacing:.06em; text-align:center; padding:.4rem;
+    align-items:center; justify-content:center; gap:.3rem; border:1px dashed rgba(255,255,255,.55);
+    color:rgba(255,255,255,.8); font-size:11px; letter-spacing:.06em; text-align:center; padding:.4rem;
   }
   .ph span{ font-size:1.5rem; line-height:1; }
-  .ph-us{ background:linear-gradient(135deg, rgba(125,211,252,.30), rgba(125,211,252,.06)); }
-  .ph-cn{ background:linear-gradient(135deg, rgba(255,59,59,.34), rgba(255,59,59,.07)); }
-  .side-label{ margin:.75rem 0 .35rem; font-size:clamp(12px,1.25vw,17px); font-weight:900; letter-spacing:.14em; text-transform:uppercase; }
-  .side-us .side-label, .blk-us .side-label{ color:var(--lightglow); text-shadow:0 0 12px rgba(125,211,252,.55); }
-  .side-cn .side-label, .blk-cn .side-label{ color:var(--darkglow); text-shadow:0 0 12px rgba(255,59,59,.55); }
-  .side p, .blk p{ margin:0; font-size:clamp(10.5px,.98vw,14px); line-height:1.5; color:#d8d8d8; font-weight:400; }
-  .meaning{
-    margin:0; justify-self:center; max-width:58rem; text-align:center;
-    font-size:clamp(10px,.95vw,13.5px); line-height:1.55; color:#bcbcbc;
-  }
-  .meaning .lt{ color:var(--lightglow); font-weight:700; }
-  .meaning .dk{ color:var(--darkglow); font-weight:700; }
+  .side-label{ margin:.75rem 0 .35rem; font-size:clamp(12px,1.25vw,17px); font-weight:900; letter-spacing:.14em; text-transform:uppercase; color:#fff; }
+  .side p, .blk p{ margin:0; font-size:clamp(10.5px,.98vw,14px); line-height:1.5; color:#fff; font-weight:400; }
   .story-flow{ display:none; }
   .yy{ position:relative; }
   .yy svg{ display:block; overflow:visible; animation:spin 22s linear infinite; width:clamp(180px,34vh,320px); height:clamp(180px,34vh,320px); }
@@ -168,15 +143,14 @@
     letter-spacing:0.08em;
     text-transform:uppercase;
     min-height:22px;
-    color:#e6e6e6;
+    color:#fff;
     font-weight:900;
-    text-shadow:0 0 10px currentColor, 0 0 24px currentColor;
+    text-shadow:0 0 10px rgba(255,255,255,.4);
     opacity:0;
     transition:opacity .25s ease;
   }
   .caption.show{ opacity:1; }
-  .caption.stage1{ color:var(--lightglow); }
-  .caption.stage2{ color:var(--darkglow); }
+  .caption.stage1, .caption.stage2{ color:#fff; }
   @keyframes spin{ to{ transform:rotate(360deg); } }
   @media (prefers-reduced-motion: reduce){
     .yy svg{ animation:none; }
@@ -184,21 +158,16 @@
 
 
   @media (max-width:900px){
-    .page-head, .side, .page > .meaning{ display:none; }
-    .page::after{ display:none; }
+    .page-head, .side{ display:none; }
     .page{ grid-template-rows:minmax(0,1fr); }
     .stage-grid{ grid-template-columns:1fr; align-self:center; }
     .story-flow{
       display:block; background:#000; padding:4rem 1.4rem 2.5rem; max-width:none;
     }
-    .story-flow .title{ font-size:clamp(30px,9vw,48px); }
-    .story-flow .intro{ font-size:14px; margin:.8rem 0 1.6rem; max-width:none; }
-    .blk{ padding:1rem 1rem 1.1rem; border-left:3px solid; margin-bottom:1.1rem; border-radius:0 8px 8px 0; }
-    .blk-us{ border-color:var(--lightglow); background:rgba(125,211,252,.07); }
-    .blk-cn{ border-color:var(--darkglow); background:rgba(255,59,59,.08); }
+    .story-flow .title{ font-size:clamp(30px,9vw,48px); margin-bottom:1.6rem; }
+    .blk{ padding:1rem 1rem 1.1rem; border-left:2px solid rgba(255,255,255,.55); margin-bottom:1.1rem; }
     .blk .ph{ max-height:none; }
     .blk p{ font-size:13.5px; }
-    .story-flow .meaning{ font-size:13px; text-align:left; margin-top:1.6rem; max-width:none; }
   }
 
   /* ---- stage 1 page (revealed after the zoom) ---- */
@@ -248,10 +217,8 @@
 
   <section class="story-flow" id="story">
     <div class="title">My Story</div>
-    <p class="intro">My biggest differentiator is my upbringing.</p>
     <div class="blk blk-us"><div class="ph ph-us"><span aria-hidden="true">📷</span>Add a photo &mdash; me in the US</div><h2 class="side-label">The US</h2><p>Born and raised in Lower Merion, PA in the US. Then, when I was 16, as a rising junior, I moved all the way back to the US. Once again, I had to give up everything I had built in the last 10 years. Even though I spoke English perfectly fine, I still wasn’t fully “American.” I wouldn’t understand the specific references, slang, etc. Once again, I was ostracized, this time for not being American enough.</p></div>
     <div class="blk blk-cn"><div class="ph ph-cn"><span aria-hidden="true">📷</span>Add a photo &mdash; me in China</div><h2 class="side-label">China</h2><p>When I was 6, I moved to Shanghai, China abruptly, despite not knowing any Mandarin at all. While I looked the part, all it took was one quick conversation for people to see through my facade that I was American.</p></div>
-    <p class="meaning">These unique experiences have helped me develop unique cross-cultural perspectives. The yin and yang is my upbringing: <span class="lt">the light half is my life in the US</span>, <span class="dk">the dark half is my life in China</span>, and each carries a small dot of the other &mdash; because neither world was ever entirely mine.</p>
   </section>
 
   <div class="hero-scroll" id="heroScroll">
@@ -260,7 +227,6 @@
         <div class="page">
           <header class="page-head">
             <h1 id="heroTitle" class="pop-scroll">My Story</h1>
-            <p class="intro pop-scroll" style="--d:.1s">My biggest differentiator is my upbringing.</p>
           </header>
 
           <div class="stage-grid">
@@ -309,7 +275,6 @@
           <aside class="side side-cn pop-scroll" style="--d:.3s"><div class="ph ph-cn"><span aria-hidden="true">📷</span>Add a photo &mdash; me in China</div><h2 class="side-label">China</h2><p>When I was 6, I moved to Shanghai, China abruptly, despite not knowing any Mandarin at all. While I looked the part, all it took was one quick conversation for people to see through my facade that I was American.</p></aside>
           </div>
 
-          <p class="meaning pop-scroll" style="--d:.35s">These unique experiences have helped me develop unique cross-cultural perspectives. The yin and yang is my upbringing: <span class="lt">the light half is my life in the US</span>, <span class="dk">the dark half is my life in China</span>, and each carries a small dot of the other &mdash; because neither world was ever entirely mine.</p>
         </div>
       </div>
 
@@ -467,8 +432,9 @@
   var SAFE_RADIUS_UNITS = 41; // clearance from SAFE_POINT to the nearest non-dark pixel, in viewBox units (measured by sampling the rendered SVG)
   var SAFE_MARGIN = 0.5; // use only half the measured clearance: covers anti-aliasing/gradient softness at the boundary AND the rotateY twist, which foreshortens one side of the frame so it needs extra scale to still reach the edge
   var MAX_SCALE = 12; // recomputed from real measurements in updateOrigin(); this is just a safe fallback before the first measurement
+  var REST_FRACTION = 15 / 165; // 15vh of rest out of the 165vh pinned scroll
   var ZOOM_EASE = 2.2;  // >1 = slower start, faster finish
-  var TURN_START = 4;   // deg
+  var TURN_START = 0;   // deg (flat at rest so columns stay perfectly aligned)
   var TURN_END = 26;    // deg
 
   var spinFrozen = false;
@@ -532,7 +498,10 @@
     requestAnimationFrame(function () {
       var rect = heroScroll.getBoundingClientRect();
       var scrollable = heroScroll.offsetHeight - window.innerHeight;
-      var progress = scrollable > 0 ? Math.min(Math.max(-rect.top / scrollable, 0), 1) : 0;
+      var raw = scrollable > 0 ? Math.min(Math.max(-rect.top / scrollable, 0), 1) : 0;
+      // The first REST_FRACTION of the pinned scroll is a rest zone: the yin-yang keeps
+      // spinning and nothing zooms, so it doesn't freeze the instant the page pins.
+      var progress = Math.min(Math.max((raw - REST_FRACTION) / (1 - REST_FRACTION), 0), 1);
 
       if (progress > 0) {
         if (!spinFrozen) {
