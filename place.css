@@ -140,13 +140,3 @@ body::after{
 /* ---------------- the dragon on these pages ----------------
  * The name follows him onto both halves: riding over Shanghai, and a smaller
  * mark above the heading in Philadelphia. */
-.place-glyph{
-  display:block;
-  margin:0 0 .7rem;
-  font-family:"Noto Serif SC","Songti SC","SimSun",serif;
-  font-weight:600;
-  font-size:clamp(40px,6vh,68px);
-  line-height:1;
-  color:var(--paper);
-  opacity:.45;
-}
