@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600&display=swap&text=%E9%BE%99" rel="stylesheet" />
 <link rel="stylesheet" href="chapters.css" />
 <style>
   :root{
@@ -276,6 +277,20 @@
 </head>
 <body>
 
+  <svg class="dg-sprite" aria-hidden="true" focusable="false">
+    <!-- A stretch of the dragon's back, cut off at both ends: between chapters
+         you see another length of the same animal passing behind the page. -->
+    <symbol id="dg-segment" viewBox="0 0 60 200">
+      <path class="dg-body" d="M30,-6 C58,34 2,66 30,100 C58,134 2,166 30,206"/>
+      <path class="dg-fin" d="M43,24 L53,18 L46,31 Z
+                              M17,76 L7,70 L14,83 Z
+                              M43,124 L53,118 L46,131 Z
+                              M17,176 L7,170 L14,183 Z"/>
+    </symbol>
+
+  </svg>
+
+
   <section class="intro" id="intro">
     <figure class="intro-photo">
       <img src="images/yicheng.jpg" alt="Yicheng Long, standing in the atrium at Carnegie Mellon" />
@@ -285,6 +300,24 @@
       <h1 class="intro-name">Yicheng Long</h1>
       <p class="intro-bio">Hi there, my name is Yicheng, and I&rsquo;m currently a sophomore at Carnegie Mellon University studying Business Administration with an additional major in Statistics &amp; Machine Learning. I&rsquo;ve been deeply shaped by multiple different aspects of my life, so here&rsquo;s a very brief breakdown of who I am, and how I got to where I am today.</p>
       <div class="intro-cue" aria-hidden="true">Scroll</div>
+    </div>
+  </section>
+
+  <section class="glyph-page" id="name">
+    <div class="glyph-wrap">
+      <span class="glyph" lang="zh-Hans">&#40857;</span>
+    </div>
+
+    <div class="glyph-def">
+      <p class="glyph-pron"><em>l&oacute;ng</em> &middot; noun</p>
+      <ol class="glyph-senses">
+        <li>The Chinese character for dragon.</li>
+        <li>My surname.</li>
+      </ol>
+      <p class="glyph-note">It is a rare surname &mdash; uncommon even in China, and rarer still
+      in the States. And a dragon here is not something to be slain: it is luck, water and weather,
+      the only animal in the zodiac that nobody has ever seen. That is why one runs through this
+      entire site. It has been running through my name the whole time.</p>
     </div>
   </section>
 
@@ -365,6 +398,7 @@
 
   <nav class="rail" aria-label="Chapters">
     <a href="#intro"><span class="rail-label">Yicheng Long</span><span class="tick"></span></a>
+    <a href="#name"><span class="rail-label">The Name</span><span class="tick"></span></a>
     <a href="#quote"><span class="rail-label">I &middot; Two Worlds</span><span class="tick"></span></a>
     <a href="#heroScroll"><span class="rail-label">My Upbringing</span><span class="tick"></span></a>
     <a href="#ch2"><span class="rail-label">II &middot; Finding My Voice</span><span class="tick"></span></a>
@@ -413,7 +447,7 @@
     </ul>
   </section>
   <div class="connector" aria-hidden="true">
-    <svg viewBox="0 0 60 200" preserveAspectRatio="none"><path d="M30,0 C58,34 2,66 30,100 C58,134 2,166 30,200"/></svg>
+    <svg viewBox="0 0 60 200"><use href="#dg-segment"/></svg>
   </div>
   <section class="chap" id="ch3">
     <p class="chap-ghost" aria-hidden="true">III</p>
@@ -455,7 +489,7 @@
     </ul>
   </section>
   <div class="connector" aria-hidden="true">
-    <svg viewBox="0 0 60 200" preserveAspectRatio="none"><path d="M30,0 C58,34 2,66 30,100 C58,134 2,166 30,200"/></svg>
+    <svg viewBox="0 0 60 200"><use href="#dg-segment"/></svg>
   </div>
   <section class="chap" id="ch4">
     <p class="chap-ghost" aria-hidden="true">IV</p>
@@ -497,7 +531,7 @@
     </ul>
   </section>
   <div class="connector" aria-hidden="true">
-    <svg viewBox="0 0 60 200" preserveAspectRatio="none"><path d="M30,0 C58,34 2,66 30,100 C58,134 2,166 30,200"/></svg>
+    <svg viewBox="0 0 60 200"><use href="#dg-segment"/></svg>
   </div>
   <section class="chap" id="ch5">
     <p class="chap-ghost" aria-hidden="true">V</p>
@@ -550,7 +584,8 @@
       <circle cx="100" cy="144" r="13" fill="url(#endLight)"/>
     </svg>
     <p class="rise">Placeholder closing line &mdash; the two halves, finally read as one person rather than two.</p>
-    <p class="sig rise" style="--d:.15s">Yicheng Long</p>
+    <span class="coda-glyph rise" style="--d:.1s" lang="zh-Hans" aria-hidden="true">&#40857;</span>
+    <p class="sig rise" style="--d:.2s">Yicheng Long</p>
   </footer>
 
 <script src="chapters.js"></script>

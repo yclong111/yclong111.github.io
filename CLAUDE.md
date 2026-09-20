@@ -22,6 +22,7 @@ One page, one colour, read top to bottom:
 | | | |
 |---|---|---|
 | Opening | portrait, name, introduction | who is speaking |
+| The Name | the character, defined | why a dragon keeps appearing |
 | I | Two Worlds | opens on the Lahiri quote, then the yin-yang |
 | II | Finding My Voice | high school: debate, sports, community |
 | III | The Pivot | how the cross-cultural read became a read on markets |
@@ -71,7 +72,27 @@ chapter a bespoke animated emblem (rotating petals, an orbit) that doubled as a
 door into a separate collage room; both the emblems and those four rooms were
 cut. The content lives inline on the page now.
 
-**The only graphic motif is the wheel's own dividing curve**, drawn on scroll
+**The dragon is the site's motif, and it is explained before it is used.** The
+second screen is a dictionary entry for the character, because his surname is
+Long - the character is the dragon, and without that the dragon elsewhere looks
+decorative. After that it recurs three ways: the character itself returns small
+at the coda and above the heading on `us.html`; a length of the dragon's back
+shows in every connector between chapters, cut off at both ends so it reads as
+one animal passing behind the page; and a full dragon arcs over the skyline on
+`china.html`. The canvas dragon in `transitions.js` was always there and is now
+part of the same idea.
+
+The symbols live in a `.dg-sprite` inside each document rather than an external
+file: external `<use>` content cannot be styled by the referencing page, and the
+whole point is that each instance takes the colour of wherever it sits. The body
+strokes use `vector-effect:non-scaling-stroke` - the connector scales the symbol
+to roughly 0.6, which would otherwise thin the line to about a pixel.
+
+A drawn dragon head was tried at the coda and beside the character, and cut both
+times: at that size it reads as a fish. The character does that job. The head
+survives only small, at the end of the arc over Shanghai, where it reads fine.
+
+**The other graphic motif is the wheel's own dividing curve**, drawn on scroll
 in the connector between chapters. Chapters share Chapter I's left and right
 insets (`--gutter`) so every text edge on the page lines up.
 
@@ -155,7 +176,9 @@ Without this the highlight orbits the ball like a moving sun.
 
 **Font is Archivo**, the wide grotesque chosen from a reference photo, with
 `font-stretch:expanded`. Times New Roman was tried for a while and reverted; do not
-reintroduce it.
+reintroduce it. The one exception is the character, set in Noto Serif SC and
+requested from Google Fonts with `&text=%E9%BE%99` so only that single glyph is
+downloaded.
 
 **Colours:** spine black `#0c0c0e`, spine paper `#f4f2f1`, China red `#cc2229`.
 The click transitions wipe in black and each destination fades up from black on

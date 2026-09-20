@@ -68,16 +68,8 @@
     if (quotePage) quotePage.classList.add('in');
   }
 
-  /* ---- connectors: each S draws itself once, from its own real length ---- */
+  /* ---- connectors: each length of dragon wipes in as it is reached ---- */
   var connectors = document.querySelectorAll('.connector');
-  connectors.forEach(function (c) {
-    var p = c.querySelector('path');
-    if (!p) return;
-    // stroke-dasharray/offset need the path's true length; hard-coding one
-    // value would leave a gap or a head start on any other curve.
-    var len = Math.ceil(p.getTotalLength());
-    c.style.setProperty('--len', len);
-  });
   if ('IntersectionObserver' in window) {
     var connObs = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {

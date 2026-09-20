@@ -129,25 +129,22 @@
  * stitch between one chapter and the next. It draws itself on scroll. */
 .connector{
   position:relative;
-  height:clamp(88px,15vh,170px);
+  height:clamp(116px,17vh,190px);
   display:grid;
   place-items:center;
   background:var(--ink);
   color:var(--paper);
   overflow:hidden;
 }
-.connector svg{ width:48px; height:100%; overflow:visible; }
-.connector path{
-  fill:none;
-  stroke:currentColor;
-  stroke-width:1.5;
-  stroke-linecap:round;
-  opacity:.3;
-  stroke-dasharray:var(--len,300);
-  stroke-dashoffset:var(--len,300);
-  transition:stroke-dashoffset 1.1s cubic-bezier(.4,0,.2,1);
+.connector svg{ width:72px; height:100%; }
+.connector svg{ opacity:.55; }
+.connector .dg-body{ stroke-width:1.8px; }
+/* the segment draws itself in as it is reached */
+.connector use{
+  clip-path:inset(0 0 100% 0);
+  transition:clip-path 1.2s cubic-bezier(.4,0,.2,1);
 }
-.connector.in path{ stroke-dashoffset:0; }
+.connector.in use{ clip-path:inset(0 0 0 0); }
 
 /* ---------------- chapter rail ----------------
  * Ticks only. The label is a chip that appears on hover, on its own solid
@@ -347,4 +344,86 @@
 @media (prefers-reduced-motion: reduce){
   .intro-cue::after{ animation:none; }
   .intro-photo, .intro-name, .intro-bio, .intro-cue{ animation:none; }
+}
+
+
+/* ---------------- the dragon ----------------
+ * One animal, seen in pieces. Its character opens the site, a length of its
+ * back shows between every chapter, and its head arrives at the end. Defined
+ * as symbols in index.html, not an external file, so each instance takes the
+ * colour of wherever it sits. */
+.dg-sprite{ position:absolute; width:0; height:0; overflow:hidden; }
+.dg-body{ fill:none; stroke:currentColor; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; vector-effect:non-scaling-stroke; }
+.dg-fin{ fill:currentColor; stroke:none; }
+.dg-eye{ fill:currentColor; }
+
+/* ---------------- the name ---------------- */
+.glyph-page{
+  position:relative;
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:minmax(0,auto) minmax(0,1fr);
+  column-gap:clamp(2rem,6vw,7rem);
+  align-items:center;
+  padding:clamp(3rem,9vh,6rem) var(--gutter);
+  background:var(--ink);
+  color:var(--paper);
+  overflow:hidden;
+}
+.glyph-wrap{ position:relative; display:grid; place-items:center; justify-self:start; }
+.glyph{
+  font-family:"Noto Serif SC","Songti SC","SimSun",serif;
+  font-weight:600;
+  font-size:clamp(140px,26vh,320px);
+  line-height:1;
+  color:var(--paper);
+  text-shadow:0 0 30px rgba(255,255,255,.22);
+}
+.glyph-def{ max-width:40rem; }
+.glyph-pron{
+  margin:0 0 1.1rem;
+  font-size:clamp(12px,1.2vw,17px);
+  letter-spacing:.26em;
+  text-transform:uppercase;
+  opacity:.5;
+}
+.glyph-pron em{ font-style:italic; text-transform:none; letter-spacing:.06em; }
+.glyph-senses{
+  margin:0 0 clamp(1.3rem,3.4vh,2.2rem);
+  padding:0 0 0 1.4em;
+  font-size:clamp(15px,min(1.5vw,2.6vh),24px);
+  line-height:1.5;
+  font-weight:800;
+}
+.glyph-senses li{ margin:0 0 .45rem; }
+.glyph-senses li::marker{ color:rgba(255,255,255,.4); font-weight:400; }
+.glyph-note{
+  margin:0;
+  max-width:38rem;
+  font-size:clamp(12.5px,min(1.22vw,2.15vh),20px);
+  line-height:1.62;
+  color:rgba(255,255,255,.7);
+}
+
+/* ---------------- the coda ----------------
+ * The character closes the site the way it opened it. A drawn head was tried
+ * here at this size and read as a fish. */
+.coda-glyph{
+  font-family:"Noto Serif SC","Songti SC","SimSun",serif;
+  font-weight:600;
+  font-size:clamp(46px,7vh,78px);
+  line-height:1;
+  color:var(--paper);
+  opacity:.5;
+}
+
+@media (max-width:900px){
+  .glyph-page{
+    grid-template-columns:1fr;
+    row-gap:clamp(1.6rem,5vh,2.6rem);
+    justify-items:start;
+    padding-left:1.4rem; padding-right:1.4rem;
+  }
+  .glyph-wrap{ justify-self:start; }
+  .glyph{ font-size:clamp(110px,30vw,200px); }
 }

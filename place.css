@@ -154,3 +154,33 @@ body::after{
 @media (prefers-reduced-motion: reduce){
   body::after{ animation:none; opacity:0; }
 }
+
+
+/* ---------------- the dragon on these pages ----------------
+ * The name follows him onto both halves: riding over Shanghai, and a smaller
+ * mark above the heading in Philadelphia. */
+.sky-dragon{
+  position:absolute;
+  left:50%;
+  bottom:min(46vh,420px);
+  width:min(62vw,620px);
+  height:auto;
+  transform:translate(-50%,28%);
+  color:var(--paper);
+  opacity:.4;
+  pointer-events:none;
+  z-index:0;
+}
+.place-glyph{
+  display:block;
+  margin:0 0 .7rem;
+  font-family:"Noto Serif SC","Songti SC","SimSun",serif;
+  font-weight:600;
+  font-size:clamp(40px,6vh,68px);
+  line-height:1;
+  color:var(--paper);
+  opacity:.45;
+}
+@media (max-width:900px){
+  .sky-dragon{ bottom:min(34vh,300px); width:78vw; }
+}
