@@ -80,6 +80,15 @@
     connectors.forEach(function (c) { c.classList.add('in'); });
   }
 
+  /* ---- the "what I took from it" reveal ---- */
+  document.querySelectorAll('.learned-toggle').forEach(function (btn) {
+    var wrap = btn.closest('.learned');
+    btn.addEventListener('click', function () {
+      var open = wrap.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
+
   /* ---- chapter rail: mark whichever chapter owns the middle of the screen ---- */
   var links = Array.prototype.slice.call(document.querySelectorAll('.rail a'));
   var targets = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });

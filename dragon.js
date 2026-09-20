@@ -29,45 +29,21 @@
   }
 
   /* ---- how it moves ----
-   * The head swims; the body follows the path the head actually took. That is
-   * the whole reason for the trail: if the body were simply drawn behind the
-   * head in its current facing, turning round would swing the tail across the
-   * screen like a rod, or flip it to the other side in a single frame. Sampled
-   * from a trail, a U-turn curls the way an animal's does.
+   * Straight across, and only across. An earlier version steered toward
+   * wandering targets and banked around when it reached an edge, which meant
+   * it looped and climbed and tangled itself over the writing. The path is now
+   * a horizontal line: it cannot loop, because there is nothing to loop with.
    *
-   * The undulation is a lateral offset applied on top of that path, not a wiggle
-   * in the path itself - otherwise the wavelength would be tied to speed, and a
-   * slow dragon would ripple in slow motion. */
+   * The S-shape is the swimming wave laid on that line, not a curve in the
+   * path, so the body still ripples while the animal travels flat. Direction
+   * only ever changes once the whole body is off the screen, so the turn is
+   * never seen - a visible reversal either flips the body to the far side of
+   * the head in one frame or swings the tail round like a rod. */
   function rand(a, b) { return a + Math.random() * (b - a); }
 
-  var hx, hy, angle, targetAngle, speed, retargetAt;
-  var trail = [];          // newest first, each with distance to the previous
-  var TURN_RATE = 0.62;    // rad/s - a wide bank, not a pivot
-  var upSign = 1;          // +1 while it swims right, -1 while it swims left
-
-  // The spines belong on its back and the belly plates underneath, whichever
-  // way it is pointing. The drawing faces +x, so coming back leftwards it has
-  // to be mirrored - and the mirror is only flipped while the dragon is close
-  // to vertical, where the switch cannot be seen.
-  function updateUpSign() {
-    var c = Math.cos(angle);
-    if (Math.abs(c) < 0.3) upSign = c >= 0 ? 1 : -1;
-  }
-
-  // The wave is measured against the geometric normal, never the mirrored one:
-  // flipping it would phase-shift the whole body by half a wavelength in a
-  // single frame.
-  function waveAt(s, t) {
-    return amp() * (1 - 0.25 * Math.min(1, s / span())) *
-           Math.sin((2 * Math.PI * s / lam()) + t * 1.7);
-  }
-  // A point on the animal itself: the path, plus the wave riding on it. The
-  // head is taken from this too, so it cannot drift off the front of the body.
-  function bodyPoint(s, t) {
-    var p = atDistance(s);
-    var o = waveAt(s, t);
-    return { x: p.x + Math.sin(p.th) * o, y: p.y - Math.cos(p.th) * o, th: p.th };
-  }
+  var dir = 1;             // +1 swimming right, -1 swimming left
+  var hx, baseY, speed;
+  var upSign = 1;          // the drawing faces +x, so it mirrors going left
 
   function span() { return Math.min(W * 1.06, 1500); }
   function amp() { return Math.min(H * 0.055, 38); }   // shallow: it swims, it does not thrash
@@ -82,76 +58,44 @@
     ctx.stroke();
   }
 
-  function aimSomewhereInside() {
-    var tx = rand(0.12, 0.88) * W;
-    var ty = rand(0.16, 0.66) * H;
-    targetAngle = Math.atan2(ty - hy, tx - hx);
-  }
-
   function init() {
-    hx = W * 0.78;
-    hy = H * 0.3;
-    angle = 0;               // heading right, across the opening screen
-    targetAngle = angle;
+    dir = 1;
+    upSign = 1;
+    hx = W * 0.78;          // already on screen beside the character
+    baseY = H * 0.3;
     speed = rand(30, 52);
-    retargetAt = rand(9, 16);
-    // lay a straight trail behind it so the body exists on the first frame
-    trail.length = 0;
-    var step = 6;
-    for (var d = 0; d <= span() + step; d += step) {
-      trail.push({ x: hx - d, y: hy, d: d === 0 ? 0 : step });
-    }
   }
 
-  function halfOffScreen() {
-    var m = span() * 0.5;
-    return hx > W + m || hx < -m || hy > H + m || hy < -m;
+  // Off screen entirely: flip and come back the other way at a new height.
+  // Doing it here, unseen, is what keeps the reversal from looking broken.
+  function turnAround(d) {
+    dir = d;
+    upSign = d;
+    hx = d > 0 ? -20 : W + 20;
+    baseY = rand(0.2, 0.55) * H;
+    speed = rand(30, 52);
   }
 
   function advance(t, dt) {
-    if (t > retargetAt) { aimSomewhereInside(); retargetAt = t + rand(9, 16); }
-    // Turn back once half of it has left the frame, rather than waiting for it
-    // to vanish and reappear somewhere else.
-    if (halfOffScreen()) { aimSomewhereInside(); retargetAt = t + rand(9, 16); }
-
-    var diff = Math.atan2(Math.sin(targetAngle - angle), Math.cos(targetAngle - angle));
-    var step = TURN_RATE * dt;
-    angle += Math.abs(diff) < step ? diff : (diff > 0 ? step : -step);
-
-    updateUpSign();
-    hx += Math.cos(angle) * speed * dt;
-    hy += Math.sin(angle) * speed * dt;
-
-    var prev = trail[0];
-    var d = prev ? Math.hypot(hx - prev.x, hy - prev.y) : 0;
-    if (d > 0.5) {
-      trail.unshift({ x: hx, y: hy, d: d });
-      var total = 0, keep = span() + 40;
-      for (var i = 0; i < trail.length; i++) {
-        total += trail[i].d;
-        if (total > keep) { trail.length = i + 1; break; }
-      }
-    }
+    hx += dir * speed * dt;
+    var L = span();
+    if (dir > 0 && hx - L > W) turnAround(-1);
+    else if (dir < 0 && hx + L < 0) turnAround(1);
   }
 
-  // point on the trail at arc length s behind the head, with its tangent
-  function atDistance(s) {
-    var acc = 0;
-    for (var i = 1; i < trail.length; i++) {
-      var seg = trail[i].d;
-      if (acc + seg >= s) {
-        var f = seg > 0 ? (s - acc) / seg : 0;
-        var a = trail[i - 1], b = trail[i];
-        return {
-          x: a.x + (b.x - a.x) * f,
-          y: a.y + (b.y - a.y) * f,
-          th: Math.atan2(a.y - b.y, a.x - b.x)
-        };
-      }
-      acc += seg;
-    }
-    var last = trail[trail.length - 1] || { x: hx, y: hy };
-    return { x: last.x, y: last.y, th: angle };
+  function waveAt(s, t) {
+    return amp() * (1 - 0.25 * Math.min(1, s / span())) *
+           Math.sin((2 * Math.PI * s / lam()) + t * 1.7);
+  }
+  // s is arc length back from the head; the body trails behind whichever way
+  // it is going
+  function bodyPoint(s, t) {
+    return { x: hx - dir * s, y: baseY + waveAt(s, t) };
+  }
+  // direction along the body at s, pointing toward the head
+  function tangentAt(s, t) {
+    var back = bodyPoint(s + 5, t), fwd = bodyPoint(Math.max(0, s - 5), t);
+    return Math.atan2(fwd.y - back.y, fwd.x - back.x);
   }
 
   /* ---- the head ---- */
@@ -293,9 +237,9 @@
     for (var i = N; i >= 1; i--) {
       var s = i * dx;
       var p = bodyPoint(s, t);
-      var th = p.th;
+      var th = tangentAt(s, t);
       var x = p.x, y = p.y;
-      if (x < -R * 6 || x > W + R * 6 || y < -R * 6 || y > H + R * 6) continue;
+      if (x < -R * 6 || x > W + R * 6) continue;
 
       // "up" for spines and legs, mirrored when it is swimming leftwards
       var nx = Math.sin(th) * upSign, ny = -Math.cos(th) * upSign;
@@ -338,8 +282,7 @@
     // taken from the same curve as the body, one short step apart, so the head
     // sits on the neck and turns with it instead of riding the bare path
     var h0 = bodyPoint(0, t);
-    var h1 = bodyPoint(Math.min(12, dx), t);
-    drawHead(h0.x, h0.y, Math.atan2(h0.y - h1.y, h0.x - h1.x), R * 1.25, t);
+    drawHead(h0.x, h0.y, tangentAt(0, t), R * 1.25, t);
   }
 
   /* ---- the loop ---- */
@@ -382,7 +325,7 @@
     clearTimeout(rt);
     rt = setTimeout(function () {
       resize();
-      // the trail is in screen coordinates, so a resize invalidates it
+      // positions are in screen coordinates, so a resize invalidates them
       init();
       // resizing clears the canvas; redraw straight away rather than waiting
       // for the next frame, which may never come if rAF is being throttled
