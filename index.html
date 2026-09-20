@@ -265,6 +265,16 @@
     line-height:1.6;
     color:#c9c6d1;
   }
+
+  /* phones: keep the hint clear of the chapter rail, and the life-line's labels apart */
+  @media (max-width:900px){
+    .page{ padding-bottom:4.6rem; }
+    .yy svg{ width:clamp(150px,27vh,300px); height:clamp(150px,27vh,300px); }
+  }
+  @media (max-width:560px){
+    .lifeline .lf{ padding-bottom:3.4rem; }
+    .lifeline .tag.end{ top:2.25rem; }
+  }
 </style>
 </head>
 <body>
