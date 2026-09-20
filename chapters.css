@@ -778,41 +778,40 @@
 }
 
 
-/* ---------------- chapter III: a ring of things he threw himself into ----
- * Four circles on a ring rather than a list, because none of them came before
- * the others - they all happened at once, in the same two years. Each opens
- * full screen, so the detail never has to be squeezed into the ring itself. */
+/* ---------------- chapter III: four pillars, scattered ----------------
+ * Loose rather than on a ring: a perfect circle made them read as a diagram,
+ * and none of the four came before the others anyway. Each circle is placed
+ * by hand as a percentage of the field, and sized a little differently. */
 .chap-orbit{ justify-items:center; }
-.chap-orbit .chap-head{ text-align:center; max-width:44rem; }
+.chap-orbit .chap-head{ text-align:center; max-width:46rem; }
 .chap-orbit .chap-lede{ margin-left:auto; margin-right:auto; }
 
 .orbit{
   position:relative;
   z-index:1;
-  margin-top:clamp(1rem,3vh,2rem);
+  margin-top:clamp(.6rem,2vh,1.4rem);
   display:grid;
   justify-items:center;
-  gap:clamp(.6rem,2vh,1.2rem);
+  gap:clamp(.4rem,1.4vh,1rem);
+  width:100%;
 }
-.orbit-ring{
+.orbit-field{
+  --base:clamp(118px,min(21vh,176px),176px);
   position:relative;
-  width:clamp(280px,min(46vh,520px),520px);
-  aspect-ratio:1;
+  width:min(100%,780px);
+  height:clamp(330px,50vh,500px);
 }
-/* placed by angle on a ring; the inner face carries the float so the two
- * transforms never fight each other */
 .orb{
   position:absolute;
-  left:50%;
-  top:50%;
-  width:clamp(84px,min(15vh,132px),132px);
-  height:clamp(84px,min(15vh,132px),132px);
-  margin:calc(clamp(84px,min(15vh,132px),132px) / -2);
+  left:var(--x);
+  top:var(--y);
+  width:calc(var(--base) * var(--s));
+  height:calc(var(--base) * var(--s));
+  transform:translate(-50%,-50%);
   padding:0;
   background:none;
   border:0;
   cursor:pointer;
-  transform:rotate(var(--a)) translate(clamp(96px,min(17vh,196px),196px)) rotate(calc(-1 * var(--a)));
 }
 .orb-face{
   display:grid;
@@ -822,13 +821,13 @@
   border-radius:50%;
   background:var(--paper);
   color:#101014;
-  box-shadow:0 0 26px rgba(245,245,244,.18);
-  animation:orb-float 5.5s ease-in-out infinite alternate;
+  box-shadow:0 0 30px rgba(245,245,244,.16);
+  animation:orb-float 6s ease-in-out infinite alternate;
   animation-delay:var(--d,0s);
   transition:transform .3s cubic-bezier(.3,1.4,.5,1), box-shadow .3s ease;
 }
 .orb-label{
-  font-size:clamp(10px,min(1.15vw,1.9vh),14px);
+  font-size:clamp(11px,min(1.25vw,2vh),15px);
   font-weight:900;
   letter-spacing:.16em;
   text-transform:uppercase;
@@ -836,12 +835,12 @@
   text-align:center;
 }
 .orb:hover .orb-face, .orb:focus-visible .orb-face{
-  transform:scale(1.08);
-  box-shadow:0 0 40px rgba(245,245,244,.4);
+  transform:scale(1.07);
+  box-shadow:0 0 46px rgba(245,245,244,.42);
 }
 .orb:focus{ outline:none; }
 .orb:focus-visible .orb-face{ outline:2px solid var(--paper); outline-offset:6px; }
-@keyframes orb-float{ from{ translate:0 -7px; } to{ translate:0 7px; } }
+@keyframes orb-float{ from{ translate:0 -9px; } to{ translate:0 9px; } }
 
 .orbit-hint{
   margin:0;
@@ -851,7 +850,11 @@
   opacity:.45;
 }
 
-/* ---------------- the full-screen detail ---------------- */
+/* ---------------- the pop-up, blooming out of the circle ----------------
+ * The panel is clipped to the tapped circle and grows from there to cover
+ * the screen, so the circle visibly becomes the page. Its surface is a shade
+ * lighter than the page on purpose: the same black as everything behind it,
+ * the expanding edge would be invisible and it would just appear. */
 .panel{
   position:fixed;
   inset:0;
@@ -859,25 +862,33 @@
   display:grid;
   place-items:center;
   padding:clamp(1.2rem,5vh,3rem) var(--gutter);
-  background:var(--ink);
-  opacity:0;
-  transition:opacity .35s ease;
+  background:#17171b;
+  clip-path:circle(var(--r0,0px) at var(--cx,50%) var(--cy,50%));
+  transition:clip-path .7s cubic-bezier(.7,0,.2,1);
 }
-.panel.open{ opacity:1; }
-.panel-sheet{ position:relative; width:min(72rem,100%); }
+.panel.open{ clip-path:circle(150vmax at var(--cx,50%) var(--cy,50%)); }
+.panel-sheet{
+  position:relative;
+  width:min(76rem,100%);
+  opacity:0;
+  transform:translateY(16px);
+  transition:opacity .35s ease, transform .45s cubic-bezier(.2,.9,.3,1);
+}
+/* the writing arrives once the circle has mostly opened */
+.panel.open .panel-sheet{ opacity:1; transform:none; transition-delay:.32s; }
 .panel-close{
   position:absolute;
   top:-.5rem; right:0;
-  width:44px; height:44px;
+  width:48px; height:48px;
   background:none; border:1px solid var(--rule); color:var(--paper);
-  font-size:22px; line-height:1; cursor:pointer;
-  opacity:.7; transition:opacity .25s ease, border-color .25s ease;
+  font-size:24px; line-height:1; cursor:pointer;
+  opacity:.72; transition:opacity .25s ease, border-color .25s ease;
 }
 .panel-close:hover, .panel-close:focus-visible{ opacity:1; border-color:var(--paper); outline:none; }
 .panel-body{
   display:grid;
   grid-template-columns:minmax(0,1fr) auto;
-  column-gap:clamp(1.5rem,5vw,4.5rem);
+  column-gap:clamp(1.8rem,6vw,5.5rem);
   align-items:start;
   padding-top:clamp(2rem,6vh,3.5rem);
 }
@@ -887,34 +898,54 @@
   letter-spacing:.42em;
   text-transform:uppercase;
   opacity:.45;
-  margin-bottom:.9rem;
+  margin-bottom:1rem;
 }
 .panel-title{
   grid-column:1 / -1;
-  margin:0 0 clamp(1rem,3vh,1.8rem);
-  font-size:clamp(30px,5.4vw,76px);
+  margin:0 0 clamp(1.2rem,3.6vh,2.2rem);
+  font-size:clamp(40px,7.4vw,112px);
   font-weight:900;
-  line-height:1;
-  text-shadow:0 0 16px rgba(255,255,255,.26);
+  line-height:.95;
+  text-shadow:0 0 18px rgba(255,255,255,.26);
 }
-.panel-text{ max-width:min(58ch,42rem); }
+.panel-text{ max-width:min(56ch,44rem); }
 .panel-text p{
   margin:0 0 1em;
-  font-size:clamp(13px,min(1.3vw,2.2vh),20px);
-  line-height:1.62;
-  color:rgba(245,245,244,.74);
+  font-size:clamp(15px,min(1.55vw,2.6vh),24px);
+  line-height:1.6;
+  color:rgba(245,245,244,.8);
 }
 .panel-text p:last-child{ margin-bottom:0; }
-.panel-text em{ font-style:italic; font-weight:700; color:var(--paper); }
 .panel-photo{ margin:0; }
-.panel-photo .slot{ width:clamp(150px,20vw,260px); }
+.panel-photo .slot{ width:clamp(170px,24vw,320px); }
 
+@media (max-width:640px){
+  /* on a phone four floating circles collide; a loose 2x2 keeps them apart */
+  .orbit-field{
+    --base:clamp(118px,38vw,150px);
+    height:auto;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1.2rem .6rem;
+    justify-items:center;
+  }
+  .orb{ position:relative; left:auto; top:auto; transform:none; }
+  .orb:nth-child(even){ margin-top:2.2rem; }
+}
 @media (max-width:900px){
   .panel-body{ grid-template-columns:1fr; row-gap:1.6rem; }
-  .panel-photo .slot{ width:min(100%,280px); }
+  .panel-photo .slot{ width:min(100%,300px); }
 }
 
 @media (prefers-reduced-motion: reduce){
   .orb-face{ animation:none; }
-  .panel{ transition:none; }
+  .panel, .panel-sheet{ transition:none; }
 }
+
+
+/* ---------------- why Recalc ---------------- */
+.recalc{ max-width:min(70ch,50rem); }
+.recalc p{ font-size:clamp(13px,min(1.2vw,2.05vh),18px); margin-bottom:.85em; }
+/* Recalc is the long one; give it most of the width and the note less */
+.chap-close .close-grid{ grid-template-columns:minmax(0,1.45fr) minmax(0,.75fr); }
+.recalc-bring{ color:var(--paper) !important; }

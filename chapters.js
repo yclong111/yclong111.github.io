@@ -103,19 +103,30 @@
       openPanel = null;
       panel.classList.remove('open');
       document.documentElement.style.overflow = '';
-      window.setTimeout(function () { panel.hidden = true; }, 350);
+      window.setTimeout(function () { panel.hidden = true; }, 700);
       if (opener) { opener.focus(); opener = null; }
+    }
+
+    // The panel starts clipped to the circle that was tapped and grows from
+    // there. Its centre and starting radius come from that circle's own box.
+    function aim(panel, btn) {
+      var face = btn.querySelector('.orb-face') || btn;
+      var r = face.getBoundingClientRect();
+      panel.style.setProperty('--cx', (r.left + r.width / 2) + 'px');
+      panel.style.setProperty('--cy', (r.top + r.height / 2) + 'px');
+      panel.style.setProperty('--r0', (r.width / 2) + 'px');
     }
 
     function open(panel, btn) {
       if (openPanel) close();
       opener = btn;
       openPanel = panel;
+      aim(panel, btn);
       panel.hidden = false;
       document.documentElement.style.overflow = 'hidden';
-      // Force layout so the transition has a start value to move from. This
-      // used to wait for an animation frame, which meant that wherever frames
-      // are throttled the panel opened fully transparent and focus never moved.
+      // Force layout so the clip starts at the circle, not at its end state.
+      // Not rAF: where frames are throttled that left the panel invisible and
+      // focus behind it.
       void panel.offsetHeight;
       panel.classList.add('open');
       var c = panel.querySelector('.panel-close');

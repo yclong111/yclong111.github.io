@@ -26,10 +26,11 @@ One page, one colour, read top to bottom:
 | Opening | portrait, name, introduction | who is speaking |
 | I | Two Worlds | opens on the Lahiri quote, then the yin-yang |
 | II | Not American Enough | coming back at sixteen, ostracized for the opposite reason |
-| III | So I Said Yes | debate, sports, community - what he seized |
+| III | So I Said Yes | four pillars of high school: debate, work, community, sports |
 | IV | The Pivot | debate led to finance |
-| IV | The Work | college organisations, internships, what comes next |
-| V | Off the Clock | family, fun, current obsessions |
+| V | The Work | college organisations, internships, what comes next |
+| VI | Off the Clock | family, fun, current obsessions |
+| Why | Why Recalc | why this program, beside why the yin and yang |
 | Coda | the wheel again | whole, and finally standing still |
 
 **The opening page** fills its left 40% with the portrait and puts the name and
@@ -77,10 +78,18 @@ It ends on its own line, set large under a short rule. The italic on *not* is
 the sentence's hinge - not ostracized for being foreign, ostracized for not
 being native - so keep it.
 
-**Chapter III is a ring, not a list.** Four circles - debate, community, sports,
-work - on a ring rather than in an order, because none of them came before the
-others; they all happened at once in the same two years. Each opens a
-full-screen panel, so the detail never has to be squeezed into the circle. The
+**Chapter III is four pillars, loosely scattered.** Debate, work, community and
+sports as large white circles placed by hand across the field (percent
+positions, slightly different sizes), not on a ring and not in a column: a
+perfect ring read as a diagram, and none of the four came before the others.
+Below 640px they drop into a loose 2x2, because four floating circles collide on
+a phone.
+
+Tapping one **blooms it into the pop-up**: the panel starts clipped to that
+circle (`clip-path: circle()` at its centre and radius, read from its box) and
+grows to cover the screen, then the writing arrives. The panel surface is
+`#17171b`, one shade lighter than the page, on purpose - in the page's own black
+the expanding edge is invisible and the panel just appears. The
 panel's `.open` class and its focus move happen after a forced reflow rather
 than inside `requestAnimationFrame`: on a throttled frame clock the rAF version
 opened the panel fully transparent with focus left behind it.
@@ -166,6 +175,12 @@ screen like a rod or flips it to the other side in a single frame. The
 undulation is a lateral offset applied on top of that path, not a wiggle in the
 path itself - in the path, its wavelength would be tied to speed and a slow
 dragon would ripple in slow motion.
+
+**Check brace balance after editing chapters.css.** A stray `}` at the top level
+does not throw anything: the parser folds it into the next rule's selector,
+which becomes invalid, and that rule is silently dropped. That is how the Why
+Recalc text sat at the Chapter II size for a while. Count `{` against `}` (with
+comments stripped) before shipping.
 
 Frame deltas are clamped to 50ms: a backgrounded tab resumes with a huge gap and
 would teleport it across the screen in one frame. It pauses when the tab is
