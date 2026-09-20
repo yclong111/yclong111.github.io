@@ -16,6 +16,12 @@ body{
 
 .board{ position:relative; min-height:100vh; overflow:hidden; isolation:isolate; animation:pageIn .8s ease-out both; }
 @keyframes pageIn{ from{ opacity:0; } to{ opacity:1; } }
+/* arriving from a transition: start on black (the wipe colour) and fade up to the page */
+body::after{
+  content:""; position:fixed; inset:0; z-index:9998; background:#000; pointer-events:none;
+  animation:fadeFromBlack 1s ease-out .05s both;
+}
+@keyframes fadeFromBlack{ from{ opacity:1; } to{ opacity:0; } }
 
 /* canvas-paper grain */
 .board::before{
@@ -132,5 +138,6 @@ body{
 }
 @media (prefers-reduced-motion:reduce){
   .board{ animation:none; }
+  body::after{ animation:none; opacity:0; }
   .st, .glit, .gem, .polaroid, .back{ transition:none; }
 }

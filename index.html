@@ -339,11 +339,11 @@
   darkHalf.addEventListener('mouseleave', hide);
   darkHalf.addEventListener('blur', hide);
 
-  // Each half plays its own transition (dragon for China, cheesesteak for the US), then navigates.
+  // Each half plays its own transition (dragon for China, cheesesteak for the US), right to left, then navigates.
   function go(kind, url) { return function (e) {
     if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return;
     e.preventDefault();
-    if (window.PageTransitions) window.PageTransitions.play(kind, url); else window.location.href = url;
+    if (window.PageTransitions) window.PageTransitions.play(kind, url, { reverse: true }); else window.location.href = url;
   }; }
   lightHalf.addEventListener('click', go('us', 'us.html'));
   lightHalf.addEventListener('keydown', go('us', 'us.html'));

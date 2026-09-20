@@ -62,11 +62,11 @@
 </div>
 <script src="transitions.js"></script>
 <script>
-  // Going home replays this page's transition in the opposite direction, wiping to the homepage's black.
+  // Going home replays this page's transition in the opposite direction (left to right), wiping to the homepage's black.
   document.querySelector('.back').addEventListener('click', function (e) {
     if (!window.PageTransitions) return;
     e.preventDefault();
-    window.PageTransitions.play('china', this.getAttribute('href'), { reverse: true, wipe: '#000000' });
+    window.PageTransitions.play('china', this.getAttribute('href'), { wipe: '#000000' });
   });
 </script>
 </body>

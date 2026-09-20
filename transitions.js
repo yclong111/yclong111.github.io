@@ -1,7 +1,7 @@
 /* Page transitions for the yin-yang homepage.
  *   china -> a Chinese dragon flies across the screen and drags a red wipe behind it
  *   us    -> a Philly cheesesteak rolls across, melted cheese dripping off the leading edge
- * Both end on the destination page's own background colour, so the navigation is seamless.
+ * The wipe left behind is black (the homepage background); destination pages fade in from black.
  * Everything is drawn on one full-screen canvas; nothing to download. */
 (function () {
   var COLORS = { china: '#cc2229', us: '#f4f2f1' };
@@ -275,8 +275,7 @@
   // opts.wipe: colour left behind, so leaving a page can wipe to the *next* page's colour.
   function render(ctx, kind, W, H, p, t, opts) {
     opts = opts || {};
-    wipe.china = opts.wipe || COLORS.china;
-    wipe.us = opts.wipe || COLORS.us;
+    wipe.china = wipe.us = opts.wipe || '#000000'; // black, matching the homepage's background
     ctx.clearRect(0, 0, W, H);
     ctx.save();
     if (opts.reverse) { ctx.translate(W, 0); ctx.scale(-1, 1); }
