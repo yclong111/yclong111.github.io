@@ -25,7 +25,7 @@ One page, one colour, read top to bottom:
 | The Name | the character, defined, with the dragon itself | why a dragon keeps appearing |
 | Opening | portrait, name, introduction | who is speaking |
 | I | Two Worlds | opens on the Lahiri quote, then the yin-yang |
-| II | Finding My Voice | high school: debate, sports, community |
+| II | Not American Enough | coming back at sixteen, ostracized for the opposite reason |
 | III | The Pivot | how the cross-cultural read became a read on markets |
 | IV | The Work | college organisations, internships, what comes next |
 | V | Off the Clock | family, fun, current obsessions |
@@ -69,7 +69,14 @@ seam visible. Nothing alternates, nothing inverts. An earlier
 version alternated dark and light panels down the page and was rejected: the
 only thing that should change as you scroll is the writing.
 
-**Chapters II-V share one template** - ghost numeral, chapter label, title,
+**Chapter II is one passage, not three strands.** It is the only chapter that
+drops the entry grid: it is a single piece of writing whose point is that it
+keeps going, and cutting it into three columns of fragments works against that.
+It ends on its own line, set large under a short rule. The italic on *not* is
+the sentence's hinge - not ostracized for being foreign, ostracized for not
+being native - so keep it.
+
+**Chapters III-V share one template** - ghost numeral, chapter label, title,
 lede, then three entries in a row, each a rule, a heading, a line and a plain
 picture frame. They have no artwork of their own. An earlier version gave each
 chapter a bespoke animated emblem (rotating petals, an orbit) that doubled as a
@@ -245,8 +252,13 @@ black via `body::after` in place.css.
 
 ## Still to do
 
-Every photo is a placeholder, and so is every word in chapters II-V: the ledes
-and all three entries in each. The wheel page and the two city pages are real copy. The structure is finished; the content is not.
+Every photo is a placeholder, and so is every word in chapters III-V: the ledes
+and all three entries in each. Chapter II is real copy.
+
+The high-school strands that used to be Chapter II - debate, sports, community -
+no longer have a home anywhere on the site. They were placeholders, and Chapter
+II became the return to the US instead; they need a chapter of their own if they
+are wanted. The wheel page and the two city pages are real copy. The structure is finished; the content is not.
 Chapter I is real everywhere: the wheel page, and both city pages now carry the owner's own words.
 
 Chapters II-V navigate nowhere - they are the whole of their own content. Only
