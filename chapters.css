@@ -197,7 +197,7 @@
 .rail a:hover .rail-label, .rail a:focus-visible .rail-label{ opacity:1; transform:translateY(-50%); }
 
 /* ---------------- reveal on scroll ---------------- */
-.rise{ opacity:0; transform:translateY(20px); }
+.js .rise{ opacity:0; transform:translateY(20px); }
 .rise.in{ animation:rise-in .8s cubic-bezier(.2,.9,.3,1) both; animation-delay:var(--d,0s); }
 @keyframes rise-in{ to{ opacity:1; transform:none; } }
 

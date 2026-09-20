@@ -17,6 +17,24 @@
     rises.forEach(function (el) { el.classList.add('in'); });
   }
 
+  /* ---- the quote page plays when it is reached, not on load ----
+   * It is the second screen, so a load-time animation would finish while the
+   * reader is still on the opening page and they would scroll onto a quote
+   * that had already arrived. */
+  var quotePage = document.querySelector('.quote-page');
+  if (quotePage) {
+    if ('IntersectionObserver' in window) {
+      var quoteObs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('in'); quoteObs.unobserve(e.target); }
+        });
+      }, { threshold: 0.4 });
+      quoteObs.observe(quotePage);
+    } else {
+      quotePage.classList.add('in');
+    }
+  }
+
   /* ---- connectors: each S draws itself once, from its own real length ---- */
   var connectors = document.querySelectorAll('.connector');
   connectors.forEach(function (c) {

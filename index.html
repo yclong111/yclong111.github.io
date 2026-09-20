@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<script>document.documentElement.className += " js";</script>
 <title>The Story of My Life</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -56,7 +57,7 @@
     60%{ opacity:1; transform:scale(1.1) translateY(-5px); }
     100%{ opacity:1; transform:none; }
   }
-  .pop-scroll{ opacity:0; }
+  .js .pop-scroll{ opacity:0; }
   .pop-scroll.in{ animation:pop .75s cubic-bezier(.2,1.4,.4,1) both; animation-delay:var(--d,0s); }
 
   /* ---- quote page (first page) ---- */
@@ -65,6 +66,10 @@
     background:#0c0c0e; color:#f5f5f4;
     display:flex; flex-direction:column; align-items:center; justify-content:center;
     padding:5rem 1.5rem 6rem; text-align:center;
+  }
+  .quote-page .chap-num{
+    margin-bottom:clamp(1.4rem,4vh,2.6rem);
+    color:#f5f5f4;
   }
   .quote-text{
     margin:0;
@@ -75,8 +80,12 @@
     margin:clamp(1.5rem,4vw,2.75rem) 0 0;
     font-style:italic; font-weight:500; font-size:clamp(16px,2.3vw,34px); color:#d9d9d6;
   }
-  .line{
-    display:block; opacity:0; text-wrap:balance;
+  /* The quote sits on the second screen, so it waits for the reader instead of
+   * playing while they are still looking at the opening. chapters.js adds .in
+   * when the section scrolls into view. */
+  .line{ display:block; text-wrap:balance; }
+  .js .line{ opacity:0; }
+  .quote-page.in .line{
     animation:appear 1.1s ease-out forwards;
     animation-delay:calc(.1s + var(--i) * .16s);
   }
@@ -84,7 +93,10 @@
     position:absolute; left:0; right:0; bottom:2.2rem;
     display:flex; flex-direction:column; align-items:center; gap:.5rem;
     font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:#8d8d8d;
-    opacity:0; animation:appear 1.1s ease-out forwards; animation-delay:calc(.1s + var(--i) * .16s);
+  }
+  .js .quote-cue{ opacity:0; }
+  .quote-page.in .quote-cue{
+    animation:appear 1.1s ease-out forwards; animation-delay:calc(.1s + var(--i) * .16s);
   }
   .quote-cue::after{
     content:""; width:9px; height:9px; border-right:2px solid #8d8d8d; border-bottom:2px solid #8d8d8d;
@@ -237,11 +249,12 @@
   </section>
 
   <section class="quote-page" id="quote">
+    <span class="chap-num line" style="--i:0">Chapter I</span>
     <blockquote style="margin:0">
-      <p class="quote-text"><span class="line" style="--i:0">“I live in two worlds,</span><span class="line" style="--i:1">neither of which is entirely mine.”</span></p>
-      <footer class="quote-author"><span class="line" style="--i:2">— Jhumpa Lahiri</span></footer>
+      <p class="quote-text"><span class="line" style="--i:1">“I live in two worlds,</span><span class="line" style="--i:2">neither of which is entirely mine.”</span></p>
+      <footer class="quote-author"><span class="line" style="--i:3">— Jhumpa Lahiri</span></footer>
     </blockquote>
-    <div class="quote-cue" style="--i:3" aria-hidden="true">Scroll</div>
+    <div class="quote-cue" style="--i:4" aria-hidden="true">Scroll</div>
   </section>
 
   <section class="story-flow" id="story">
@@ -312,8 +325,8 @@
 
   <nav class="rail" aria-label="Chapters">
     <a href="#intro"><span class="rail-label">Yicheng Long</span><span class="tick"></span></a>
-    <a href="#quote"><span class="rail-label">Prologue</span><span class="tick"></span></a>
-    <a href="#heroScroll"><span class="rail-label">I &middot; Two Worlds</span><span class="tick"></span></a>
+    <a href="#quote"><span class="rail-label">I &middot; Two Worlds</span><span class="tick"></span></a>
+    <a href="#heroScroll"><span class="rail-label">My Upbringing</span><span class="tick"></span></a>
     <a href="#ch2"><span class="rail-label">II &middot; Finding My Voice</span><span class="tick"></span></a>
     <a href="#ch3"><span class="rail-label">III &middot; The Pivot</span><span class="tick"></span></a>
     <a href="#ch4"><span class="rail-label">IV &middot; The Work</span><span class="tick"></span></a>

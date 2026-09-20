@@ -23,8 +23,7 @@ One page, one colour, read top to bottom:
 | | | |
 |---|---|---|
 | Opening | portrait, name, introduction | who is speaking |
-| Prologue | the Lahiri quote | sets the tension |
-| I | Two Worlds | upbringing; the yin-yang, and its two collage rooms |
+| I | Two Worlds | opens on the Lahiri quote, then the yin-yang |
 | II | Finding My Voice | high school: debate, sports, community |
 | III | The Pivot | how the cross-cultural read became a read on markets |
 | IV | The Work | college organisations, internships, what comes next |
@@ -38,7 +37,17 @@ strip as the column narrows - a plain centre crop loses him. The photo meets the
 page on a hard edge; a gradient dissolve was tried and rejected. Below 1000px it
 stacks above the text, still on a hard edge.
 
-Its four elements animate in on load, not on scroll, because the opening is
+**The epigraph page waits to be reached.** It carries the "Chapter I" label and
+is the second screen, so its lines reveal when the section scrolls into view -
+`chapters.js` adds `.in` to `.quote-page` and the CSS is scoped to that. On load
+it would finish playing while the reader is still on the opening page, and they
+would arrive at a quote that had already landed.
+
+**Nothing hides itself unless JavaScript is running.** An inline script in the
+head puts `js` on `<html>`, and every reveal's `opacity:0` is scoped to `.js`.
+Without it the reveals all start hidden and a broken script leaves a blank page.
+
+The opening page's four elements animate in on load, not on scroll, because it is
 above the fold. Each has its own keyframes ending at its own resting opacity -
 the shared `.rise` helper ends at 1, which would burn off the deliberate dimming
 on the bio and the scroll cue.
