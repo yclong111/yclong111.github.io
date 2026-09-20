@@ -322,6 +322,25 @@ Chapter I is real everywhere: the wheel page, and both city pages now carry the 
 Chapters II-V navigate nowhere - they are the whole of their own content. Only
 Chapter I's two halves have click transitions (the dragon and the cheesesteak).
 
+## Cache-busting: bump the ?v= stamps
+
+GitHub Pages lets browsers cache CSS and JS for about ten minutes, so a deploy
+can hand a visitor the new HTML with the *old* stylesheet. That actually
+happened: the fix for the grey discs was live, but a cached `chapters.css`
+without the fix kept drawing them. Every local asset is now referenced as
+`chapters.css?v=<8 chars of its sha1>`, so changed files get a new URL and are
+fetched fresh.
+
+**After editing any .css or .js file, re-stamp the three pages**, or visitors can
+see the new markup against old styles:
+
+```
+python -c "import io,re,hashlib as h;A=['chapters.css','place.css','chapters.js','dragon.js','transitions.js'];V={a:h.sha1(open(a,'rb').read()).hexdigest()[:8] for a in A};[io.open(p,'w',encoding='utf-8').write(re.sub(r'((?:href|src)=\")('+'|'.join(map(re.escape,A))+r')(\?v=[0-9a-f]+)?(\")',lambda m:m.group(1)+m.group(2)+'?v='+V[m.group(2)]+m.group(4),io.open(p,encoding='utf-8').read())) for p in ['index.html','us.html','china.html']]"
+```
+
+Closing a pillar panel also clips it to a zero radius as well as hiding it, so
+even a stale stylesheet cannot leave anything painted over the circles.
+
 ## Working agreement
 
 After every push, give BOTH links, unprompted, every time:

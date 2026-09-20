@@ -97,13 +97,25 @@
   (function () {
     var openPanel = null, opener = null;
 
+    var hideTimers = {};
+
+    // Once it has shrunk back into the circle, take it away completely: hidden
+    // AND a zero-radius clip. Hidden alone depends on the stylesheet winning
+    // over .panel{display:grid}; with a stale cached stylesheet it did not, and
+    // every closed panel sat over its circle as a grey disc. A zero clip paints
+    // nothing whatever the CSS says.
     function close() {
       if (!openPanel) return;
       var panel = openPanel;
       openPanel = null;
       panel.classList.remove('open');
       document.documentElement.style.overflow = '';
-      window.setTimeout(function () { panel.hidden = true; }, 700);
+      clearTimeout(hideTimers[panel.id]);
+      hideTimers[panel.id] = window.setTimeout(function () {
+        if (panel.classList.contains('open')) return;   // reopened meanwhile
+        panel.hidden = true;
+        panel.style.setProperty('--r0', '0px');
+      }, 700);
       if (opener) { opener.focus(); opener = null; }
     }
 
@@ -119,6 +131,7 @@
 
     function open(panel, btn) {
       if (openPanel) close();
+      clearTimeout(hideTimers[panel.id]);
       opener = btn;
       openPanel = panel;
       aim(panel, btn);
