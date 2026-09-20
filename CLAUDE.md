@@ -5,13 +5,53 @@ no build step, no dependencies, no framework. GitHub Pages serves `main` directl
 https://yclong111.github.io, so a push is a deploy and takes a minute or two to appear.
 
 ```
-index.html       quote page -> "My Upbringing" yin-yang page -> Stage 3 section
-us.html          Stage 1: the US      (scrapbook page, paper #f4f2f1)
-china.html       Stage 2: China       (scrapbook page, paper #cc2229)
-scrapbook.css    shared collage styling for both stage pages
+index.html       the whole spine: prologue + chapters I-V + coda
+chapters.css     chapters II-V, the chapter rail, the S connectors
+chapters.js      reveals, rail state, connector draw, emblem links
+us.html          Chapter I, light half   (scrapbook room, paper #f4f2f1)
+china.html       Chapter I, dark half    (scrapbook room, paper #cc2229)
+highschool.html  Chapter II room   (#debate / #sports / #community)
+finance.html     Chapter III room  (#spark / #language / #proof)
+today.html       Chapter IV room   (#campus / #internships / #next)
+home.html        Chapter V room    (#family / #fun / #curious)
+scrapbook.css    shared collage styling for every room
+rooms.css        multi-spread room layout, loaded after scrapbook.css
 scrapbook.svg    sticker symbols referenced by <use href="scrapbook.svg#id">
 transitions.js   canvas animations played when a yin-yang half is clicked
 ```
+
+## The shape of the site
+
+One chronological read, top to bottom, in six movements:
+
+| | | |
+|---|---|---|
+| Prologue | the Lahiri quote | sets the tension |
+| I | Two Worlds | upbringing; the yin-yang, two rooms |
+| II | Finding My Voice | high school: debate, sports, community |
+| III | The Pivot | how the cross-cultural read became a read on markets |
+| IV | The Work | college organisations, internships, what comes next |
+| V | Off the Clock | family, fun, current obsessions |
+| Coda | the wheel again | whole, and finally standing still |
+
+Three rules hold it together:
+
+**Panels alternate dark and light** all the way down, so the yin/yang split
+becomes the rhythm of the whole site rather than one page's trick. II and IV are
+black; III, V and the coda are paper.
+
+**Every chapter carries one emblem**, drawn in the same language as the wheel:
+monochrome, glowing, built from circles and the wheel's own S-curve. The emblem is
+the only door into that chapter's room. Chapter II's three petals deep-link to the
+three sections of `highschool.html`; the others open their room at the top.
+
+**The spine is monochrome; colour lives inside the rooms.** Each room gets its own
+paper (manila for high school, ledger green for finance, blueprint blue for today,
+warm peach for home). Never bring those colours out onto the spine.
+
+The connector between chapters is the yin-yang's own dividing curve, pulled out and
+drawn on scroll. Chapters share Chapter I's exact left and right insets
+(`--gutter` in chapters.css) so every text edge on the site lines up.
 
 Preview locally with `python3 -m http.server 8765`; the `<use href>` sticker references
 need a real server, so opening the files directly from disk will not render them.
@@ -44,9 +84,9 @@ Without this the highlight orbits the ball like a moving sun.
 `font-stretch:expanded`. Times New Roman was tried for a while and reverted; do not
 reintroduce it.
 
-**Colours:** Stage 3 / homepage black `#0c0c0e`, US paper `#f4f2f1`, China red `#cc2229`.
-The transition wipes in `transitions.js` reuse these exact values so each animation lands
-on its destination page's own background with no visible seam.
+**Colours:** spine black `#0c0c0e`, spine paper `#f4f2f1`, China red `#cc2229`.
+The click transitions now wipe in black and each room fades up from black on arrival
+(`body::after` in scrapbook.css), so a room's own paper colour is free to be anything.
 
 ## Click transitions
 
@@ -58,9 +98,14 @@ the wipe colour via `.board`'s `pageIn` animation.
 
 ## Still to do
 
-Every photo on every page is a placeholder: the `📷 Add a photo` polaroids on the
-homepage's two columns, and the `.polaroid` figures on `us.html` and `china.html`. They
-need real photos and real captions. The Stage 3 section is also still placeholder copy.
+Every photo on every page is a placeholder, and so is every word in chapters II-V:
+the ledes, the three strands beside each emblem, and all the notes and captions in
+`highschool.html`, `finance.html`, `today.html` and `home.html`. The structure is
+finished; the content is not. Chapter I is the only chapter whose copy is real.
+
+The new rooms have no signature click animation yet - they navigate plainly, unlike the
+dragon and the cheesesteak. That was deliberate, to keep out of `transitions.js` while it
+was being edited, and it is the obvious next thing to build.
 
 ## Working agreement
 

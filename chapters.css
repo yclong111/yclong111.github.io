@@ -1,0 +1,249 @@
+/* Chapters II-V: the narrative spine below the yin-yang.
+ * The homepage alternates dark and light panels, continuing the yin/yang
+ * split as a rhythm. Every chapter carries an emblem drawn in the same
+ * language as the wheel - monochrome, glowing, built from circles and the
+ * yin-yang's own S-curve - and each emblem is the door into that chapter's
+ * scrapbook room. Colour lives in the rooms, never here. */
+
+:root{
+  --ink:#0c0c0e;
+  --paperlight:#f4f2f1;
+  /* Chapter I insets its title by the .page padding plus the .page-head margin.
+   * Repeating that sum here keeps every chapter's text on the same two edges as
+   * "My Upbringing" instead of drifting to its own margin. */
+  --gutter:calc(clamp(1rem,3vw,2.6rem) + clamp(.8rem,2.8vw,2.8rem));
+}
+
+/* ---------------- chapter shell ---------------- */
+.chap{
+  position:relative;
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  padding:clamp(4rem,11vh,8rem) var(--gutter);
+  overflow:hidden;
+}
+.chap-dark{ background:var(--ink); color:#f5f5f4; }
+.chap-light{ background:var(--paperlight); color:#14140f; }
+
+.chap-inner{
+  width:100%;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+  column-gap:clamp(1.4rem,4vw,4rem);
+  align-items:center;
+}
+
+/* All three sit in one row explicitly. Without this the flipped chapters put
+ * their head in column 3, and auto-placement will not step back to column 2 for
+ * the emblem - it drops to a new row instead and the chapter grows past the
+ * viewport. */
+.chap-head, .chap-aside, .emblem-wrap{ grid-row:1; }
+.chap-head{ grid-column:1; text-align:right; }
+.chap-aside{ grid-column:3; text-align:left; }
+.emblem-wrap{ grid-column:2; position:relative; display:grid; place-items:center; }
+
+.chap-num{
+  display:block;
+  font-size:clamp(11px,1.15vw,15px);
+  letter-spacing:.42em;
+  text-transform:uppercase;
+  opacity:.5;
+  margin-bottom:.9rem;
+}
+.chap-title{
+  margin:0 0 1rem;
+  font-weight:900;
+  font-size:clamp(28px,4.1vw,60px);
+  line-height:1.02;
+  letter-spacing:.01em;
+}
+.chap-dark .chap-title{ text-shadow:0 0 14px rgba(255,255,255,.3); }
+.chap-lede{
+  margin:0;
+  font-size:clamp(13px,min(1.35vw,2.3vh),20px);
+  line-height:1.5;
+  opacity:.82;
+  max-width:34ch;
+  margin-left:auto;   /* head column is right-aligned */
+}
+.chap-aside .chap-lede{ margin-left:0; margin-right:auto; }
+
+/* the three-or-so things each chapter contains, listed beside the emblem */
+.strand-list{ list-style:none; margin:0; padding:0; display:grid; gap:.9rem; }
+.strand{
+  display:grid;
+  gap:.2rem;
+  padding:.7rem .95rem;
+  border-left:2px solid currentColor;
+  opacity:.9;
+}
+.chap-head .strand{ border-left:0; border-right:2px solid currentColor; }
+.strand b{ font-size:clamp(12px,1.25vw,17px); letter-spacing:.11em; text-transform:uppercase; font-weight:900; }
+.strand span{ font-size:clamp(11px,1.1vw,15px); line-height:1.4; opacity:.62; }
+
+/* ---------------- emblems ---------------- */
+.emblem{
+  display:block;
+  overflow:visible;
+  width:clamp(168px,27vh,258px);
+  height:clamp(168px,27vh,258px);
+}
+.emblem .piece{
+  cursor:pointer;
+  outline:none;
+  -webkit-tap-highlight-color:transparent;
+  transform-box:fill-box;
+  transform-origin:center;
+  transition:filter .35s ease, opacity .35s ease;
+}
+.emblem .piece:focus, .emblem .piece:focus-visible{ outline:none; }
+.chap-dark .emblem{ filter:drop-shadow(0 0 9px rgba(255,255,255,.28)) drop-shadow(0 0 26px rgba(255,255,255,.12)); }
+.chap-light .emblem{ filter:drop-shadow(0 5px 16px rgba(0,0,0,.24)); }
+.emblem .piece:hover, .emblem .piece:focus-visible{ opacity:1; filter:drop-shadow(0 0 13px currentColor) drop-shadow(0 0 30px currentColor); }
+
+.spin-slow{ animation:spin 26s linear infinite; transform-box:fill-box; transform-origin:center; }
+.spin-rev{ animation:spin 34s linear infinite reverse; transform-box:fill-box; transform-origin:center; }
+
+.emblem-caption{
+  position:absolute;
+  left:50%; top:100%;
+  transform:translate(-50%,.4rem);
+  white-space:nowrap;
+  pointer-events:none;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  opacity:0;
+  transition:opacity .25s ease;
+}
+.emblem-caption.show{ opacity:1; }
+.chap-dark .emblem-caption{ color:#fff; text-shadow:0 0 10px rgba(255,255,255,.45); }
+.chap-light .emblem-caption{ color:#14140f; }
+
+.enter-hint{
+  margin:1.6rem 0 0;
+  font-size:11px;
+  letter-spacing:.17em;
+  text-transform:uppercase;
+  opacity:.55;
+  text-align:center;
+}
+
+/* ---------------- the S connector between chapters ----------------
+ * The curve that divides the yin from the yang, pulled out and used as the
+ * stitch between one chapter and the next. It draws itself on scroll. */
+.connector{
+  position:relative;
+  height:clamp(96px,17vh,190px);
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+}
+.connector svg{ width:60px; height:100%; overflow:visible; }
+.connector path{
+  fill:none;
+  stroke:currentColor;
+  stroke-width:2;
+  stroke-linecap:round;
+  opacity:.45;
+  stroke-dasharray:var(--len,300);
+  stroke-dashoffset:var(--len,300);
+  transition:stroke-dashoffset 1.1s cubic-bezier(.4,0,.2,1);
+}
+.connector.in path{ stroke-dashoffset:0; }
+.conn-dark{ background:var(--ink); color:#f5f5f4; }
+.conn-light{ background:var(--paperlight); color:#14140f; }
+/* a connector that straddles two panels fades from one paper to the other */
+.conn-d2l{ background:linear-gradient(to bottom,var(--ink),var(--paperlight)); color:#8a8a87; }
+.conn-l2d{ background:linear-gradient(to bottom,var(--paperlight),var(--ink)); color:#8a8a87; }
+
+/* ---------------- chapter rail ---------------- */
+.rail{
+  position:fixed;
+  right:clamp(.7rem,1.8vw,1.9rem);
+  top:50%;
+  transform:translateY(-50%);
+  z-index:40;
+  display:grid;
+  gap:.85rem;
+  mix-blend-mode:difference;   /* one rail that stays legible on black and on paper */
+}
+.rail a{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:.6rem;
+  text-decoration:none;
+  color:#fff;
+  opacity:.4;
+  transition:opacity .3s ease;
+}
+.rail a:hover, .rail a:focus-visible{ opacity:.95; outline:none; }
+.rail a.active{ opacity:1; }
+.rail .rail-label{
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  opacity:0;
+  transform:translateX(6px);
+  transition:opacity .3s ease, transform .3s ease;
+}
+.rail a:hover .rail-label, .rail a.active .rail-label{ opacity:1; transform:none; }
+.rail .tick{ width:22px; height:2px; background:currentColor; transition:width .3s ease; }
+.rail a.active .tick{ width:38px; }
+
+/* ---------------- reveal on scroll ---------------- */
+.rise{ opacity:0; transform:translateY(22px); }
+.rise.in{ animation:rise-in .85s cubic-bezier(.2,.9,.3,1) both; animation-delay:var(--d,0s); }
+@keyframes rise-in{ to{ opacity:1; transform:none; } }
+
+/* ---------------- closing ---------------- */
+.coda{
+  min-height:82vh;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  gap:1.6rem;
+  padding:5rem 1.5rem 7rem;
+  background:var(--paperlight);
+  color:#14140f;
+}
+.coda .emblem{ width:clamp(120px,17vh,168px); height:clamp(120px,17vh,168px); }
+.coda p{ margin:0; max-width:40ch; font-size:clamp(13px,1.3vw,18px); line-height:1.6; opacity:.7; }
+.coda .sig{ font-size:11px; letter-spacing:.3em; text-transform:uppercase; opacity:.45; }
+
+/* ---------------- narrow screens ---------------- */
+@media (max-width:900px){
+  .chap{ min-height:auto; padding:clamp(3rem,9vh,5rem) 1.3rem; }
+  .chap-inner{ grid-template-columns:1fr; row-gap:2.2rem; justify-items:center; }
+  .chap-head, .chap-aside, .emblem-wrap{ grid-row:auto; }
+  .chap-head, .chap-aside{ grid-column:1; text-align:center; }
+  .chap-lede{ margin-left:auto; margin-right:auto; }
+  .emblem-wrap{ grid-column:1; order:-1; }
+  .strand-list{ width:min(420px,100%); }
+  .chap-head .strand{ border-right:0; border-left:2px solid currentColor; text-align:left; }
+  .strand{ text-align:left; }
+  .rail .rail-label{ display:none; }
+  .rail .tick{ width:14px; }
+  .rail a.active .tick{ width:24px; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .spin-slow, .spin-rev{ animation:none; }
+  .rise{ opacity:1; transform:none; }
+  .rise.in{ animation:none; }
+  .connector path{ stroke-dashoffset:0; transition:none; }
+}
+
+/* alternating sides, so the eye zig-zags down the spine instead of tracking one edge */
+.chap.flip .chap-head{ grid-column:3; text-align:left; }
+.chap.flip .chap-head .chap-lede{ margin-left:0; margin-right:auto; }
+.chap.flip .chap-head .strand{ border-right:0; border-left:2px solid currentColor; }
+.chap.flip .chap-aside{ grid-column:1; text-align:right; }
+.chap.flip .chap-aside .strand{ border-left:0; border-right:2px solid currentColor; }
+@media (max-width:900px){
+  .chap.flip .chap-head, .chap.flip .chap-aside{ grid-column:1; text-align:center; }
+  .chap.flip .chap-aside .strand{ border-right:0; border-left:2px solid currentColor; text-align:left; }
+}
