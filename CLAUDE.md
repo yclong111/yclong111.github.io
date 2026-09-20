@@ -127,5 +127,14 @@ language, or stay as the one deliberate burst of colour, is an open question.
 
 ## Working agreement
 
-Give the live URL after every push, and mention that GitHub Pages takes a minute or two
-to rebuild. The site is checked on the deployed URL, not on a local preview.
+After every push, give BOTH links, unprompted, every time:
+
+- the live page: https://yclong111.github.io (or the specific page that changed)
+- the commit: https://github.com/yclong111/yclong111.github.io/commit/<sha>
+
+Mention that GitHub Pages takes a minute or two to rebuild. The site is checked on
+the deployed URL, never on a local preview.
+
+The repo owner pushes to `main` from their own machine while work is in progress, so
+always `git pull --rebase` before pushing and check `git log HEAD..origin/main` before
+assuming the local copy is current.
