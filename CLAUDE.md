@@ -335,8 +335,14 @@ fetched fresh.
 see the new markup against old styles:
 
 ```
-python -c "import io,re,hashlib as h;A=['chapters.css','place.css','chapters.js','dragon.js','transitions.js'];V={a:h.sha1(open(a,'rb').read()).hexdigest()[:8] for a in A};[io.open(p,'w',encoding='utf-8').write(re.sub(r'((?:href|src)=\")('+'|'.join(map(re.escape,A))+r')(\?v=[0-9a-f]+)?(\")',lambda m:m.group(1)+m.group(2)+'?v='+V[m.group(2)]+m.group(4),io.open(p,encoding='utf-8').read())) for p in ['index.html','us.html','china.html']]"
+python -c "import io,re,hashlib as h;A=['chapters.css','place.css','chapters.js','dragon.js','transitions.js'];V={a:h.sha1(open(a,'rb').read()).hexdigest()[:8] for a in A};R=re.compile(r'((?:href|src)=\")('+'|'.join(map(re.escape,A))+r')(\?v=[0-9a-f]+)?(\")');W=lambda p,s:io.open(p,'w',encoding='utf-8').write(s);[W(p,R.sub(lambda m:m.group(1)+m.group(2)+'?v='+V[m.group(2)]+m.group(4),io.open(p,encoding='utf-8').read())) for p in ['index.html','us.html','china.html']]"
 ```
+
+Run it from the repo root. It reads each page *before* opening it for writing -
+the new text is built as an argument, and arguments are evaluated first. An
+earlier version of this line opened the file for writing inside the same
+expression that read it, which truncated every page to nothing before the read
+happened. If you ever rewrite it, keep the read strictly before the write.
 
 Closing a pillar panel also clips it to a zero radius as well as hiding it, so
 even a stale stylesheet cannot leave anything painted over the circles.
