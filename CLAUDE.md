@@ -77,6 +77,14 @@ It ends on its own line, set large under a short rule. The italic on *not* is
 the sentence's hinge - not ostracized for being foreign, ostracized for not
 being native - so keep it.
 
+**Chapter III is a ring, not a list.** Four circles - debate, community, sports,
+work - on a ring rather than in an order, because none of them came before the
+others; they all happened at once in the same two years. Each opens a
+full-screen panel, so the detail never has to be squeezed into the circle. The
+panel's `.open` class and its focus move happen after a forced reflow rather
+than inside `requestAnimationFrame`: on a throttled frame clock the rAF version
+opened the panel fully transparent with focus left behind it.
+
 **Chapter II ends on a reveal.** What he worked out from it sits behind a
 "What I took from it" button, under the line it answers, and opens only when the
 reader asks. It animates with `grid-template-rows: 0fr -> 1fr`, which is the one
@@ -84,7 +92,7 @@ way to transition to a height that is not known in advance. The chapter grows
 past one screen when open; that is expected.
 
 **Every chapter has a different shape, on purpose.** II is one passage with a
-photo beside it; III is full-width bands with the picture alternating sides; IV
+photo beside it; III is a ring of four circles that open full-screen panels; IV
 is a pulled-out sentence over numbered steps; V is the three-card grid; VI is an
 uneven wall of pictures. Scrolling should not feel like
 the same slide four times. If another is ever added, give it a rhythm of its own
@@ -106,6 +114,12 @@ shows in every connector between chapters, cut off at both ends so it reads as
 one animal passing behind the page; and a full dragon arcs over the skyline on
 `china.html`. The canvas dragon in `transitions.js` was always there and is now
 part of the same idea.
+
+**It belongs to the opening, not to the whole site.** The dragon is the name,
+and the name is what the first screens are about; past the upbringing it would
+just be swimming over other people's chapters. `dragon.js` fades the canvas out
+once `#heroScroll` has left the top of the viewport and brings it back if the
+reader scrolls up, and stops drawing while it is gone.
 
 **It travels straight across and only across.** An earlier version steered
 toward wandering targets and banked around at the edges, which meant it looped,

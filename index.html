@@ -459,57 +459,112 @@
   <div class="connector" aria-hidden="true">
     <svg viewBox="0 0 60 200"><use href="#dg-segment"/></svg>
   </div>
-  <section class="chap chap-bands" id="ch3">
+  <section class="chap chap-orbit" id="ch3">
     <p class="chap-ghost" aria-hidden="true">III</p>
 
     <header class="chap-head rise">
       <span class="chap-num">Chapter III</span>
       <h2 class="chap-title">So I Said Yes</h2>
-      <p class="chap-lede">If I could not control how I was read, I could control what I
-      put myself into. So I put myself into everything.</p>
+      <p class="chap-lede">If I could not control how I was read, I could control what I put
+      myself into. So I put myself into everything.</p>
     </header>
 
-    <div class="bands">
-      <article class="band rise" style="--d:.12s">
-        <div class="band-text">
-          <span class="band-n" aria-hidden="true">01</span>
-          <h3>Debate</h3>
-          <p>I fell in love with the art of argumentation and storytelling &mdash; building
-          a case out of nothing and making a room see it the way I saw it. It was the first
-          thing since coming back that I was good at <em>because</em> of where I had been,
-          not in spite of it.</p>
-        </div>
-        <figure class="frame band-photo">
-          <div class="slot">Add a photo</div>
-          <figcaption>A round, or the team</figcaption>
-        </figure>
-      </article>
+    <div class="orbit rise" style="--d:.16s">
+      <div class="orbit-ring">
+        <button class="orb" type="button" data-panel="p-debate" style="--a:-90deg;--d:0.0s"
+                aria-haspopup="dialog">
+          <span class="orb-face"><span class="orb-label">Debate</span></span>
+        </button>
+        <button class="orb" type="button" data-panel="p-community" style="--a:0deg;--d:0.7s"
+                aria-haspopup="dialog">
+          <span class="orb-face"><span class="orb-label">Community</span></span>
+        </button>
+        <button class="orb" type="button" data-panel="p-sports" style="--a:90deg;--d:1.4s"
+                aria-haspopup="dialog">
+          <span class="orb-face"><span class="orb-label">Sports</span></span>
+        </button>
+        <button class="orb" type="button" data-panel="p-work" style="--a:180deg;--d:2.1s"
+                aria-haspopup="dialog">
+          <span class="orb-face"><span class="orb-label">Work</span></span>
+        </button>
+      </div>
+      <p class="orbit-hint">Click one</p>
+    </div>
 
-      <article class="band rise" style="--d:.2s">
-        <div class="band-text">
-          <span class="band-n" aria-hidden="true">02</span>
-          <h3>Sports</h3>
+    <div class="panel" id="p-debate" role="dialog" aria-modal="true" aria-labelledby="t-debate" hidden>
+      <div class="panel-sheet">
+        <button class="panel-close" type="button" aria-label="Close">&times;</button>
+        <div class="panel-body">
+          <span class="panel-kicker">Chapter III</span>
+          <h3 class="panel-title" id="t-debate">Debate</h3>
+          <div class="panel-text">
+          <p>I fell in love with the art of argumentation and storytelling &mdash; building a
+          case out of nothing and making a room see it the way I saw it. It was the first
+          thing since coming back that I was good at <em>because</em> of where I had been,
+          rather than in spite of it.</p>
+          <p>Placeholder &mdash; the circuit, the partner, the round that still stings, and
+          what the results actually were.</p>
+          </div>
+          <figure class="frame panel-photo">
+            <div class="slot">Add a photo</div>
+            <figcaption>Add a caption</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+    <div class="panel" id="p-community" role="dialog" aria-modal="true" aria-labelledby="t-community" hidden>
+      <div class="panel-sheet">
+        <button class="panel-close" type="button" aria-label="Close">&times;</button>
+        <div class="panel-body">
+          <span class="panel-kicker">Chapter III</span>
+          <h3 class="panel-title" id="t-community">Community</h3>
+          <div class="panel-text">
+          <p>Placeholder &mdash; the volunteering, the club, the people it served, and what it
+          taught about people whose lives looked nothing like mine.</p>
+          <p>Placeholder &mdash; how long, how often, and what changed because of it.</p>
+          </div>
+          <figure class="frame panel-photo">
+            <div class="slot">Add a photo</div>
+            <figcaption>Add a caption</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+    <div class="panel" id="p-sports" role="dialog" aria-modal="true" aria-labelledby="t-sports" hidden>
+      <div class="panel-sheet">
+        <button class="panel-close" type="button" aria-label="Close">&times;</button>
+        <div class="panel-body">
+          <span class="panel-kicker">Chapter III</span>
+          <h3 class="panel-title" id="t-sports">Sports</h3>
+          <div class="panel-text">
           <p>Placeholder &mdash; the sport, the seasons, the coach, and what a team gave that
           nothing else did.</p>
+          <p>Placeholder &mdash; where it got hard, and what you did about it.</p>
+          </div>
+          <figure class="frame panel-photo">
+            <div class="slot">Add a photo</div>
+            <figcaption>Add a caption</figcaption>
+          </figure>
         </div>
-        <figure class="frame band-photo">
-          <div class="slot">Add a photo</div>
-          <figcaption>The season</figcaption>
-        </figure>
-      </article>
-
-      <article class="band rise" style="--d:.28s">
-        <div class="band-text">
-          <span class="band-n" aria-hidden="true">03</span>
-          <h3>Community</h3>
-          <p>Placeholder &mdash; the work done outside school, who it was for, and what it
-          taught about people who were not like me.</p>
+      </div>
+    </div>
+    <div class="panel" id="p-work" role="dialog" aria-modal="true" aria-labelledby="t-work" hidden>
+      <div class="panel-sheet">
+        <button class="panel-close" type="button" aria-label="Close">&times;</button>
+        <div class="panel-body">
+          <span class="panel-kicker">Chapter III</span>
+          <h3 class="panel-title" id="t-work">Work</h3>
+          <div class="panel-text">
+          <p>Placeholder &mdash; the job, the hours, and what earning it changed about how you
+          saw the rest of it.</p>
+          <p>Placeholder &mdash; what you learned there that school could not teach.</p>
+          </div>
+          <figure class="frame panel-photo">
+            <div class="slot">Add a photo</div>
+            <figcaption>Add a caption</figcaption>
+          </figure>
         </div>
-        <figure class="frame band-photo">
-          <div class="slot">Add a photo</div>
-          <figcaption>The work</figcaption>
-        </figure>
-      </article>
+      </div>
     </div>
   </section>
 

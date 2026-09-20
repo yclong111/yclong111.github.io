@@ -313,9 +313,33 @@
   init();
   frame(0, 0);
 
-  // The canvas covers the viewport now, so there is no "off screen" to observe
-  // against; tab visibility is the only thing worth pausing for.
-  start();
+  /* ---- it belongs to the opening, not to the whole site ----
+   * The dragon is the name, and the name is what the first screens are about.
+   * Past the upbringing it would just be swimming over other people's
+   * chapters, so it leaves - and comes back if the reader scrolls up. */
+  var hero = document.getElementById('heroScroll');
+  var gone = false;
+  function updatePresence() {
+    if (!hero) return;
+    var shouldGo = hero.getBoundingClientRect().bottom <= 0;
+    if (shouldGo === gone) return;
+    gone = shouldGo;
+    canvas.classList.toggle('gone', gone);
+    // the fade is CSS; stop drawing once it is over, and pick up again the
+    // moment it is on its way back
+    if (gone) window.setTimeout(function () { if (gone) stop(); }, 700);
+    else start();
+  }
+
+  var presenceTicking = false;
+  window.addEventListener('scroll', function () {
+    if (presenceTicking) return;
+    presenceTicking = true;
+    window.setTimeout(function () { updatePresence(); presenceTicking = false; }, 100);
+  }, { passive: true });
+
+  updatePresence();
+  if (!gone) start();
   document.addEventListener('visibilitychange', function () {
     document.hidden ? stop() : start();
   });

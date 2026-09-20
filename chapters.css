@@ -449,7 +449,9 @@
   z-index:0;
   opacity:.2;
   pointer-events:none;
+  transition:opacity .6s ease;
 }
+.dragon-canvas.gone{ opacity:0; }
 
 /* the first screen now, so it plays on load */
 .js .glyph, .js .glyph-pron, .js .glyph-senses li, .js .glyph-note{ opacity:0; }
@@ -773,4 +775,146 @@
   .band:nth-child(even) .band-photo{ order:0; }
   .band-photo .slot{ width:min(100%,260px); }
   .close-grid{ grid-template-columns:1fr; }
+}
+
+
+/* ---------------- chapter III: a ring of things he threw himself into ----
+ * Four circles on a ring rather than a list, because none of them came before
+ * the others - they all happened at once, in the same two years. Each opens
+ * full screen, so the detail never has to be squeezed into the ring itself. */
+.chap-orbit{ justify-items:center; }
+.chap-orbit .chap-head{ text-align:center; max-width:44rem; }
+.chap-orbit .chap-lede{ margin-left:auto; margin-right:auto; }
+
+.orbit{
+  position:relative;
+  z-index:1;
+  margin-top:clamp(1rem,3vh,2rem);
+  display:grid;
+  justify-items:center;
+  gap:clamp(.6rem,2vh,1.2rem);
+}
+.orbit-ring{
+  position:relative;
+  width:clamp(280px,min(46vh,520px),520px);
+  aspect-ratio:1;
+}
+/* placed by angle on a ring; the inner face carries the float so the two
+ * transforms never fight each other */
+.orb{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:clamp(84px,min(15vh,132px),132px);
+  height:clamp(84px,min(15vh,132px),132px);
+  margin:calc(clamp(84px,min(15vh,132px),132px) / -2);
+  padding:0;
+  background:none;
+  border:0;
+  cursor:pointer;
+  transform:rotate(var(--a)) translate(clamp(96px,min(17vh,196px),196px)) rotate(calc(-1 * var(--a)));
+}
+.orb-face{
+  display:grid;
+  place-items:center;
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  background:var(--paper);
+  color:#101014;
+  box-shadow:0 0 26px rgba(245,245,244,.18);
+  animation:orb-float 5.5s ease-in-out infinite alternate;
+  animation-delay:var(--d,0s);
+  transition:transform .3s cubic-bezier(.3,1.4,.5,1), box-shadow .3s ease;
+}
+.orb-label{
+  font-size:clamp(10px,min(1.15vw,1.9vh),14px);
+  font-weight:900;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  padding:0 .4em;
+  text-align:center;
+}
+.orb:hover .orb-face, .orb:focus-visible .orb-face{
+  transform:scale(1.08);
+  box-shadow:0 0 40px rgba(245,245,244,.4);
+}
+.orb:focus{ outline:none; }
+.orb:focus-visible .orb-face{ outline:2px solid var(--paper); outline-offset:6px; }
+@keyframes orb-float{ from{ translate:0 -7px; } to{ translate:0 7px; } }
+
+.orbit-hint{
+  margin:0;
+  font-size:11px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  opacity:.45;
+}
+
+/* ---------------- the full-screen detail ---------------- */
+.panel{
+  position:fixed;
+  inset:0;
+  z-index:80;
+  display:grid;
+  place-items:center;
+  padding:clamp(1.2rem,5vh,3rem) var(--gutter);
+  background:var(--ink);
+  opacity:0;
+  transition:opacity .35s ease;
+}
+.panel.open{ opacity:1; }
+.panel-sheet{ position:relative; width:min(72rem,100%); }
+.panel-close{
+  position:absolute;
+  top:-.5rem; right:0;
+  width:44px; height:44px;
+  background:none; border:1px solid var(--rule); color:var(--paper);
+  font-size:22px; line-height:1; cursor:pointer;
+  opacity:.7; transition:opacity .25s ease, border-color .25s ease;
+}
+.panel-close:hover, .panel-close:focus-visible{ opacity:1; border-color:var(--paper); outline:none; }
+.panel-body{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  column-gap:clamp(1.5rem,5vw,4.5rem);
+  align-items:start;
+  padding-top:clamp(2rem,6vh,3.5rem);
+}
+.panel-kicker{
+  grid-column:1 / -1;
+  font-size:clamp(10px,1vw,13px);
+  letter-spacing:.42em;
+  text-transform:uppercase;
+  opacity:.45;
+  margin-bottom:.9rem;
+}
+.panel-title{
+  grid-column:1 / -1;
+  margin:0 0 clamp(1rem,3vh,1.8rem);
+  font-size:clamp(30px,5.4vw,76px);
+  font-weight:900;
+  line-height:1;
+  text-shadow:0 0 16px rgba(255,255,255,.26);
+}
+.panel-text{ max-width:min(58ch,42rem); }
+.panel-text p{
+  margin:0 0 1em;
+  font-size:clamp(13px,min(1.3vw,2.2vh),20px);
+  line-height:1.62;
+  color:rgba(245,245,244,.74);
+}
+.panel-text p:last-child{ margin-bottom:0; }
+.panel-text em{ font-style:italic; font-weight:700; color:var(--paper); }
+.panel-photo{ margin:0; }
+.panel-photo .slot{ width:clamp(150px,20vw,260px); }
+
+@media (max-width:900px){
+  .panel-body{ grid-template-columns:1fr; row-gap:1.6rem; }
+  .panel-photo .slot{ width:min(100%,280px); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .orb-face{ animation:none; }
+  .panel{ transition:none; }
 }

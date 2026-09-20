@@ -89,6 +89,57 @@
     });
   });
 
+
+  /* ---- chapter III: the ring, and its full-screen panels ----
+   * hidden is removed before .open is added so the opacity transition has a
+   * frame to run in; a display change and a transition in the same frame
+   * simply snaps. */
+  (function () {
+    var openPanel = null, opener = null;
+
+    function close() {
+      if (!openPanel) return;
+      var panel = openPanel;
+      openPanel = null;
+      panel.classList.remove('open');
+      document.documentElement.style.overflow = '';
+      window.setTimeout(function () { panel.hidden = true; }, 350);
+      if (opener) { opener.focus(); opener = null; }
+    }
+
+    function open(panel, btn) {
+      if (openPanel) close();
+      opener = btn;
+      openPanel = panel;
+      panel.hidden = false;
+      document.documentElement.style.overflow = 'hidden';
+      // Force layout so the transition has a start value to move from. This
+      // used to wait for an animation frame, which meant that wherever frames
+      // are throttled the panel opened fully transparent and focus never moved.
+      void panel.offsetHeight;
+      panel.classList.add('open');
+      var c = panel.querySelector('.panel-close');
+      if (c) c.focus();
+    }
+
+    document.querySelectorAll('.orb').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var panel = document.getElementById(btn.getAttribute('data-panel'));
+        if (panel) open(panel, btn);
+      });
+    });
+    document.querySelectorAll('.panel-close').forEach(function (btn) {
+      btn.addEventListener('click', close);
+    });
+    document.querySelectorAll('.panel').forEach(function (panel) {
+      // clicking the surround, but not the writing on it
+      panel.addEventListener('click', function (e) { if (e.target === panel) close(); });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') close();
+    });
+  })();
+
   /* ---- chapter rail: mark whichever chapter owns the middle of the screen ---- */
   var links = Array.prototype.slice.call(document.querySelectorAll('.rail a'));
   var targets = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
