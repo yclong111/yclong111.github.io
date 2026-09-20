@@ -26,7 +26,8 @@ One page, one colour, read top to bottom:
 | Opening | portrait, name, introduction | who is speaking |
 | I | Two Worlds | opens on the Lahiri quote, then the yin-yang |
 | II | Not American Enough | coming back at sixteen, ostracized for the opposite reason |
-| III | The Pivot | how the cross-cultural read became a read on markets |
+| III | So I Said Yes | debate, sports, community - what he seized |
+| IV | The Pivot | debate led to finance |
 | IV | The Work | college organisations, internships, what comes next |
 | V | Off the Clock | family, fun, current obsessions |
 | Coda | the wheel again | whole, and finally standing still |
@@ -83,8 +84,9 @@ way to transition to a height that is not known in advance. The chapter grows
 past one screen when open; that is expected.
 
 **Every chapter has a different shape, on purpose.** II is one passage with a
-photo beside it; III is numbered steps against a tall portrait; IV is the
-three-card grid; V is an uneven wall of pictures. Scrolling should not feel like
+photo beside it; III is full-width bands with the picture alternating sides; IV
+is a pulled-out sentence over numbered steps; V is the three-card grid; VI is an
+uneven wall of pictures. Scrolling should not feel like
 the same slide four times. If another is ever added, give it a rhythm of its own
 rather than reusing one of these.
 
@@ -275,10 +277,17 @@ black via `body::after` in place.css.
 Every photo is a placeholder, and so is every word in chapters III-V: the ledes
 and all three entries in each. Chapter II is real copy.
 
-The high-school strands that used to be Chapter II - debate, sports, community -
-no longer have a home anywhere on the site. They were placeholders, and Chapter
-II became the return to the US instead; they need a chapter of their own if they
-are wanted. The wheel page and the two city pages are real copy. The structure is finished; the content is not.
+**The bridge into finance runs through debate, and it is load-bearing.** Chapter
+II's reveal ends on "seizing every single opportunity my new school threw at
+me"; Chapter III is what he seized; Chapter IV is what one of those things
+turned into. Debate taught him argumentation and storytelling, and then that
+every argument chased far enough is an argument about the economy. Do not let
+III become a list of activities - it is evidence for the decision in II, which
+is why it opens on "So I said yes".
+
+The site closes on `#why`: why Recalc (his copy to write), beside a short note on
+why the yin and yang. It opens by explaining the character and closes by
+explaining the symbol. The wheel page and the two city pages are real copy. The structure is finished; the content is not.
 Chapter I is real everywhere: the wheel page, and both city pages now carry the owner's own words.
 
 Chapters II-V navigate nowhere - they are the whole of their own content. Only
