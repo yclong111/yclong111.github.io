@@ -92,10 +92,15 @@ first. The side columns, their labels and the polaroid styling are gone, along
 with the `.story-flow` block that duplicated that copy for narrow screens.
 
 The paragraph's dimming is done with `color:rgba(255,255,255,.7)`, NOT with
-`opacity`. An opacity on the paragraph makes a group its children cannot exceed,
-so the bold phrases could never read brighter than the body text around them. The
-bold phrases then animate from that same colour up to white, one after another,
-once the paragraph has landed.
+`opacity`, so the key phrases can read brighter than the text around them. There is
+no bold on this page (asked for explicitly): the key phrases stay regular weight,
+brighten to white and get a hairline drawn under them, one after another, once the
+paragraph has landed. The title is extra-light (200) with the "My" in italic.
+
+Under the paragraph sits the **life-line**: the wheel as a timeline. A filled bar is
+the light half (the US), a hollow bar the dark half (China), and the widths are the
+years - 0-6, 6-16, 16-now (the last fades out, because it is not over). Black and
+white only, like everything else here.
 
 **The disc spins during a rest zone at the start of the pinned scroll**, and
 freezes once the zoom begins - frozen because `SAFE_POINT` is only stable while

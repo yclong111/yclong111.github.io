@@ -139,18 +139,22 @@
     color:rgba(255,255,255,.7);
     opacity:1;
   }
-  .hero-intro strong{ font-weight:800; color:rgba(255,255,255,.7); }
-  /* the bold phrases come up out of the body text once the paragraph has landed */
-  .hero-intro.in strong{ animation:bold-in .9s ease-out both; }
+  /* Key phrases are picked out without bold: they brighten and a hairline draws under them,
+   * one after another, once the paragraph has landed. */
+  .hero-intro strong{
+    font-weight:400; color:rgba(255,255,255,.7); padding-bottom:.1em;
+    background:linear-gradient(#fff,#fff) 0 100% / 0 1px no-repeat;
+  }
+  .hero-intro.in strong{ animation:mark-in .9s ease-out both; }
   .hero-intro.in strong:nth-of-type(1){ animation-delay:.55s; }
   .hero-intro.in strong:nth-of-type(2){ animation-delay:.71s; }
   .hero-intro.in strong:nth-of-type(3){ animation-delay:.87s; }
   .hero-intro.in strong:nth-of-type(4){ animation-delay:1.03s; }
   .hero-intro.in strong:nth-of-type(5){ animation-delay:1.19s; }
   .hero-intro.in strong:nth-of-type(6){ animation-delay:1.35s; }
-  @keyframes bold-in{
-    from{ color:rgba(255,255,255,.7); text-shadow:none; }
-    to{ color:#fff; text-shadow:0 0 14px rgba(255,255,255,.3); }
+  @keyframes mark-in{
+    from{ color:rgba(255,255,255,.7); background-size:0 1px; }
+    to{ color:#fff; background-size:100% 1px; }
   }
   h1, .title{
     margin:0;
@@ -161,6 +165,25 @@
     color:#f5f5f5;
     text-shadow:0 0 12px rgba(255,255,255,.35);
   }
+  #heroTitle{ font-weight:200; font-size:clamp(32px,4.9vw,76px); letter-spacing:.005em; }
+  #heroTitle em{ font-style:italic; font-weight:200; padding-right:.08em; }
+  /* The wheel as a timeline: a filled bar is the light half (the US), a hollow one the dark half
+   * (China). Widths are the years - 0-6, 6-16, 16-now. */
+  .lifeline{ display:flex; gap:4px; margin:clamp(1.4rem,3.4vh,2.3rem) 0 0; }
+  .lifeline .lf{ position:relative; min-width:0; padding-bottom:2.4rem; }
+  .lifeline .bar{ display:block; height:10px; border:1px solid #fff; transform-origin:0 50%; }
+  .lifeline .bar.us{ background:#fff; }
+  .lifeline .bar.now{ -webkit-mask-image:linear-gradient(90deg,#000 55%,transparent); mask-image:linear-gradient(90deg,#000 55%,transparent); }
+  .lifeline .tag{
+    position:absolute; left:0; top:1.05rem; white-space:nowrap;
+    font-size:clamp(9.5px,.82vw,12px); font-weight:300; letter-spacing:.18em; text-transform:uppercase; color:rgba(255,255,255,.72);
+  }
+  .lifeline .tag.end{ left:auto; right:0; }
+  .lifeline.pop-scroll.in{ animation:fade-in .6s ease-out both; animation-delay:var(--d,0s); }
+  .lifeline.in .bar{ animation:bar-grow .9s cubic-bezier(.2,.7,.2,1) both; animation-delay:calc(.5s + var(--k) * .28s); }
+  .lifeline.in .tag{ animation:fade-in .7s ease-out both; animation-delay:calc(.75s + var(--k) * .28s); }
+  @keyframes bar-grow{ from{ transform:scaleX(0); } to{ transform:none; } }
+  @keyframes fade-in{ from{ opacity:0; } to{ opacity:1; } }
   .stage-grid{ display:grid; place-items:center; min-height:0; margin:0; justify-self:end; }
   .center-col{ align-self:center; display:flex; flex-direction:column; align-items:center; gap:1.7rem; text-align:center; }
   .click-hint{
@@ -181,7 +204,7 @@
     letter-spacing:0.08em;
     text-transform:uppercase;
     color:#fff;
-    font-weight:900;
+    font-weight:400;
     text-shadow:0 0 10px rgba(255,255,255,.4);
     opacity:0;
     transition:opacity .25s ease;
@@ -191,7 +214,8 @@
   @keyframes spin{ to{ transform:rotate(360deg); } }
   @media (prefers-reduced-motion: reduce){
     .yy svg{ animation:none; }
-    .hero-intro.in strong{ animation:none; color:#fff; }
+    .hero-intro.in strong{ animation:none; color:#fff; background-size:100% 1px; }
+    .lifeline.in .bar, .lifeline.in .tag{ animation:none; }
   }
 
 
@@ -272,9 +296,14 @@
       <div class="zoom-layer" id="zoomLayer">
         <div class="page">
           <header class="page-head">
-            <h1 id="heroTitle" class="pop-scroll">My Upbringing</h1>
+            <h1 id="heroTitle" class="pop-scroll"><em>My</em> Upbringing</h1>
             <div class="hero-rule pop-scroll" style="--d:.08s" aria-hidden="true"></div>
             <p class="hero-intro pop-scroll" style="--d:.16s">My childhood was <strong>far from static</strong>. Born and raised in the United States, I moved during two crucial moments of my life: first, when I was <strong>6</strong>, all the way to <strong>Shanghai, China</strong>. Then a second time when I was <strong>16</strong>, this time all the way <strong>back to the States</strong>. And while it definitely was hectic, those experiences also taught me some pretty <strong>unique cross-cultural perspectives</strong> early on in life.</p>
+            <div class="lifeline pop-scroll" style="--d:.3s" role="img" aria-label="Ages 0 to 6 in the US, 6 to 16 in China, 16 to now in the US">
+              <div class="lf" style="flex:6;--k:0"><i class="bar us"></i><span class="tag">0 &middot; US</span></div>
+              <div class="lf" style="flex:10;--k:1"><i class="bar cn"></i><span class="tag">6 &middot; China</span></div>
+              <div class="lf" style="flex:6;--k:2"><i class="bar us now"></i><span class="tag">16 &middot; US</span><span class="tag end">now</span></div>
+            </div>
           </header>
 
           <div class="stage-grid">
