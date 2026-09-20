@@ -55,6 +55,70 @@ body::after{
 .skyline .ground{ fill:none; stroke:var(--paper); stroke-width:2; opacity:.45; }
 .skyline .sun{ fill:var(--accent); opacity:var(--sun-opacity,.9); stroke:none; }
 
+/* ---------------- the writing ----------------
+ * Each place tells its story in two passages: the writing on the left edge, a
+ * plain frame on the right. The left edge is --gutter, like every chapter. */
+.zh{
+  font-family:"Noto Serif SC","Songti SC","STSong","Noto Serif CJK SC",serif;
+  font-stretch:normal;
+  font-weight:400;
+  letter-spacing:.06em;
+}
+.passages{
+  position:relative; z-index:1;
+  list-style:none; margin:0; padding:0;
+  display:grid; gap:clamp(3.4rem,11vh,7rem);
+}
+.passage{
+  display:grid;
+  grid-template-columns:minmax(0,40rem) minmax(0,1fr);
+  column-gap:clamp(1.6rem,6vw,7rem);
+  align-items:start;
+}
+.passage-text .entry-rule{ margin-bottom:1.1rem; }
+.num{
+  display:block; margin-bottom:.9rem;
+  font-size:clamp(10px,1vw,13px); letter-spacing:.42em; text-transform:uppercase; opacity:.45;
+}
+.passage h3{
+  margin:0 0 1.15rem;
+  font-size:clamp(20px,2.6vw,38px); font-weight:900; line-height:1.1; letter-spacing:.01em;
+}
+.passage p{
+  margin:0 0 1.1em;
+  font-size:clamp(14.5px,min(1.42vw,2.5vh),21px); line-height:1.68;
+  color:rgba(245,245,244,.86);
+}
+.passage p:last-child{ margin-bottom:0; }
+.passage .frame{ justify-self:end; align-self:start; margin:0; width:100%; }
+.passage .frame .slot{ width:min(100%,46vh); margin-left:auto; }
+.passage .frame figcaption{ width:min(100%,46vh); margin-left:auto; }
+
+/* the turn: one line on its own, after the writing */
+.turn{
+  margin:clamp(3.4rem,11vh,7rem) 0 0; max-width:46rem;
+  font-size:clamp(22px,3.7vw,56px); line-height:1.18; font-weight:300; letter-spacing:.005em;
+}
+
+/* the fun fact: a dictionary entry, with the character set very large */
+.fact-item{ list-style:none; }
+.fact{
+  display:grid; grid-template-columns:auto minmax(0,1fr);
+  column-gap:clamp(1.6rem,6vw,7rem); align-items:center;
+  border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);
+  padding:clamp(1.6rem,5vh,3.2rem) 0;
+}
+.fact-glyph{
+  font-size:clamp(120px,21vw,300px); line-height:.95; font-weight:400; letter-spacing:0;
+  color:var(--paper); text-shadow:0 0 24px rgba(245,245,244,.25);
+}
+.fact-body .num{ margin-bottom:1rem; }
+.fact-body p{ margin:0; }
+.fact-head{ font-size:clamp(18px,2vw,28px); letter-spacing:.04em; }
+.fact-head i{ font-style:italic; font-weight:300; opacity:.7; }
+.fact-def{ margin-top:.55rem !important; font-size:clamp(14px,1.5vw,21px); opacity:.72; }
+.fact-line{ margin-top:1.1rem !important; font-size:clamp(20px,2.8vw,42px); line-height:1.15; font-weight:300; }
+
 /* ---------------- the rest of the page ---------------- */
 .place-body{
   position:relative;
@@ -78,6 +142,10 @@ body::after{
 .back:hover, .back:focus-visible{ opacity:1; border-color:var(--paper); outline:none; }
 
 @media (max-width:900px){
+  .passage{ grid-template-columns:1fr; row-gap:1.8rem; }
+  .passage .frame{ justify-self:start; }
+  .passage .frame .slot, .passage .frame figcaption{ margin-left:0; width:min(100%,60vw); }
+  .fact{ grid-template-columns:1fr; row-gap:1rem; }
   .place-hero{ padding-left:1.4rem; padding-right:1.4rem; padding-bottom:min(34vh,300px); }
   .place-sky{ height:min(34vh,300px); }
   .place-body{ padding-left:1.4rem; padding-right:1.4rem; }

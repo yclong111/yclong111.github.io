@@ -92,15 +92,22 @@ first. The side columns, their labels and the polaroid styling are gone, along
 with the `.story-flow` block that duplicated that copy for narrow screens.
 
 The paragraph's dimming is done with `color:rgba(255,255,255,.7)`, NOT with
-`opacity`, so the key phrases can read brighter than the text around them. There is
-no bold on this page (asked for explicitly): the key phrases stay regular weight,
-brighten to white and get a hairline drawn under them, one after another, once the
-paragraph has landed. The title is extra-light (200) with the "My" in italic.
+`opacity`, so the key phrases can read brighter than the text around them. The
+Upbringing page has no bold in its writing and NO UNDERLINING anywhere (both asked
+for explicitly): the key phrases stay regular weight and just brighten to white, one
+after another, once the paragraph has landed. The title itself stays bold (900) and
+upright - a lighter, italic-"My" version was tried and the owner asked for the
+original back. The short rule under the title is not text underlining; it stays.
 
 Under the paragraph sits the **life-line**: the wheel as a timeline. A filled bar is
 the light half (the US), a hollow bar the dark half (China), and the widths are the
-years - 0-6, 6-16, 16-now (the last fades out, because it is not over). Black and
-white only, like everything else here.
+years - labelled "Age 0 - US", "Age 6 - China", "Age 16 - US" and "now" (the last bar
+fades out, because it is not over). Black and white only, like everything else here.
+
+The hover caption ("Stage 1: the US" / "Stage 2: china") and the "click the yin or the
+yang" hint sit BELOW the wheel and clear of it - the caption first, the hint under
+it. Neither may overlap the disc or its glow. On phones the wheel is smaller so the
+hint stays above the bottom rail.
 
 **The disc spins during a rest zone at the start of the pinned scroll**, and
 freezes once the zoom begins - frozen because `SAFE_POINT` is only stable while
@@ -164,10 +171,9 @@ black via `body::after` in place.css.
 
 ## Still to do
 
-Every photo is a placeholder, and so is every word in chapters II-V and on the
-two city pages: the ledes and all three entries in each. The wheel page's own
-paragraph is real copy. The structure is finished; the content is not.
-Chapter I is the only chapter whose copy is real.
+Every photo is a placeholder, and so is every word in chapters II-V: the ledes
+and all three entries in each. The wheel page and the two city pages are real copy. The structure is finished; the content is not.
+Chapter I is real everywhere: the wheel page, and both city pages now carry the owner's own words.
 
 Chapters II-V navigate nowhere - they are the whole of their own content. Only
 Chapter I's two halves have click transitions (the dragon and the cheesesteak).
@@ -185,3 +191,23 @@ the deployed URL, never on a local preview.
 The repo owner pushes to `main` from their own machine while work is in progress, so
 always `git pull --rebase` before pushing and check `git log HEAD..origin/main` before
 assuming the local copy is current.
+
+## The two city pages (us.html, china.html)
+
+Each tells its story in **two numbered passages** - the writing on the left edge (the
+site's `--gutter`), a plain photo frame on the right - built from `.passage` in
+place.css. Philadelphia: "Lower Merion" and "Only American", then a single large line,
+"Little did I know, this would all soon change." (`.turn`). Shanghai: "Out of the
+blue" and "Back to where it began", with a **fun fact** between them - a dictionary
+card with 龙 set very large ("My surname literally means dragon"; `.fact`).
+
+Philadelphia's sun (the disc behind the skyline) is **light blue** (`--accent:#a9dcf5`,
+opacity .9), no longer paper. Shanghai's is still the China red.
+
+Chinese characters need a real font: Archivo has none. Both pages load a Noto Serif SC
+subset limited to 龙毅诚 (`&text=` in the Google Fonts URL, a few KB) and wrap the
+characters in `.zh`. If the copy ever uses other characters, add them to that `text=`
+parameter, or they fall back to the system's CJK font.
+
+The chapter copy is the owner's own words; keep it verbatim, typos included, unless
+asked. Photos are still placeholders.

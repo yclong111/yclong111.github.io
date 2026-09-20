@@ -139,12 +139,9 @@
     color:rgba(255,255,255,.7);
     opacity:1;
   }
-  /* Key phrases are picked out without bold: they brighten and a hairline draws under them,
+  /* Key phrases are picked out without bold or underline: they simply brighten to white,
    * one after another, once the paragraph has landed. */
-  .hero-intro strong{
-    font-weight:400; color:rgba(255,255,255,.7); padding-bottom:.1em;
-    background:linear-gradient(#fff,#fff) 0 100% / 0 1px no-repeat;
-  }
+  .hero-intro strong{ font-weight:400; color:rgba(255,255,255,.7); }
   .hero-intro.in strong{ animation:mark-in .9s ease-out both; }
   .hero-intro.in strong:nth-of-type(1){ animation-delay:.55s; }
   .hero-intro.in strong:nth-of-type(2){ animation-delay:.71s; }
@@ -153,8 +150,8 @@
   .hero-intro.in strong:nth-of-type(5){ animation-delay:1.19s; }
   .hero-intro.in strong:nth-of-type(6){ animation-delay:1.35s; }
   @keyframes mark-in{
-    from{ color:rgba(255,255,255,.7); background-size:0 1px; }
-    to{ color:#fff; background-size:100% 1px; }
+    from{ color:rgba(255,255,255,.7); }
+    to{ color:#fff; }
   }
   h1, .title{
     margin:0;
@@ -165,8 +162,6 @@
     color:#f5f5f5;
     text-shadow:0 0 12px rgba(255,255,255,.35);
   }
-  #heroTitle{ font-weight:200; font-size:clamp(32px,4.9vw,76px); letter-spacing:.005em; }
-  #heroTitle em{ font-style:italic; font-weight:200; padding-right:.08em; }
   /* The wheel as a timeline: a filled bar is the light half (the US), a hollow one the dark half
    * (China). Widths are the years - 0-6, 6-16, 16-now. */
   .lifeline{ display:flex; gap:4px; margin:clamp(1.4rem,3.4vh,2.3rem) 0 0; }
@@ -185,7 +180,7 @@
   @keyframes bar-grow{ from{ transform:scaleX(0); } to{ transform:none; } }
   @keyframes fade-in{ from{ opacity:0; } to{ opacity:1; } }
   .stage-grid{ display:grid; place-items:center; min-height:0; margin:0; justify-self:end; }
-  .center-col{ align-self:center; display:flex; flex-direction:column; align-items:center; gap:1.7rem; text-align:center; }
+  .center-col{ align-self:center; display:flex; flex-direction:column; align-items:center; gap:3.8rem; text-align:center; }
   .click-hint{
     margin:0; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:#fff; opacity:.6;
   }
@@ -198,7 +193,7 @@
   .dark{ filter:drop-shadow(0 0 8px #ff3b3b70) drop-shadow(0 0 20px #ff3b3b35) drop-shadow(var(--shx,0px) var(--shy,14px) 24px rgba(0,0,0,0.6)); }
   .half:hover{ filter:drop-shadow(0 0 14px currentColor) drop-shadow(0 0 34px currentColor) drop-shadow(var(--shx,0px) var(--shy,14px) 24px rgba(0,0,0,0.6)); }
   .caption{
-    position:absolute; left:50%; top:100%; transform:translate(-50%,-50%);
+    position:absolute; left:50%; top:100%; transform:translate(-50%,1.15rem); /* below the wheel, clear of it and its glow */
     white-space:nowrap; pointer-events:none; z-index:2;
     font-size:15px;
     letter-spacing:0.08em;
@@ -214,7 +209,7 @@
   @keyframes spin{ to{ transform:rotate(360deg); } }
   @media (prefers-reduced-motion: reduce){
     .yy svg{ animation:none; }
-    .hero-intro.in strong{ animation:none; color:#fff; background-size:100% 1px; }
+    .hero-intro.in strong{ animation:none; color:#fff; }
     .lifeline.in .bar, .lifeline.in .tag{ animation:none; }
   }
 
@@ -269,11 +264,13 @@
   /* phones: keep the hint clear of the chapter rail, and the life-line's labels apart */
   @media (max-width:900px){
     .page{ padding-bottom:4.6rem; }
-    .yy svg{ width:clamp(150px,27vh,300px); height:clamp(150px,27vh,300px); }
+    .yy svg{ width:clamp(140px,23vh,300px); height:clamp(140px,23vh,300px); }
+    .center-col{ gap:3.1rem; }
   }
   @media (max-width:560px){
     .lifeline .lf{ padding-bottom:3.4rem; }
     .lifeline .tag.end{ top:2.25rem; }
+    .lifeline .tag{ letter-spacing:.1em; }
   }
 </style>
 </head>
@@ -306,13 +303,13 @@
       <div class="zoom-layer" id="zoomLayer">
         <div class="page">
           <header class="page-head">
-            <h1 id="heroTitle" class="pop-scroll"><em>My</em> Upbringing</h1>
+            <h1 id="heroTitle" class="pop-scroll">My Upbringing</h1>
             <div class="hero-rule pop-scroll" style="--d:.08s" aria-hidden="true"></div>
             <p class="hero-intro pop-scroll" style="--d:.16s">My childhood was <strong>far from static</strong>. Born and raised in the United States, I moved during two crucial moments of my life: first, when I was <strong>6</strong>, all the way to <strong>Shanghai, China</strong>. Then a second time when I was <strong>16</strong>, this time all the way <strong>back to the States</strong>. And while it definitely was hectic, those experiences also taught me some pretty <strong>unique cross-cultural perspectives</strong> early on in life.</p>
             <div class="lifeline pop-scroll" style="--d:.3s" role="img" aria-label="Ages 0 to 6 in the US, 6 to 16 in China, 16 to now in the US">
-              <div class="lf" style="flex:6;--k:0"><i class="bar us"></i><span class="tag">0 &middot; US</span></div>
-              <div class="lf" style="flex:10;--k:1"><i class="bar cn"></i><span class="tag">6 &middot; China</span></div>
-              <div class="lf" style="flex:6;--k:2"><i class="bar us now"></i><span class="tag">16 &middot; US</span><span class="tag end">now</span></div>
+              <div class="lf" style="flex:6;--k:0"><i class="bar us"></i><span class="tag">Age 0 &middot; US</span></div>
+              <div class="lf" style="flex:10;--k:1"><i class="bar cn"></i><span class="tag">Age 6 &middot; China</span></div>
+              <div class="lf" style="flex:6;--k:2"><i class="bar us now"></i><span class="tag">Age 16 &middot; US</span><span class="tag end">now</span></div>
             </div>
           </header>
 
