@@ -5,7 +5,8 @@
  * Everything is drawn on one full-screen canvas; nothing to download. */
 (function () {
   var COLORS = { china: '#cc2229', us: '#f4f2f1' };
-  var DURATION = { china: 2700, us: 2100 };
+  var DURATION = { china: 3240, us: 2520 }; // 20% slower than the first version (2700 / 2100)
+  var wipe = { china: COLORS.china, us: COLORS.us };
   var running = false;
   var overlay = null;
 
@@ -157,7 +158,7 @@
 
     // red wipe trailing the middle of the body, with a smoky wavy edge
     var base = headX - bodyLen * 0.38;
-    ctx.fillStyle = COLORS.china;
+    ctx.fillStyle = wipe.china;
     ctx.beginPath(); ctx.moveTo(0, -10);
     for (var y = -10; y <= H + 10; y += 6) {
       var x = base + 34 * Math.sin(y / 70 + t * 3) + 18 * Math.sin(y / 29 - t * 5);
@@ -252,7 +253,7 @@
     pts.forEach(function (q) { ctx.lineTo(q[0], q[1]); });
     ctx.strokeStyle = '#e0a000'; ctx.lineWidth = 3; ctx.stroke();
 
-    ctx.fillStyle = COLORS.us;
+    ctx.fillStyle = wipe.us;
     ctx.beginPath(); ctx.moveTo(0, -10);
     for (y = -10; y <= H + 10; y += 6) ctx.lineTo(Math.min(front - 8 + 10 * Math.sin(y / 40 + t * 4), W + 120), y);
     ctx.lineTo(0, H + 10); ctx.closePath(); ctx.fill();
@@ -270,9 +271,17 @@
 
   /* ---------------------------------------------------------------- driver */
 
-  function render(ctx, kind, W, H, p, t) {
+  // opts.reverse: mirror the scene so it travels right -> left (the dragon then faces left).
+  // opts.wipe: colour left behind, so leaving a page can wipe to the *next* page's colour.
+  function render(ctx, kind, W, H, p, t, opts) {
+    opts = opts || {};
+    wipe.china = opts.wipe || COLORS.china;
+    wipe.us = opts.wipe || COLORS.us;
     ctx.clearRect(0, 0, W, H);
+    ctx.save();
+    if (opts.reverse) { ctx.translate(W, 0); ctx.scale(-1, 1); }
     (kind === 'china' ? renderChina : renderUS)(ctx, W, H, p, t);
+    ctx.restore();
   }
 
   function removeOverlay() {
@@ -281,7 +290,7 @@
     document.documentElement.style.overflow = '';
   }
 
-  function play(kind, url) {
+  function play(kind, url, opts) {
     if (running) return;
     running = true;
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { window.location.href = url; return; }
@@ -302,7 +311,7 @@
     function frame(ts) {
       if (t0 === null) t0 = ts;
       var p = Math.min((ts - t0) / dur, 1);
-      render(ctx, kind, W, H, p, (ts - t0) / 1000);
+      render(ctx, kind, W, H, p, (ts - t0) / 1000, opts);
       if (p < 1) requestAnimationFrame(frame); else go();
     }
     requestAnimationFrame(frame);

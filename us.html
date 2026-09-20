@@ -60,5 +60,14 @@
     <a class="back" href="./">&larr; back to the yin and yang</a>
   </main>
 </div>
+<script src="transitions.js"></script>
+<script>
+  // Going home replays this page's transition in the opposite direction, wiping to the homepage's black.
+  document.querySelector('.back').addEventListener('click', function (e) {
+    if (!window.PageTransitions) return;
+    e.preventDefault();
+    window.PageTransitions.play('us', this.getAttribute('href'), { reverse: true, wipe: '#000000' });
+  });
+</script>
 </body>
 </html>
