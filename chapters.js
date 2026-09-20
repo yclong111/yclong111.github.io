@@ -2,7 +2,8 @@
  * Chapter I - the quote page and the yin-yang zoom - is handled by the inline
  * script in index.html and is deliberately left alone here. */
 (function () {
-  var quotePage = document.querySelector('.quote-page');
+  // sections that reveal as a whole rather than element by element
+  var sections = Array.prototype.slice.call(document.querySelectorAll('.quote-page, .intro'));
   var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---- reveal blocks as they scroll into view ----
@@ -28,9 +29,9 @@
     fallbackEls.forEach(function (el) {
       if (!el.classList.contains('in') && onScreen(el)) el.classList.add('in');
     });
-    if (quotePage && !quotePage.classList.contains('in') && onScreen(quotePage)) {
-      quotePage.classList.add('in');
-    }
+    sections.forEach(function (el) {
+      if (!el.classList.contains('in') && onScreen(el)) el.classList.add('in');
+    });
   }
 
   if ('IntersectionObserver' in window) {
@@ -45,15 +46,13 @@
     /* The quote page is the second screen: on load its animation would finish
      * while the reader is still on the opening page, and they would scroll
      * onto a quote that had already arrived. */
-    if (quotePage) {
-      var quoteObs = new IntersectionObserver(function (entries) {
-        observerFired = true;
-        entries.forEach(function (e) {
-          if (e.isIntersecting) { e.target.classList.add('in'); quoteObs.unobserve(e.target); }
-        });
-      }, { threshold: 0.4 });
-      quoteObs.observe(quotePage);
-    }
+    var sectionObs = new IntersectionObserver(function (entries) {
+      observerFired = true;
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); sectionObs.unobserve(e.target); }
+      });
+    }, { threshold: 0.35 });
+    sections.forEach(function (el) { sectionObs.observe(el); });
 
     // If nothing has been reported shortly after load, assume the observer is
     // not going to run and drive the reveals from scroll instead.
@@ -65,7 +64,7 @@
     }, 1500);
   } else {
     rises.forEach(function (el) { el.classList.add('in'); });
-    if (quotePage) quotePage.classList.add('in');
+    sections.forEach(function (el) { el.classList.add('in'); });
   }
 
   /* ---- connectors: each length of dragon wipes in as it is reached ---- */

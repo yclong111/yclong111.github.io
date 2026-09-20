@@ -331,10 +331,14 @@
  * the scroll observer. Each element animates to its OWN resting opacity: the
  * shared .rise helper ends at 1, which would have burned off the deliberate
  * dimming on the bio and the scroll cue. */
-.intro-photo{ animation:intro-fade 1s ease-out .05s both; }
-.intro-name{ animation:intro-up .85s cubic-bezier(.2,.9,.3,1) .26s both; }
-.intro-bio{ animation:intro-up-dim .85s cubic-bezier(.2,.9,.3,1) .46s both; }
-.intro-cue{ animation:intro-up-faint .85s cubic-bezier(.2,.9,.3,1) .66s both; }
+/* The introduction used to be the first screen. The name page sits in front of
+ * it now, so it waits to be scrolled to - otherwise it finishes playing while
+ * the reader is still looking at the character. */
+.js .intro-photo, .js .intro-name, .js .intro-bio, .js .intro-cue{ opacity:0; }
+.intro.in .intro-photo{ animation:intro-fade 1s ease-out .05s both; }
+.intro.in .intro-name{ animation:intro-up .85s cubic-bezier(.2,.9,.3,1) .26s both; }
+.intro.in .intro-bio{ animation:intro-up-dim .85s cubic-bezier(.2,.9,.3,1) .46s both; }
+.intro.in .intro-cue{ animation:intro-up-faint .85s cubic-bezier(.2,.9,.3,1) .66s both; }
 
 @keyframes intro-fade{ from{ opacity:0; } to{ opacity:1; } }
 @keyframes intro-up{ from{ opacity:0; transform:translateY(24px); } to{ opacity:1; transform:none; } }
@@ -343,7 +347,8 @@
 
 @media (prefers-reduced-motion: reduce){
   .intro-cue::after{ animation:none; }
-  .intro-photo, .intro-name, .intro-bio, .intro-cue{ animation:none; }
+  .js .intro-photo, .js .intro-name, .js .intro-bio, .js .intro-cue{ opacity:1; }
+  .intro.in .intro-photo, .intro.in .intro-name, .intro.in .intro-bio, .intro.in .intro-cue{ animation:none; }
 }
 
 
@@ -370,7 +375,35 @@
   color:var(--paper);
   overflow:hidden;
 }
-.glyph-wrap{ position:relative; display:grid; place-items:center; justify-self:start; }
+.glyph-wrap{ position:relative; z-index:1; display:grid; place-items:center; justify-self:start; }
+
+/* the animal itself, behind the character it is named by */
+.dragon-canvas{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:0;
+  opacity:.34;
+  pointer-events:none;
+}
+
+/* the first screen now, so it plays on load */
+.js .glyph, .js .glyph-pron, .js .glyph-senses li, .js .glyph-note{ opacity:0; }
+.glyph{ animation:glyph-in 1.1s cubic-bezier(.2,.9,.3,1) .15s both; }
+.glyph-pron{ animation:intro-up .8s cubic-bezier(.2,.9,.3,1) .5s both; }
+.glyph-senses li{ animation:intro-up .8s cubic-bezier(.2,.9,.3,1) both; }
+.glyph-senses li:nth-child(1){ animation-delay:.66s; }
+.glyph-senses li:nth-child(2){ animation-delay:.82s; }
+.glyph-note{ animation:glyph-note-in .9s cubic-bezier(.2,.9,.3,1) 1s both; }
+@keyframes glyph-in{
+  from{ opacity:0; transform:translateY(26px) scale(.94); }
+  to{ opacity:1; transform:none; }
+}
+@keyframes glyph-note-in{
+  from{ opacity:0; transform:translateY(20px); }
+  to{ opacity:1; transform:none; }
+}
 .glyph{
   font-family:"Noto Serif SC","Songti SC","SimSun",serif;
   font-weight:600;
@@ -379,7 +412,7 @@
   color:var(--paper);
   text-shadow:0 0 30px rgba(255,255,255,.22);
 }
-.glyph-def{ max-width:40rem; }
+.glyph-def{ position:relative; z-index:1; max-width:40rem; }
 .glyph-pron{
   margin:0 0 1.1rem;
   font-size:clamp(12px,1.2vw,17px);
@@ -415,6 +448,11 @@
   line-height:1;
   color:var(--paper);
   opacity:.5;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .js .glyph, .js .glyph-pron, .js .glyph-senses li, .js .glyph-note{ opacity:1; }
+  .glyph, .glyph-pron, .glyph-senses li, .glyph-note{ animation:none; }
 }
 
 @media (max-width:900px){

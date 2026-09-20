@@ -8,6 +8,7 @@ https://yclong111.github.io, so a push is a deploy and takes a minute or two to 
 index.html       the whole site: opening + prologue + chapters I-V + coda, one page
 chapters.css     chapters II-V, the chapter rail, the S connectors
 chapters.js      reveals, rail state, connector draw
+dragon.js        the animated dragon on the first screen (canvas)
 us.html          Chapter I, light half   (Philadelphia skyline, disc #f4f2f1)
 china.html       Chapter I, dark half    (Shanghai skyline, disc #cc2229)
 place.css        layout for those two pages; they also load chapters.css/js
@@ -21,8 +22,8 @@ One page, one colour, read top to bottom:
 
 | | | |
 |---|---|---|
+| The Name | the character, defined, with the dragon itself | why a dragon keeps appearing |
 | Opening | portrait, name, introduction | who is speaking |
-| The Name | the character, defined | why a dragon keeps appearing |
 | I | Two Worlds | opens on the Lahiri quote, then the yin-yang |
 | II | Finding My Voice | high school: debate, sports, community |
 | III | The Pivot | how the cross-cultural read became a read on markets |
@@ -54,8 +55,11 @@ the inline script in index.html reveals through its own observer.
 head puts `js` on `<html>`, and every reveal's `opacity:0` is scoped to `.js`.
 Without it the reveals all start hidden and a broken script leaves a blank page.
 
-The opening page's four elements animate in on load, not on scroll, because it is
-above the fold. Each has its own keyframes ending at its own resting opacity -
+The name page is the first screen, so its character and definition animate in on
+load. The introduction, which used to be first and played on load, now waits to
+be scrolled to - anything that plays on load while the reader is still on the
+screen above it has finished before they arrive. `chapters.js` reveals both
+`.quote-page` and `.intro` as whole sections. Each has its own keyframes ending at its own resting opacity -
 the shared `.rise` helper ends at 1, which would burn off the deliberate dimming
 on the bio and the scroll cue.
 
@@ -72,8 +76,8 @@ chapter a bespoke animated emblem (rotating petals, an orbit) that doubled as a
 door into a separate collage room; both the emblems and those four rooms were
 cut. The content lives inline on the page now.
 
-**The dragon is the site's motif, and it is explained before it is used.** The
-second screen is a dictionary entry for the character, because his surname is
+**The dragon is the site's motif, and it is explained before anything else.**
+The FIRST screen is a dictionary entry for the character, because his surname is
 Long - the character is the dragon, and without that the dragon elsewhere looks
 decorative. After that it recurs three ways: the character itself returns small
 at the coda and above the heading on `us.html`; a length of the dragon's back
@@ -82,7 +86,15 @@ one animal passing behind the page; and a full dragon arcs over the skyline on
 `china.html`. The canvas dragon in `transitions.js` was always there and is now
 part of the same idea.
 
-The symbols live in a `.dg-sprite` inside each document rather than an external
+On that first screen the dragon is drawn live on a canvas (`dragon.js`), not in
+SVG: it has to keep moving. Its spine is the sum of two travelling sine waves of
+different wavelengths, so the body ripples instead of pulsing in lockstep, and
+every other part - segments, dorsal spines, legs, mane, whiskers, jaw - hangs off
+that one curve. It rides the upper band of the section (`H * 0.3`); centred, the
+body swims straight through the paragraph and the text becomes unreadable. The
+canvas only animates while it is on screen and pauses when the tab is hidden.
+
+The static symbols live in a `.dg-sprite` inside each document rather than an external
 file: external `<use>` content cannot be styled by the referencing page, and the
 whole point is that each instance takes the colour of wherever it sits. The body
 strokes use `vector-effect:non-scaling-stroke` - the connector scales the symbol

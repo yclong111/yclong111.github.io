@@ -291,19 +291,9 @@
   </svg>
 
 
-  <section class="intro" id="intro">
-    <figure class="intro-photo">
-      <img src="images/yicheng.jpg" alt="Yicheng Long, standing in the atrium at Carnegie Mellon" />
-    </figure>
-
-    <div class="intro-text">
-      <h1 class="intro-name">Yicheng Long</h1>
-      <p class="intro-bio">Hi there, my name is Yicheng, and I&rsquo;m currently a sophomore at Carnegie Mellon University studying Business Administration with an additional major in Statistics &amp; Machine Learning. I&rsquo;ve been deeply shaped by multiple different aspects of my life, so here&rsquo;s a very brief breakdown of who I am, and how I got to where I am today.</p>
-      <div class="intro-cue" aria-hidden="true">Scroll</div>
-    </div>
-  </section>
-
   <section class="glyph-page" id="name">
+    <canvas id="dragonCanvas" class="dragon-canvas" aria-hidden="true"></canvas>
+
     <div class="glyph-wrap">
       <span class="glyph" lang="zh-Hans">&#40857;</span>
     </div>
@@ -318,6 +308,18 @@
       in the States. And a dragon here is not something to be slain: it is luck, water and weather,
       the only animal in the zodiac that nobody has ever seen. That is why one runs through this
       entire site. It has been running through my name the whole time.</p>
+    </div>
+  </section>
+
+  <section class="intro" id="intro">
+    <figure class="intro-photo">
+      <img src="images/yicheng.jpg" alt="Yicheng Long, standing in the atrium at Carnegie Mellon" />
+    </figure>
+
+    <div class="intro-text">
+      <h1 class="intro-name">Yicheng Long</h1>
+      <p class="intro-bio">Hi there, my name is Yicheng, and I&rsquo;m currently a sophomore at Carnegie Mellon University studying Business Administration with an additional major in Statistics &amp; Machine Learning. I&rsquo;ve been deeply shaped by multiple different aspects of my life, so here&rsquo;s a very brief breakdown of who I am, and how I got to where I am today.</p>
+      <div class="intro-cue" aria-hidden="true">Scroll</div>
     </div>
   </section>
 
@@ -397,8 +399,8 @@
   </div>
 
   <nav class="rail" aria-label="Chapters">
-    <a href="#intro"><span class="rail-label">Yicheng Long</span><span class="tick"></span></a>
     <a href="#name"><span class="rail-label">The Name</span><span class="tick"></span></a>
+    <a href="#intro"><span class="rail-label">Yicheng Long</span><span class="tick"></span></a>
     <a href="#quote"><span class="rail-label">I &middot; Two Worlds</span><span class="tick"></span></a>
     <a href="#heroScroll"><span class="rail-label">My Upbringing</span><span class="tick"></span></a>
     <a href="#ch2"><span class="rail-label">II &middot; Finding My Voice</span><span class="tick"></span></a>
@@ -588,6 +590,7 @@
     <p class="sig rise" style="--d:.2s">Yicheng Long</p>
   </footer>
 
+<script src="dragon.js"></script>
 <script src="chapters.js"></script>
 <script src="transitions.js"></script>
 <script>
