@@ -5,53 +5,53 @@ no build step, no dependencies, no framework. GitHub Pages serves `main` directl
 https://yclong111.github.io, so a push is a deploy and takes a minute or two to appear.
 
 ```
-index.html       the whole spine: prologue + chapters I-V + coda
+index.html       the whole site: prologue + chapters I-V + coda, one page
 chapters.css     chapters II-V, the chapter rail, the S connectors
-chapters.js      reveals, rail state, connector draw, emblem links
-us.html          Chapter I, light half   (scrapbook room, paper #f4f2f1)
-china.html       Chapter I, dark half    (scrapbook room, paper #cc2229)
-highschool.html  Chapter II room   (#debate / #sports / #community)
-finance.html     Chapter III room  (#spark / #language / #proof)
-today.html       Chapter IV room   (#campus / #internships / #next)
-home.html        Chapter V room    (#family / #fun / #curious)
-scrapbook.css    shared collage styling for every room
-rooms.css        multi-spread room layout, loaded after scrapbook.css
+chapters.js      reveals, rail state, connector draw
+us.html          Chapter I, light half   (collage room, paper #f4f2f1)
+china.html       Chapter I, dark half    (collage room, paper #cc2229)
+scrapbook.css    collage styling, used only by us.html and china.html
 scrapbook.svg    sticker symbols referenced by <use href="scrapbook.svg#id">
 transitions.js   canvas animations played when a yin-yang half is clicked
 ```
 
 ## The shape of the site
 
-One chronological read, top to bottom, in six movements:
+One page, one colour, read top to bottom in six movements:
 
 | | | |
 |---|---|---|
 | Prologue | the Lahiri quote | sets the tension |
-| I | Two Worlds | upbringing; the yin-yang, two rooms |
+| I | Two Worlds | upbringing; the yin-yang, and its two collage rooms |
 | II | Finding My Voice | high school: debate, sports, community |
 | III | The Pivot | how the cross-cultural read became a read on markets |
 | IV | The Work | college organisations, internships, what comes next |
 | V | Off the Clock | family, fun, current obsessions |
 | Coda | the wheel again | whole, and finally standing still |
 
-Three rules hold it together:
+**Everything is `#0c0c0e`.** Nothing alternates, nothing inverts. An earlier
+version alternated dark and light panels down the page and was rejected: the
+only thing that should change as you scroll is the writing.
 
-**Panels alternate dark and light** all the way down, so the yin/yang split
-becomes the rhythm of the whole site rather than one page's trick. II and IV are
-black; III, V and the coda are paper.
+**Chapters II-V share one template** - ghost numeral, chapter label, title,
+lede, then three entries in a row, each a rule, a heading, a line and a plain
+picture frame. They have no artwork of their own. An earlier version gave each
+chapter a bespoke animated emblem (rotating petals, an orbit) that doubled as a
+door into a separate collage room; both the emblems and those four rooms were
+cut. The content lives inline on the page now.
 
-**Every chapter carries one emblem**, drawn in the same language as the wheel:
-monochrome, glowing, built from circles and the wheel's own S-curve. The emblem is
-the only door into that chapter's room. Chapter II's three petals deep-link to the
-three sections of `highschool.html`; the others open their room at the top.
+**The only graphic motif is the wheel's own dividing curve**, drawn on scroll
+in the connector between chapters. Chapters share Chapter I's left and right
+insets (`--gutter`) so every text edge on the page lines up.
 
-**The spine is monochrome; colour lives inside the rooms.** Each room gets its own
-paper (manila for high school, ledger green for finance, blueprint blue for today,
-warm peach for home). Never bring those colours out onto the spine.
+**The rail must never touch the writing.** It is ticks only; the label is a
+chip that appears on hover, on its own solid background. Below 1000px it moves
+to a row along the bottom, because the gap between Chapter I's right column and
+a side rail closes to a few pixels as the viewport narrows. If you widen the
+rail or the type, re-measure that gap before shipping.
 
-The connector between chapters is the yin-yang's own dividing curve, pulled out and
-drawn on scroll. Chapters share Chapter I's exact left and right insets
-(`--gutter` in chapters.css) so every text edge on the site lines up.
+Chapter I keeps its collage rooms (`us.html`, `china.html`) - they are the only
+collage left on the site, and the only pages with a colour other than black.
 
 Preview locally with `python3 -m http.server 8765`; the `<use href>` sticker references
 need a real server, so opening the files directly from disk will not render them.
@@ -98,14 +98,16 @@ the wipe colour via `.board`'s `pageIn` animation.
 
 ## Still to do
 
-Every photo on every page is a placeholder, and so is every word in chapters II-V:
-the ledes, the three strands beside each emblem, and all the notes and captions in
-`highschool.html`, `finance.html`, `today.html` and `home.html`. The structure is
-finished; the content is not. Chapter I is the only chapter whose copy is real.
+Every photo is a placeholder, and so is every word in chapters II-V: the ledes
+and all three entries in each. The structure is finished; the content is not.
+Chapter I is the only chapter whose copy is real.
 
-The new rooms have no signature click animation yet - they navigate plainly, unlike the
-dragon and the cheesesteak. That was deliberate, to keep out of `transitions.js` while it
-was being edited, and it is the obvious next thing to build.
+Chapters II-V navigate nowhere - they are the whole of their own content. Only
+Chapter I's two halves have click transitions (the dragon and the cheesesteak).
+
+`us.html` and `china.html` are still collage pages while the rest of the site is
+minimal and monochrome. Deciding whether they get pulled toward the spine's
+language, or stay as the one deliberate burst of colour, is an open question.
 
 ## Working agreement
 

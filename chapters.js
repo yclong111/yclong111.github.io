@@ -38,32 +38,6 @@
     connectors.forEach(function (c) { c.classList.add('in'); });
   }
 
-  /* ---- emblem pieces: hover caption, click through to the room ---- */
-  document.querySelectorAll('.emblem').forEach(function (emblem) {
-    var caption = emblem.parentNode.querySelector('.emblem-caption');
-    emblem.querySelectorAll('.piece').forEach(function (piece) {
-      var label = piece.getAttribute('data-label') || '';
-      var href = piece.getAttribute('data-href');
-
-      function show() { if (caption) { caption.textContent = label; caption.classList.add('show'); } }
-      function hide() { if (caption) caption.classList.remove('show'); }
-
-      piece.addEventListener('mouseenter', show);
-      piece.addEventListener('focus', show);
-      piece.addEventListener('mouseleave', hide);
-      piece.addEventListener('blur', hide);
-
-      if (!href) return;
-      function go(e) {
-        if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return;
-        e.preventDefault();
-        window.location.href = href;
-      }
-      piece.addEventListener('click', go);
-      piece.addEventListener('keydown', go);
-    });
-  });
-
   /* ---- chapter rail: mark whichever chapter owns the middle of the screen ---- */
   var links = Array.prototype.slice.call(document.querySelectorAll('.rail a'));
   var targets = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
