@@ -115,7 +115,17 @@
     padding:clamp(.9rem,2.8vh,1.9rem) clamp(1rem,3vw,2.6rem) clamp(.8rem,2.4vh,1.6rem);
     text-align:left;
   }
-  .page-head{ margin:clamp(.8rem,3.2vh,2.4rem) 0 0 clamp(.8rem,2.8vw,2.8rem); }
+  .page-head{ margin:clamp(.8rem,3.2vh,2.4rem) clamp(.8rem,2.8vw,2.8rem) 0; }
+  .hero-intro{
+    margin:clamp(.9rem,2.2vh,1.6rem) 0 0;
+    max-width:min(74ch,100%);
+    font-size:clamp(12px,min(1.18vw,2.05vh),19px);
+    line-height:1.55;
+    color:#fff;
+    font-weight:400;
+    opacity:.78;
+  }
+  .hero-intro strong{ font-weight:800; opacity:1; }
   h1, .title{
     margin:0;
     font-weight:900;
@@ -126,37 +136,13 @@
     text-shadow:0 0 12px rgba(255,255,255,.35);
   }
   .stage-grid{
-    display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); grid-template-rows:auto auto auto;
-    column-gap:clamp(1rem,3vw,3.2rem); row-gap:0; align-items:start; align-content:center; min-height:0;
-    margin:0 clamp(.8rem,2.8vw,2.8rem); /* same inset as .page-head, so text edges match the title */
+    display:grid; place-items:center; place-content:center; min-height:0;
+    margin:0 clamp(.8rem,2.8vw,2.8rem); /* same inset as .page-head, so edges match the title */
   }
-  .side{ min-width:0; grid-row:1 / span 3; display:grid; grid-template-rows:subgrid; }
-  .center-col{ grid-row:1 / span 3; align-self:center; display:flex; flex-direction:column; align-items:center; gap:1.7rem; text-align:center; }
+  .center-col{ align-self:center; display:flex; flex-direction:column; align-items:center; gap:1.7rem; text-align:center; }
   .click-hint{
     margin:0; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:#fff; opacity:.6;
   }
-  .pol{
-    position:relative; justify-self:center; margin:1.5rem auto 0; padding:8px 8px 0;
-    width:clamp(140px,min(20vw,27vh),280px); background:#fff; color:#222;
-    box-shadow:2px 9px 20px rgba(0,0,0,.6); transform:rotate(var(--r,0deg));
-  }
-  .pol-pic{
-    aspect-ratio:4/3; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.3rem;
-    background:linear-gradient(135deg,#474747,#1d1d1d); color:#e6e6e6; font-size:11px; letter-spacing:.08em; text-align:center;
-  }
-  .pol-pic span{ font-size:1.5rem; line-height:1; }
-  .pol figcaption{
-    padding:.55em .3em .75em; text-align:center; font-style:italic; line-height:1.25;
-    font-size:clamp(9px,min(.95vw,1.7vh),14px); color:#222;
-  }
-  .pol .tape{
-    position:absolute; top:-12px; left:50%; width:74px; height:23px; margin-left:-37px; transform:rotate(-4deg);
-    background:rgba(214,214,214,.78); box-shadow:0 1px 3px rgba(0,0,0,.35);
-    clip-path:polygon(0 8%,3% 0,6% 10%,9% 0,100% 0,97% 12%,100% 25%,97% 38%,100% 50%,97% 62%,100% 75%,97% 88%,100% 100%,0 100%,3% 88%,0 75%,3% 62%,0 50%,3% 38%,0 25%,3% 12%);
-  }
-  .side-label{ margin:0 0 .6rem; font-size:clamp(12px,min(1.5vw,2.5vh),24px); font-weight:900; letter-spacing:.14em; text-transform:uppercase; color:#fff; }
-  .side p, .blk p{ margin:0; font-size:clamp(11px,min(1.45vw,2.45vh),24px); line-height:1.42; color:#fff; font-weight:400; text-align:justify; hyphens:auto; -webkit-hyphens:auto; }
-  .story-flow{ display:none; }
   .yy{ position:relative; }
   .yy svg{ display:block; overflow:visible; animation:spin 22s linear infinite; width:clamp(180px,34vh,320px); height:clamp(180px,34vh,320px); }
   .half{ cursor:pointer; transition:filter .35s ease; transform-box:fill-box; transform-origin:center; outline:none; -webkit-tap-highlight-color:transparent; }
@@ -186,17 +172,9 @@
 
 
   @media (max-width:900px){
-    .page-head, .side{ display:none; }
-    .page{ grid-template-rows:minmax(0,1fr); }
-    .stage-grid{ grid-template-columns:1fr; align-self:center; }
-    .story-flow{
-      display:block; background:#0c0c0e; padding:4rem 1.4rem 2.5rem; max-width:none;
-    }
-    .story-flow .title{ font-size:clamp(30px,9vw,48px); margin-bottom:1.6rem; }
-    .blk{ padding:1rem 1rem 1.1rem; border-left:2px solid rgba(255,255,255,.55); margin-bottom:1.1rem; }
-    .blk .pol{ width:min(70%,260px); margin-top:1.4rem; }
-    .blk .pol figcaption{ font-size:14px; }
-    .blk p{ font-size:17px; text-align:left; hyphens:manual; -webkit-hyphens:manual; }
+    .page-head{ margin-left:1.2rem; margin-right:1.2rem; }
+    .stage-grid{ margin:0 1.2rem; }
+    .hero-intro{ font-size:15px; line-height:1.5; opacity:.82; }
   }
 
   /* ---- stage 1 page (revealed after the zoom) ---- */
@@ -257,11 +235,6 @@
     <div class="quote-cue" style="--i:4" aria-hidden="true">Scroll</div>
   </section>
 
-  <section class="story-flow" id="story">
-    <div class="title">My Upbringing</div>
-    <div class="blk blk-us"><h2 class="side-label">The US</h2><p>Born and raised in Lower Merion, PA in the US. Then, when I was 16, as a rising junior, I moved all the way back to the US. Once again, I had to give up everything I had built in the last 10 years. Even though I spoke English perfectly fine, I still wasn’t fully “American.” I wouldn’t understand the specific references, slang, etc. Once again, I was ostracized, this time for not being American enough.</p><figure class="pol" style="--r:-2.5deg"><span class="tape"></span><div class="pol-pic"><span aria-hidden="true">📷</span>Add a photo</div><figcaption>Me in Lower Merion, PA</figcaption></figure></div>
-    <div class="blk blk-cn"><h2 class="side-label">China</h2><p>When I was 6, I moved to Shanghai, China abruptly, despite not knowing any Mandarin at all. While I looked the part, all it took was one quick conversation for people to see through my facade that I was American.</p><figure class="pol" style="--r:2.5deg"><span class="tape"></span><div class="pol-pic"><span aria-hidden="true">📷</span>Add a photo</div><figcaption>Me in Shanghai, China</figcaption></figure></div>
-  </section>
 
   <div class="hero-scroll" id="heroScroll">
     <div class="hero-sticky">
@@ -269,10 +242,10 @@
         <div class="page">
           <header class="page-head">
             <h1 id="heroTitle" class="pop-scroll">My Upbringing</h1>
+            <p class="hero-intro pop-scroll" style="--d:.12s">My childhood was <strong>far from static</strong>. Born and raised in the United States, I moved during two crucial moments of my life: first, when I was <strong>6</strong>, all the way to <strong>Shanghai, China</strong>. Then a second time when I was <strong>16</strong>, this time all the way <strong>back to the States</strong>. And while it definitely was hectic, those experiences also taught me some pretty <strong>unique cross-cultural perspectives</strong> early on in life.</p>
           </header>
 
           <div class="stage-grid">
-          <aside class="side side-us pop-scroll" style="--d:.2s"><h2 class="side-label">The US</h2><p>Born and raised in Lower Merion, PA in the US. Then, when I was 16, as a rising junior, I moved all the way back to the US. Once again, I had to give up everything I had built in the last 10 years. Even though I spoke English perfectly fine, I still wasn’t fully “American.” I wouldn’t understand the specific references, slang, etc. Once again, I was ostracized, this time for not being American enough.</p><figure class="pol" style="--r:-2.5deg"><span class="tape"></span><div class="pol-pic"><span aria-hidden="true">📷</span>Add a photo</div><figcaption>Me in Lower Merion, PA</figcaption></figure></aside>
           <div class="center-col">
 
           <div class="yy pop-scroll" style="--d:.15s">
@@ -314,7 +287,6 @@
           </div>
           <p class="click-hint pop-scroll" style="--d:.4s">Click the yin or the yang to view more</p>
           </div>
-          <aside class="side side-cn pop-scroll" style="--d:.3s"><h2 class="side-label">China</h2><p>When I was 6, I moved to Shanghai, China abruptly, despite not knowing any Mandarin at all. While I looked the part, all it took was one quick conversation for people to see through my facade that I was American.</p><figure class="pol" style="--r:2.5deg"><span class="tape"></span><div class="pol-pic"><span aria-hidden="true">📷</span>Add a photo</div><figcaption>Me in Shanghai, China</figcaption></figure></aside>
           </div>
 
         </div>

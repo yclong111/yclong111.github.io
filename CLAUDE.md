@@ -46,7 +46,8 @@ would arrive at a quote that had already landed.
 be revealed sits at `opacity:0`, so a dead IntersectionObserver would show nothing
 rather than something unanimated. `chapters.js` watches whether the observer has
 reported at all; if it has not shortly after load, it reveals what is on screen
-and drives the rest from scroll instead.
+and drives the rest from scroll instead. That net covers `.pop-scroll` too, which
+the inline script in index.html reveals through its own observer.
 
 **Nothing hides itself unless JavaScript is running.** An inline script in the
 head puts `js` on `<html>`, and every reveal's `opacity:0` is scoped to `.js`.
@@ -79,6 +80,13 @@ chip that appears on hover, on its own solid background. Below 1000px it moves
 to a row along the bottom, because the gap between Chapter I's right column and
 a side rail closes to a few pixels as the viewport narrows. If you widen the
 rail or the type, re-measure that gap before shipping.
+
+**The wheel page carries its copy under the title**, in one column, with the
+wheel centred below it. It used to run a column of text down each side of the
+wheel with a taped polaroid under each; that was replaced by a single paragraph
+and the side columns, their labels and the polaroid styling are gone - along with
+the `.story-flow` block that duplicated them for narrow screens, which is no
+longer needed now that the title and copy survive the mobile breakpoint.
 
 **The two halves of the wheel are pages, not rooms.** `us.html` and `china.html`
 are built from the same parts as the chapters - same type, same entries, same
@@ -136,8 +144,9 @@ black via `body::after` in place.css.
 
 ## Still to do
 
-Every photo is a placeholder, and so is every word in chapters II-V: the ledes
-and all three entries in each. The structure is finished; the content is not.
+Every photo is a placeholder, and so is every word in chapters II-V and on the
+two city pages: the ledes and all three entries in each. The wheel page's own
+paragraph is real copy. The structure is finished; the content is not.
 Chapter I is the only chapter whose copy is real.
 
 Chapters II-V navigate nowhere - they are the whole of their own content. Only

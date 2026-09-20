@@ -18,8 +18,14 @@
     var r = el.getBoundingClientRect();
     return r.top < window.innerHeight && r.bottom > 0;
   }
+  // The hero's own elements are revealed by the inline script in index.html,
+  // which has the same dependency on the observer, so the fallback covers them
+  // too rather than leaving the wheel and its title blank.
+  var fallbackEls = rises.concat(
+    Array.prototype.slice.call(document.querySelectorAll('.pop-scroll')));
+
   function revealVisible() {
-    rises.forEach(function (el) {
+    fallbackEls.forEach(function (el) {
       if (!el.classList.contains('in') && onScreen(el)) el.classList.add('in');
     });
     if (quotePage && !quotePage.classList.contains('in') && onScreen(quotePage)) {
