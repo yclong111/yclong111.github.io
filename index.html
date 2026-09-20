@@ -115,8 +115,8 @@
   .stage-grid{
     display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); grid-template-rows:auto auto auto;
     column-gap:clamp(1rem,3vw,3.2rem); row-gap:0; align-items:start; align-content:center; min-height:0;
+    margin:0 clamp(.8rem,2.8vw,2.8rem); /* same inset as .page-head, so text edges match the title */
   }
-  .side, .blk{ font-family:"Times New Roman", Times, serif; font-stretch:normal; }
   .side{ min-width:0; grid-row:1 / span 3; display:grid; grid-template-rows:subgrid; }
   .center-col{ grid-row:1 / span 3; align-self:center; display:flex; flex-direction:column; align-items:center; gap:1.7rem; text-align:center; }
   .click-hint{
@@ -134,19 +134,21 @@
   .pol-pic span{ font-size:1.5rem; line-height:1; }
   .pol figcaption{
     padding:.55em .3em .75em; text-align:center; font-style:italic; line-height:1.25;
-    font-size:clamp(11px,min(1.15vw,2vh),17px); color:#222;
+    font-size:clamp(9px,min(.95vw,1.7vh),14px); color:#222;
   }
   .pol .tape{
     position:absolute; top:-12px; left:50%; width:74px; height:23px; margin-left:-37px; transform:rotate(-4deg);
     background:rgba(214,214,214,.78); box-shadow:0 1px 3px rgba(0,0,0,.35);
     clip-path:polygon(0 8%,3% 0,6% 10%,9% 0,100% 0,97% 12%,100% 25%,97% 38%,100% 50%,97% 62%,100% 75%,97% 88%,100% 100%,0 100%,3% 88%,0 75%,3% 62%,0 50%,3% 38%,0 25%,3% 12%);
   }
-  .side-label{ margin:0 0 .6rem; font-size:clamp(15px,min(1.75vw,3vh),26px); font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#fff; }
-  .side p, .blk p{ margin:0; font-size:clamp(15px,min(1.9vw,3.1vh),30px); line-height:1.38; color:#fff; font-weight:400; text-align:justify; hyphens:auto; -webkit-hyphens:auto; }
+  .side-label{ margin:0 0 .6rem; font-size:clamp(12px,min(1.5vw,2.5vh),24px); font-weight:900; letter-spacing:.14em; text-transform:uppercase; color:#fff; }
+  .side p, .blk p{ margin:0; font-size:clamp(11px,min(1.45vw,2.45vh),24px); line-height:1.42; color:#fff; font-weight:400; text-align:justify; hyphens:auto; -webkit-hyphens:auto; }
   .story-flow{ display:none; }
   .yy{ position:relative; }
   .yy svg{ display:block; overflow:visible; animation:spin 22s linear infinite; width:clamp(180px,34vh,320px); height:clamp(180px,34vh,320px); }
-  .half{ cursor:pointer; transition:filter .35s ease; transform-box:fill-box; transform-origin:center; }
+  .half{ cursor:pointer; transition:filter .35s ease; transform-box:fill-box; transform-origin:center; outline:none; -webkit-tap-highlight-color:transparent; }
+  .half:focus, .half:focus-visible{ outline:none; }
+  .yy svg, .yy svg *{ outline:none; }
   .light{ filter:drop-shadow(0 0 8px #7dd3fc70) drop-shadow(0 0 20px #7dd3fc35) drop-shadow(var(--shx,0px) var(--shy,14px) 24px rgba(0,0,0,0.55)); }
   .dark{ filter:drop-shadow(0 0 8px #ff3b3b70) drop-shadow(0 0 20px #ff3b3b35) drop-shadow(var(--shx,0px) var(--shy,14px) 24px rgba(0,0,0,0.6)); }
   .half:hover{ filter:drop-shadow(0 0 14px currentColor) drop-shadow(0 0 34px currentColor) drop-shadow(var(--shx,0px) var(--shy,14px) 24px rgba(0,0,0,0.6)); }
@@ -300,6 +302,7 @@
     <p class="pop-scroll" style="--d:.2s">Where the story lands today. Swap this copy and add photos for what you're doing now.</p>
   </section>
 
+<script src="transitions.js"></script>
 <script>
 (function () {
 
@@ -336,15 +339,16 @@
   darkHalf.addEventListener('mouseleave', hide);
   darkHalf.addEventListener('blur', hide);
 
-  function go(url) { return function (e) {
+  // Each half plays its own transition (dragon for China, cheesesteak for the US), then navigates.
+  function go(kind, url) { return function (e) {
     if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return;
     e.preventDefault();
-    window.location.href = url;
+    if (window.PageTransitions) window.PageTransitions.play(kind, url); else window.location.href = url;
   }; }
-  lightHalf.addEventListener('click', go('us.html'));
-  lightHalf.addEventListener('keydown', go('us.html'));
-  darkHalf.addEventListener('click', go('china.html'));
-  darkHalf.addEventListener('keydown', go('china.html'));
+  lightHalf.addEventListener('click', go('us', 'us.html'));
+  lightHalf.addEventListener('keydown', go('us', 'us.html'));
+  darkHalf.addEventListener('click', go('china', 'china.html'));
+  darkHalf.addEventListener('keydown', go('china', 'china.html'));
 
   /* ============ scroll-driven zoom into the dark half ============
    * The zoom layer scales up around a fixed point inside the dark
