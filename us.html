@@ -3,71 +3,108 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Stage 1: The US</title>
+<script>document.documentElement.className += " js";</script>
+<title>Philadelphia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="scrapbook.css" />
+<link rel="stylesheet" href="chapters.css" />
+<link rel="stylesheet" href="place.css" />
 <style>
-  :root{ --paper:#f4f2f1; --scrib:#2b4c9b; --grain:.045; }
+  :root{ --accent:#f4f2f1;
+  --sun-opacity:.5; }
 </style>
 </head>
 <body>
-<div class="board">
-  <svg class="st " style="--x:3%;--y:5%;--s:22vmin;--r:-8deg;color:#ffc93c" aria-hidden="true"><use href="scrapbook.svg#sun" width="100%" height="100%"/></svg>
-  <svg class="st " style="--x:44%;--y:2%;--s:12vmin;--r:8deg;color:#d62839" aria-hidden="true"><use href="scrapbook.svg#heart" width="100%" height="100%"/></svg>
-  <svg class="st " style="--x:72%;--y:3%;--s:13vmin;--r:12deg;color:#5b8def" aria-hidden="true"><use href="scrapbook.svg#star" width="100%" height="100%"/></svg>
-  <svg class="st opt" style="--x:27%;--y:9%;--s:16vmin;--r:-12deg;color:#1f3a8a" aria-hidden="true"><use href="scrapbook.svg#butterfly" width="100%" height="100%"/></svg>
-  <svg class="st opt" style="--x:60%;--y:9%;--s:7vmin;--r:0deg;color:#f5b700" aria-hidden="true"><use href="scrapbook.svg#sparkle" width="100%" height="100%"/></svg>
-  <svg class="st scrib opt" style="--x:66%;--y:12%;--s:17vmin;--r:0deg" aria-hidden="true"><use href="scrapbook.svg#ball1" width="100%" height="100%"/></svg>
-  <i class="glit " style="--x:2%;--y:31%;--s:9vmin;--c:#b8862b" aria-hidden="true"></i>
-  <i class="glit " style="--x:88%;--y:6%;--s:8vmin;--c:#1f5fa8" aria-hidden="true"></i>
-  <i class="glit opt" style="--x:91%;--y:40%;--s:10vmin;--c:#2d8f3e" aria-hidden="true"></i>
-  <i class="glit opt" style="--x:5%;--y:64%;--s:8vmin;--c:#c93a4c" aria-hidden="true"></i>
-  <svg class="st opt" style="--x:89%;--y:24%;--s:10vmin;--r:-10deg;color:#d62839" aria-hidden="true"><use href="scrapbook.svg#star" width="100%" height="100%"/></svg>
-  <svg class="st " style="--x:3%;--y:46%;--s:13vmin;--r:-10deg;color:#1f3a8a" aria-hidden="true"><use href="scrapbook.svg#heart" width="100%" height="100%"/></svg>
-  <svg class="st scrib opt" style="--x:2%;--y:56%;--s:17vmin;--r:0deg" aria-hidden="true"><use href="scrapbook.svg#diamond" width="100%" height="100%"/></svg>
-  <svg class="st " style="--x:82%;--y:60%;--s:17vmin;--r:15deg;color:#b02a6f" aria-hidden="true"><use href="scrapbook.svg#butterfly" width="100%" height="100%"/></svg>
-  <svg class="st front" style="--x:1%;--y:82%;--s:16vmin;--r:-14deg;color:#5b8def" aria-hidden="true"><use href="scrapbook.svg#butterfly" width="100%" height="100%"/></svg>
-  <svg class="st " style="--x:76%;--y:82%;--s:15vmin;--r:6deg;color:#ffe45c" aria-hidden="true"><use href="scrapbook.svg#flower" width="100%" height="100%"/></svg>
-  <svg class="st opt" style="--x:88%;--y:78%;--s:11vmin;--r:12deg;color:#d62839" aria-hidden="true"><use href="scrapbook.svg#heart" width="100%" height="100%"/></svg>
-  <svg class="st " style="--x:18%;--y:86%;--s:12vmin;--r:-15deg;color:#ffc93c" aria-hidden="true"><use href="scrapbook.svg#star" width="100%" height="100%"/></svg>
-  <svg class="st opt" style="--x:36%;--y:90%;--s:8vmin;--r:0deg;color:#5b8def" aria-hidden="true"><use href="scrapbook.svg#sparkle" width="100%" height="100%"/></svg>
-  <svg class="st scrib opt" style="--x:50%;--y:90%;--s:16vmin;--r:-6deg" aria-hidden="true"><use href="scrapbook.svg#scrib1" width="100%" height="100%"/></svg>
-  <svg class="st scrib opt" style="--x:24%;--y:2%;--s:15vmin;--r:8deg" aria-hidden="true"><use href="scrapbook.svg#scrib2" width="100%" height="100%"/></svg>
-  <i class="gem " style="--x:92%;--y:70%;--s:7vmin;--c:#2f9be0" aria-hidden="true"></i>
-  <i class="gem " style="--x:3%;--y:90%;--s:8vmin;--c:#8f5bd6" aria-hidden="true"></i>
-  <i class="gem opt" style="--x:60%;--y:91%;--s:6vmin;--c:#f0c419" aria-hidden="true"></i>
-  <i class="gem opt" style="--x:34%;--y:1%;--s:6vmin;--c:#d62839" aria-hidden="true"></i>
-  <span class="st emo opt" style="--x:87%;--y:84%;--s:14vmin;--r:8deg" aria-hidden="true">🗽</span>
-  <span class="st emo opt" style="--x:13%;--y:30%;--s:9vmin;--r:-12deg" aria-hidden="true">⚾</span>
-  <span class="st emo opt" style="--x:55%;--y:3%;--s:12vmin;--r:6deg" aria-hidden="true">🎆</span>
 
-  <main class="center">
-    <div class="title-wrap">
-      <svg class="st scrib orbit" aria-hidden="true"><use href="scrapbook.svg#orbit" width="100%" height="100%"/></svg>
-      <span class="label">Stage 1</span>
-      <div class="tiles"><div class="word"><span class="tile">T</span><span class="tile">H</span><span class="tile">E</span></div><div class="word"><span class="tile">U</span><span class="tile">S</span></div></div>
-      <div class="flag-sticker" aria-hidden="true">🇺🇸</div>
+  <section class="place-hero">
+    <div class="place-sky" aria-hidden="true">
+      <svg class="skyline" viewBox="0 0 1200 320" preserveAspectRatio="xMidYMax meet" role="img" aria-label="The Philadelphia skyline">
+        <circle class="sun" cx="300" cy="158" r="92"/>
+
+        <path class="b" d="M18,300 L18,254 L27,254 L27,246 L55,246 L55,254 L64,254 L64,300 Z"/>
+        <path class="b" d="M64,300 L64,254 L73,254 L73,246 L101,246 L101,254 L110,254 L110,300 Z"/>
+        <path class="b" d="M110,300 L110,254 L119,254 L119,246 L147,246 L147,254 L156,254 L156,300 Z"/>
+        <path class="b" d="M156,300 L156,254 L165,254 L165,246 L193,246 L193,254 L202,254 L202,300 Z"/>
+        <path class="b" d="M202,300 L202,254 L211,254 L211,246 L239,246 L239,254 L248,254 L248,300 Z"/>
+
+        <rect class="b" x="262" y="238" width="54" height="62"/>
+        <rect class="b" x="326" y="258" width="44" height="42"/>
+
+        <!-- City Hall, with William Penn on the tower -->
+        <path class="b" d="M462,300 L462,216 L558,216 L558,300 Z"/>
+        <path class="b" d="M488,216 L488,122 L532,122 L532,216 Z"/>
+        <circle class="b" cx="510" cy="152" r="11"/>
+        <path class="b" d="M488,122 L510,92 L532,122 Z"/>
+        <path class="l" d="M510,92 L510,74"/>
+        <circle class="b" cx="510" cy="68" r="5"/>
+        <path class="l" d="M502,78 L518,78"/>
+
+        <rect class="b" x="588" y="244" width="48" height="56"/>
+
+        <!-- One Liberty Place -->
+        <path class="b" d="M648,300 L648,152 L660,152 L660,122 L668,122 L668,98 L676,98 L676,70 L680,70 L684,98 L692,98 L692,122 L700,122 L700,152 L712,152 L712,300 Z"/>
+
+        <!-- Two Liberty Place -->
+        <path class="b" d="M726,300 L726,184 L738,184 L738,154 L746,154 L746,128 L754,128 L754,112 L758,112 L762,128 L770,128 L770,154 L778,154 L778,184 L790,184 L790,300 Z"/>
+
+        <!-- Comcast Center -->
+        <path class="b" d="M812,300 L812,146 L816,132 L868,132 L872,146 L872,300 Z"/>
+
+        <!-- Comcast Technology Center, with its spire -->
+        <path class="b" d="M894,300 L894,104 L944,104 L944,300 Z"/>
+        <path class="b" d="M902,104 L908,86 L930,86 L936,104 Z"/>
+        <path class="l" d="M919,86 L919,36"/>
+
+        <rect class="b" x="964" y="228" width="66" height="72"/>
+        <rect class="b" x="1040" y="254" width="58" height="46"/>
+        <rect class="b" x="1108" y="238" width="72" height="62"/>
+
+        <path class="ground" d="M0,300 H1200"/>
+      </svg>
     </div>
 
-    <div class="row">
-      <figure class="polaroid" style="--r:-6deg;--a:#9bbcf2;--b:#f2a1ab"><span class="tape"></span><div class="pic">📷</div><figcaption>Lower Merion, PA</figcaption></figure>
-      <div class="note"><span class="tape"></span><p>Where the story begins — growing up in Lower Merion, Pennsylvania. Swap this copy and add photos for your years in the US.</p></div>
-      <figure class="polaroid" style="--r:5deg;--a:#ffe9a3;--b:#9bd3b0"><span class="tape"></span><div class="pic">📷</div><figcaption>add a photo</figcaption></figure>
-    </div>
+    <header class="place-head rise">
+      <span class="chap-num">Chapter I &middot; the light half</span>
+      <h2 class="chap-title">Philadelphia</h2>
+      <p class="chap-lede">Placeholder lede. Born on the Main Line, gone for a decade, and back at sixteen to a country that read as almost-home.</p>
+    </header>
+  </section>
 
-    <a class="back" href="./">&larr; back to the yin and yang</a>
-  </main>
-</div>
-<script src="transitions.js"></script>
-<script>
-  // Going home replays this page's transition in the opposite direction (left to right), wiping to the homepage's black.
-  document.querySelector('.back').addEventListener('click', function (e) {
-    if (!window.PageTransitions) return;
-    e.preventDefault();
-    window.PageTransitions.play('us', this.getAttribute('href'), { wipe: '#000000' });
-  });
-</script>
+  <section class="place-body">
+    <ul class="entries">
+        <li class="entry rise" style="--d:0.10s">
+          <div class="entry-rule"></div>
+          <h3>Lower Merion</h3>
+          <p>Placeholder &mdash; born and raised here, and the first six years that set the baseline.</p>
+          <figure class="frame">
+            <div class="slot">Add a photo</div>
+            <figcaption>Lower Merion</figcaption>
+          </figure>
+        </li>
+        <li class="entry rise" style="--d:0.18s">
+          <div class="entry-rule"></div>
+          <h3>Back at sixteen</h3>
+          <p>Placeholder &mdash; a rising junior, giving up ten years of a life built in Shanghai.</p>
+          <figure class="frame">
+            <div class="slot">Add a photo</div>
+            <figcaption>The move back</figcaption>
+          </figure>
+        </li>
+        <li class="entry rise" style="--d:0.26s">
+          <div class="entry-rule"></div>
+          <h3>Not quite American</h3>
+          <p>Placeholder &mdash; fluent English, missing references; ostracised for the opposite reason.</p>
+          <figure class="frame">
+            <div class="slot">Add a photo</div>
+            <figcaption>Fitting in</figcaption>
+          </figure>
+        </li>
+    </ul>
+
+    <a class="back" href="./#heroScroll">&larr; Back to the wheel</a>
+  </section>
+
+<script src="chapters.js"></script>
 </body>
 </html>

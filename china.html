@@ -3,71 +3,98 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Stage 2: China</title>
+<script>document.documentElement.className += " js";</script>
+<title>Shanghai</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="scrapbook.css" />
+<link rel="stylesheet" href="chapters.css" />
+<link rel="stylesheet" href="place.css" />
 <style>
-  :root{ --paper:#cc2229; --scrib:#ffffff; }
+  :root{ --accent:#cc2229; }
 </style>
 </head>
 <body>
-<div class="board">
-  <svg class="st " style="--x:3%;--y:5%;--s:22vmin;--r:-8deg;color:#ffd23f" aria-hidden="true"><use href="scrapbook.svg#sun" width="100%" height="100%"/></svg>
-  <svg class="st " style="--x:44%;--y:2%;--s:12vmin;--r:8deg;color:#ff8fa3" aria-hidden="true"><use href="scrapbook.svg#heart" width="100%" height="100%"/></svg>
-  <svg class="st " style="--x:72%;--y:3%;--s:13vmin;--r:12deg;color:#fff3b0" aria-hidden="true"><use href="scrapbook.svg#star" width="100%" height="100%"/></svg>
-  <svg class="st opt" style="--x:27%;--y:9%;--s:16vmin;--r:-12deg;color:#ffd23f" aria-hidden="true"><use href="scrapbook.svg#butterfly" width="100%" height="100%"/></svg>
-  <svg class="st opt" style="--x:60%;--y:9%;--s:7vmin;--r:0deg;color:#fff" aria-hidden="true"><use href="scrapbook.svg#sparkle" width="100%" height="100%"/></svg>
-  <svg class="st scrib opt" style="--x:66%;--y:12%;--s:17vmin;--r:0deg" aria-hidden="true"><use href="scrapbook.svg#ball1" width="100%" height="100%"/></svg>
-  <i class="glit " style="--x:2%;--y:31%;--s:9vmin;--c:#d4a017" aria-hidden="true"></i>
-  <i class="glit " style="--x:88%;--y:6%;--s:8vmin;--c:#7a0c14" aria-hidden="true"></i>
-  <i class="glit opt" style="--x:91%;--y:40%;--s:10vmin;--c:#ff6b3d" aria-hidden="true"></i>
-  <i class="glit opt" style="--x:5%;--y:64%;--s:8vmin;--c:#9b0f1a" aria-hidden="true"></i>
-  <svg class="st opt" style="--x:89%;--y:24%;--s:10vmin;--r:-10deg;color:#ffd23f" aria-hidden="true"><use href="scrapbook.svg#star" width="100%" height="100%"/></svg>
-  <svg class="st " style="--x:3%;--y:46%;--s:13vmin;--r:-10deg;color:#7a0c14" aria-hidden="true"><use href="scrapbook.svg#heart" width="100%" height="100%"/></svg>
-  <svg class="st scrib opt" style="--x:2%;--y:56%;--s:17vmin;--r:0deg" aria-hidden="true"><use href="scrapbook.svg#diamond" width="100%" height="100%"/></svg>
-  <svg class="st " style="--x:82%;--y:60%;--s:17vmin;--r:15deg;color:#ff9fb2" aria-hidden="true"><use href="scrapbook.svg#butterfly" width="100%" height="100%"/></svg>
-  <svg class="st front" style="--x:1%;--y:82%;--s:16vmin;--r:-14deg;color:#fff3b0" aria-hidden="true"><use href="scrapbook.svg#butterfly" width="100%" height="100%"/></svg>
-  <svg class="st " style="--x:76%;--y:82%;--s:15vmin;--r:6deg;color:#ffe9a8" aria-hidden="true"><use href="scrapbook.svg#flower" width="100%" height="100%"/></svg>
-  <svg class="st opt" style="--x:88%;--y:78%;--s:11vmin;--r:12deg;color:#ffd23f" aria-hidden="true"><use href="scrapbook.svg#heart" width="100%" height="100%"/></svg>
-  <svg class="st " style="--x:18%;--y:86%;--s:12vmin;--r:-15deg;color:#ffd23f" aria-hidden="true"><use href="scrapbook.svg#star" width="100%" height="100%"/></svg>
-  <svg class="st opt" style="--x:36%;--y:90%;--s:8vmin;--r:0deg;color:#ffd23f" aria-hidden="true"><use href="scrapbook.svg#sparkle" width="100%" height="100%"/></svg>
-  <svg class="st scrib opt" style="--x:50%;--y:90%;--s:16vmin;--r:-6deg" aria-hidden="true"><use href="scrapbook.svg#scrib1" width="100%" height="100%"/></svg>
-  <svg class="st scrib opt" style="--x:24%;--y:2%;--s:15vmin;--r:8deg" aria-hidden="true"><use href="scrapbook.svg#scrib2" width="100%" height="100%"/></svg>
-  <i class="gem " style="--x:92%;--y:70%;--s:7vmin;--c:#ffd23f" aria-hidden="true"></i>
-  <i class="gem " style="--x:3%;--y:90%;--s:8vmin;--c:#ff8fa3" aria-hidden="true"></i>
-  <i class="gem opt" style="--x:60%;--y:91%;--s:6vmin;--c:#f28c28" aria-hidden="true"></i>
-  <i class="gem opt" style="--x:34%;--y:1%;--s:6vmin;--c:#fff3b0" aria-hidden="true"></i>
-  <span class="st emo opt" style="--x:87%;--y:84%;--s:14vmin;--r:8deg" aria-hidden="true">🏮</span>
-  <span class="st emo opt" style="--x:13%;--y:30%;--s:9vmin;--r:-12deg" aria-hidden="true">🥟</span>
-  <span class="st emo opt" style="--x:55%;--y:3%;--s:12vmin;--r:6deg" aria-hidden="true">🧧</span>
 
-  <main class="center">
-    <div class="title-wrap">
-      <svg class="st scrib orbit" aria-hidden="true"><use href="scrapbook.svg#orbit" width="100%" height="100%"/></svg>
-      <span class="label">Stage 2</span>
-      <div class="tiles"><div class="word"><span class="tile">C</span><span class="tile">H</span><span class="tile">I</span><span class="tile">N</span><span class="tile">A</span></div></div>
-      <div class="flag-sticker" aria-hidden="true">🇨🇳</div>
+  <section class="place-hero">
+    <div class="place-sky" aria-hidden="true">
+      <svg class="skyline" viewBox="0 0 1200 320" preserveAspectRatio="xMidYMax meet" role="img" aria-label="The Pudong skyline, Shanghai">
+        <circle class="sun" cx="838" cy="150" r="96"/>
+
+        <rect class="b" x="20" y="232" width="62" height="68"/>
+        <rect class="b" x="92" y="252" width="46" height="48"/>
+        <rect class="b" x="148" y="206" width="72" height="94"/>
+        <rect class="b" x="230" y="246" width="50" height="54"/>
+
+        <!-- Jin Mao Tower: stepped, pagoda-like -->
+        <path class="b" d="M300,300 L300,150 L312,150 L312,128 L322,128 L322,110 L330,110 L330,96 L336,96 L336,60 L340,60 L340,96 L346,96 L346,110 L354,110 L354,128 L364,128 L364,150 L376,150 L376,300 Z"/>
+
+        <!-- Shanghai Tower: tapering, with the twist drawn as one interior line -->
+        <path class="b" d="M420,300 L426,142 C430,100 444,70 460,48 C476,70 490,100 494,142 L500,300 Z"/>
+        <path class="l" d="M438,288 C452,216 476,140 462,56" opacity=".55"/>
+
+        <!-- Shanghai World Financial Center: the opening at the top is a real hole -->
+        <path class="b" fill-rule="evenodd" d="M534,300 L550,92 L610,92 L626,300 Z M560,106 L564,134 L596,134 L600,106 Z"/>
+
+        <!-- Oriental Pearl Tower -->
+        <path class="l" d="M676,300 L700,188 M724,300 L700,188 M700,300 L700,188"/>
+        <circle class="b" cx="700" cy="178" r="34"/>
+        <rect class="b" x="694" y="112" width="12" height="66"/>
+        <circle class="b" cx="700" cy="98" r="21"/>
+        <path class="l" d="M700,77 L700,32"/>
+
+        <rect class="b" x="762" y="242" width="56" height="58"/>
+        <rect class="b" x="828" y="212" width="66" height="88"/>
+        <rect class="b" x="904" y="256" width="50" height="44"/>
+        <rect class="b" x="964" y="226" width="70" height="74"/>
+        <rect class="b" x="1044" y="252" width="60" height="48"/>
+        <rect class="b" x="1114" y="236" width="68" height="64"/>
+
+        <path class="ground" d="M0,300 H1200"/>
+      </svg>
     </div>
 
-    <div class="row">
-      <figure class="polaroid" style="--r:-6deg;--a:#ffd6a0;--b:#ff9a7a"><span class="tape"></span><div class="pic">📷</div><figcaption>Shanghai</figcaption></figure>
-      <div class="note"><span class="tape"></span><p>The next chapter — life in Shanghai. Swap this copy and add photos for your years in China.</p></div>
-      <figure class="polaroid" style="--r:5deg;--a:#ffe9a3;--b:#f28c8c"><span class="tape"></span><div class="pic">📷</div><figcaption>add a photo</figcaption></figure>
-    </div>
+    <header class="place-head rise">
+      <span class="chap-num">Chapter I &middot; the dark half</span>
+      <h2 class="chap-title">Shanghai</h2>
+      <p class="chap-lede">Placeholder lede. Ten years in a city I arrived in without the language, and left just as it had become mine.</p>
+    </header>
+  </section>
 
-    <a class="back" href="./">&larr; back to the yin and yang</a>
-  </main>
-</div>
-<script src="transitions.js"></script>
-<script>
-  // Going home replays this page's transition in the opposite direction (left to right), wiping to the homepage's black.
-  document.querySelector('.back').addEventListener('click', function (e) {
-    if (!window.PageTransitions) return;
-    e.preventDefault();
-    window.PageTransitions.play('china', this.getAttribute('href'), { wipe: '#000000' });
-  });
-</script>
+  <section class="place-body">
+    <ul class="entries">
+        <li class="entry rise" style="--d:0.10s">
+          <div class="entry-rule"></div>
+          <h3>Arriving at six</h3>
+          <p>Placeholder &mdash; moved abruptly, without a word of Mandarin.</p>
+          <figure class="frame">
+            <div class="slot">Add a photo</div>
+            <figcaption>Arriving</figcaption>
+          </figure>
+        </li>
+        <li class="entry rise" style="--d:0.18s">
+          <div class="entry-rule"></div>
+          <h3>Looking the part</h3>
+          <p>Placeholder &mdash; one conversation was all it took for people to see through it.</p>
+          <figure class="frame">
+            <div class="slot">Add a photo</div>
+            <figcaption>The facade</figcaption>
+          </figure>
+        </li>
+        <li class="entry rise" style="--d:0.26s">
+          <div class="entry-rule"></div>
+          <h3>Ten years in</h3>
+          <p>Placeholder &mdash; what Shanghai gave, right before it had to be given up.</p>
+          <figure class="frame">
+            <div class="slot">Add a photo</div>
+            <figcaption>Leaving</figcaption>
+          </figure>
+        </li>
+    </ul>
+
+    <a class="back" href="./#heroScroll">&larr; Back to the wheel</a>
+  </section>
+
+<script src="chapters.js"></script>
 </body>
 </html>

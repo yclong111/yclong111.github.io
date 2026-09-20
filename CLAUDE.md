@@ -8,10 +8,9 @@ https://yclong111.github.io, so a push is a deploy and takes a minute or two to 
 index.html       the whole site: opening + prologue + chapters I-V + coda, one page
 chapters.css     chapters II-V, the chapter rail, the S connectors
 chapters.js      reveals, rail state, connector draw
-us.html          Chapter I, light half   (collage room, paper #f4f2f1)
-china.html       Chapter I, dark half    (collage room, paper #cc2229)
-scrapbook.css    collage styling, used only by us.html and china.html
-scrapbook.svg    sticker symbols referenced by <use href="scrapbook.svg#id">
+us.html          Chapter I, light half   (Philadelphia skyline, disc #f4f2f1)
+china.html       Chapter I, dark half    (Shanghai skyline, disc #cc2229)
+place.css        layout for those two pages; they also load chapters.css/js
 images/          photographs; yicheng.jpg is the opening portrait
 transitions.js   canvas animations played when a yin-yang half is clicked
 ```
@@ -42,6 +41,12 @@ is the second screen, so its lines reveal when the section scrolls into view -
 `chapters.js` adds `.in` to `.quote-page` and the CSS is scoped to that. On load
 it would finish playing while the reader is still on the opening page, and they
 would arrive at a quote that had already landed.
+
+**A reveal that never fires must not leave a blank page.** Everything waiting to
+be revealed sits at `opacity:0`, so a dead IntersectionObserver would show nothing
+rather than something unanimated. `chapters.js` watches whether the observer has
+reported at all; if it has not shortly after load, it reveals what is on screen
+and drives the rest from scroll instead.
 
 **Nothing hides itself unless JavaScript is running.** An inline script in the
 head puts `js` on `<html>`, and every reveal's `opacity:0` is scoped to `.js`.
@@ -75,8 +80,16 @@ to a row along the bottom, because the gap between Chapter I's right column and
 a side rail closes to a few pixels as the viewport narrows. If you widen the
 rail or the type, re-measure that gap before shipping.
 
-Chapter I keeps its collage rooms (`us.html`, `china.html`) - they are the only
-collage left on the site, and the only pages with a colour other than black.
+**The two halves of the wheel are pages, not rooms.** `us.html` and `china.html`
+are built from the same parts as the chapters - same type, same entries, same
+frames - so clicking through the wheel does not land you on a different website.
+They were collage pages and that was cut. What makes each one its place is a
+line-drawn skyline (Philadelphia: rowhouses, City Hall with William Penn, the
+two Liberty Places, Comcast; Shanghai: Jin Mao, the Shanghai Tower, the SWFC's
+opening, the Oriental Pearl) and one disc behind it carrying the colour of the
+half you arrived from - paper for the light half, red for the dark. The buildings
+are filled with the page's own black and outlined, so the disc shows only through
+the gaps. The light disc is held at half opacity; at the red one's it glares.
 
 Preview locally with `python3 -m http.server 8765`; the `<use href>` sticker references
 need a real server, so opening the files directly from disk will not render them.
@@ -110,16 +123,16 @@ Without this the highlight orbits the ball like a moving sun.
 reintroduce it.
 
 **Colours:** spine black `#0c0c0e`, spine paper `#f4f2f1`, China red `#cc2229`.
-The click transitions now wipe in black and each room fades up from black on arrival
-(`body::after` in scrapbook.css), so a room's own paper colour is free to be anything.
+The click transitions wipe in black and each destination fades up from black on
+arrival (`body::after` in place.css).
 
 ## Click transitions
 
 Clicking a half plays a full-screen canvas animation, then navigates: a Chinese dragon
 dragging a red wipe for China (2.7s), a Philly cheesesteak with dripping cheese for the
 US (2.1s). Everything is drawn in code — there are no image assets to lose. Both are
-skipped when the visitor prefers reduced motion, and the destination pages fade in over
-the wipe colour via `.board`'s `pageIn` animation.
+skipped when the visitor prefers reduced motion, and the destination pages fade up from
+black via `body::after` in place.css.
 
 ## Still to do
 
@@ -129,10 +142,6 @@ Chapter I is the only chapter whose copy is real.
 
 Chapters II-V navigate nowhere - they are the whole of their own content. Only
 Chapter I's two halves have click transitions (the dragon and the cheesesteak).
-
-`us.html` and `china.html` are still collage pages while the rest of the site is
-minimal and monochrome. Deciding whether they get pulled toward the spine's
-language, or stay as the one deliberate burst of colour, is an open question.
 
 ## Working agreement
 

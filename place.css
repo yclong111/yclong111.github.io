@@ -1,0 +1,88 @@
+/* The two halves of the wheel, opened up.
+ *
+ * These were collage pages; they are now built from the same parts as the
+ * chapters (chapters.css supplies the type, the entries and the frames) so
+ * that clicking through the wheel does not land you on a different website.
+ *
+ * What makes each one its place is a line-drawn skyline of that city, and a
+ * single disc behind it carrying the colour of the half you came from: paper
+ * for the light half, red for the dark one. */
+
+/* index.html carries its own reset; these pages need their own, or the hero's
+ * padding is added to its min-height and the skyline lands below the fold. */
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; }
+body{
+  background:var(--ink);
+  color:var(--paper);
+  font-family:"Archivo", "Arial Black", "Helvetica Neue", Arial, sans-serif;
+  font-stretch:expanded;
+  overflow-x:hidden;
+}
+
+/* arriving from a click transition: start on the wipe's black and fade up */
+body::after{
+  content:"";
+  position:fixed; inset:0; z-index:60;
+  background:#000; pointer-events:none;
+  animation:fade-from-black 1s ease-out .05s both;
+}
+@keyframes fade-from-black{ from{ opacity:1; } to{ opacity:0; } }
+
+/* ---------------- the opening screen ---------------- */
+.place-hero{
+  position:relative;
+  min-height:100vh;
+  display:grid;
+  align-content:center;
+  padding:clamp(3rem,9vh,6rem) var(--gutter) min(46vh,420px);
+  overflow:hidden;
+}
+.place-head{ position:relative; z-index:1; max-width:52rem; }
+
+/* ---------------- skyline ---------------- */
+.place-sky{
+  position:absolute;
+  left:0; right:0; bottom:0;
+  height:min(46vh,420px);
+  pointer-events:none;
+}
+.skyline{ display:block; width:100%; height:100%; }
+/* buildings are the page's own black, outlined - so the disc behind them
+ * shows only in the gaps, the way a skyline sits against a low sun */
+.skyline .b{ fill:var(--ink); stroke:var(--paper); stroke-width:2; stroke-linejoin:round; }
+.skyline .l{ fill:none; stroke:var(--paper); stroke-width:2; stroke-linecap:round; }
+.skyline .ground{ fill:none; stroke:var(--paper); stroke-width:2; opacity:.45; }
+.skyline .sun{ fill:var(--accent); opacity:var(--sun-opacity,.9); stroke:none; }
+
+/* ---------------- the rest of the page ---------------- */
+.place-body{
+  position:relative;
+  padding:clamp(3rem,9vh,6rem) var(--gutter) clamp(4rem,10vh,7rem);
+}
+.place-body .entries{ margin-top:0; }
+
+.back{
+  display:inline-block;
+  margin-top:clamp(2.5rem,7vh,4.5rem);
+  padding:.7rem 1.1rem;
+  border:1px solid var(--rule);
+  color:var(--paper);
+  text-decoration:none;
+  font-size:11px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  opacity:.6;
+  transition:opacity .25s ease, border-color .25s ease;
+}
+.back:hover, .back:focus-visible{ opacity:1; border-color:var(--paper); outline:none; }
+
+@media (max-width:900px){
+  .place-hero{ padding-left:1.4rem; padding-right:1.4rem; padding-bottom:min(34vh,300px); }
+  .place-sky{ height:min(34vh,300px); }
+  .place-body{ padding-left:1.4rem; padding-right:1.4rem; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  body::after{ animation:none; opacity:0; }
+}

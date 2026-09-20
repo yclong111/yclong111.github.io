@@ -2,37 +2,64 @@
  * Chapter I - the quote page and the yin-yang zoom - is handled by the inline
  * script in index.html and is deliberately left alone here. */
 (function () {
+  var quotePage = document.querySelector('.quote-page');
   var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---- reveal blocks as they scroll into view ---- */
-  var rises = document.querySelectorAll('.rise');
+  /* ---- reveal blocks as they scroll into view ----
+   * Anything waiting to be revealed sits at opacity 0, so if the observer
+   * never reports the page is blank rather than merely unanimated. Some
+   * engines throttle or defer IntersectionObserver callbacks - background
+   * tabs, restored sessions, reduced-power modes - so a dead observer has to
+   * degrade to something, not to nothing. */
+  var rises = Array.prototype.slice.call(document.querySelectorAll('.rise'));
+  var observerFired = false;
+
+  function onScreen(el) {
+    var r = el.getBoundingClientRect();
+    return r.top < window.innerHeight && r.bottom > 0;
+  }
+  function revealVisible() {
+    rises.forEach(function (el) {
+      if (!el.classList.contains('in') && onScreen(el)) el.classList.add('in');
+    });
+    if (quotePage && !quotePage.classList.contains('in') && onScreen(quotePage)) {
+      quotePage.classList.add('in');
+    }
+  }
+
   if ('IntersectionObserver' in window) {
     var riseObs = new IntersectionObserver(function (entries) {
+      observerFired = true;
       entries.forEach(function (e) {
         if (e.isIntersecting) { e.target.classList.add('in'); riseObs.unobserve(e.target); }
       });
     }, { threshold: 0.25 });
     rises.forEach(function (el) { riseObs.observe(el); });
-  } else {
-    rises.forEach(function (el) { el.classList.add('in'); });
-  }
 
-  /* ---- the quote page plays when it is reached, not on load ----
-   * It is the second screen, so a load-time animation would finish while the
-   * reader is still on the opening page and they would scroll onto a quote
-   * that had already arrived. */
-  var quotePage = document.querySelector('.quote-page');
-  if (quotePage) {
-    if ('IntersectionObserver' in window) {
+    /* The quote page is the second screen: on load its animation would finish
+     * while the reader is still on the opening page, and they would scroll
+     * onto a quote that had already arrived. */
+    if (quotePage) {
       var quoteObs = new IntersectionObserver(function (entries) {
+        observerFired = true;
         entries.forEach(function (e) {
           if (e.isIntersecting) { e.target.classList.add('in'); quoteObs.unobserve(e.target); }
         });
       }, { threshold: 0.4 });
       quoteObs.observe(quotePage);
-    } else {
-      quotePage.classList.add('in');
     }
+
+    // If nothing has been reported shortly after load, assume the observer is
+    // not going to run and drive the reveals from scroll instead.
+    window.setTimeout(function () {
+      if (observerFired) return;
+      revealVisible();
+      window.addEventListener('scroll', revealVisible, { passive: true });
+      window.addEventListener('resize', revealVisible);
+    }, 1500);
+  } else {
+    rises.forEach(function (el) { el.classList.add('in'); });
+    if (quotePage) quotePage.classList.add('in');
   }
 
   /* ---- connectors: each S draws itself once, from its own real length ---- */
