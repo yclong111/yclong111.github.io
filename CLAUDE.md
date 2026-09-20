@@ -103,6 +103,18 @@ It swims at 30-52 px/s, wanders toward a new point every 9-16 seconds, and turns
 back once half of it has left the frame rather than disappearing and reappearing
 elsewhere.
 
+**The head is taken from the same curve as the body**, one short step apart,
+rather than from the bare path. The wave is a lateral offset, so a head placed
+on the path sits beside its own neck and the two visibly come apart.
+
+**It stays the right way up on the way back.** The spines belong on its back and
+the belly plates underneath whichever way it points, but both are derived from
+the travel direction, which inverts when it swims left. A mirror (`upSign`)
+handles that, and it is only flipped while the dragon is close to vertical,
+where the switch cannot be seen. The wave itself is measured against the
+un-mirrored normal - flipping that would phase-shift the whole body by half a
+wavelength in one frame.
+
 **The body follows the path the head actually took.** `dragon.js` keeps a trail
 of head positions and samples each segment at a fixed arc length back along it.
 This is the whole reason the trail exists: with the body simply drawn behind the

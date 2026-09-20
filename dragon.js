@@ -43,9 +43,34 @@
   var hx, hy, angle, targetAngle, speed, retargetAt;
   var trail = [];          // newest first, each with distance to the previous
   var TURN_RATE = 0.62;    // rad/s - a wide bank, not a pivot
+  var upSign = 1;          // +1 while it swims right, -1 while it swims left
+
+  // The spines belong on its back and the belly plates underneath, whichever
+  // way it is pointing. The drawing faces +x, so coming back leftwards it has
+  // to be mirrored - and the mirror is only flipped while the dragon is close
+  // to vertical, where the switch cannot be seen.
+  function updateUpSign() {
+    var c = Math.cos(angle);
+    if (Math.abs(c) < 0.3) upSign = c >= 0 ? 1 : -1;
+  }
+
+  // The wave is measured against the geometric normal, never the mirrored one:
+  // flipping it would phase-shift the whole body by half a wavelength in a
+  // single frame.
+  function waveAt(s, t) {
+    return amp() * (1 - 0.25 * Math.min(1, s / span())) *
+           Math.sin((2 * Math.PI * s / lam()) + t * 1.7);
+  }
+  // A point on the animal itself: the path, plus the wave riding on it. The
+  // head is taken from this too, so it cannot drift off the front of the body.
+  function bodyPoint(s, t) {
+    var p = atDistance(s);
+    var o = waveAt(s, t);
+    return { x: p.x + Math.sin(p.th) * o, y: p.y - Math.cos(p.th) * o, th: p.th };
+  }
 
   function span() { return Math.min(W * 1.06, 1500); }
-  function amp() { return Math.min(H * 0.12, 80); }
+  function amp() { return Math.min(H * 0.055, 38); }   // shallow: it swims, it does not thrash
   function lam() { return Math.max(W * 0.5, 380); }
   function bodyR() { return Math.max(11, Math.min(30, H * 0.075, W * 0.028)); }
 
@@ -93,6 +118,7 @@
     var step = TURN_RATE * dt;
     angle += Math.abs(diff) < step ? diff : (diff > 0 ? step : -step);
 
+    updateUpSign();
     hx += Math.cos(angle) * speed * dt;
     hy += Math.sin(angle) * speed * dt;
 
@@ -133,6 +159,7 @@
     ctx.save();
     ctx.translate(x, y);
     ctx.rotate(th);
+    if (upSign < 0) ctx.scale(1, -1);   // right way up on the way back
     ctx.lineWidth = 1.5;
     ctx.lineJoin = 'round';
     ctx.lineCap = 'round';
@@ -260,20 +287,18 @@
     var N = 64;
     var L = span();
     var dx = L / N;
-    var A = amp(), lambda = lam();
+    // (amp and wavelength are read inside waveAt)
 
     // tail to head, so each segment overlaps the one behind it
     for (var i = N; i >= 1; i--) {
       var s = i * dx;
-      var p = atDistance(s);
+      var p = bodyPoint(s, t);
       var th = p.th;
-      var nx = Math.sin(th), ny = -Math.cos(th);
-      // the swimming wave, riding on top of the path
-      var off = A * (1 - 0.25 * (i / N)) * Math.sin((2 * Math.PI * s / lambda) + t * 1.7);
-      var x = p.x + nx * off;
-      var y = p.y + ny * off;
+      var x = p.x, y = p.y;
       if (x < -R * 6 || x > W + R * 6 || y < -R * 6 || y > H + R * 6) continue;
 
+      // "up" for spines and legs, mirrored when it is swimming leftwards
+      var nx = Math.sin(th) * upSign, ny = -Math.cos(th) * upSign;
       var f = i / N;
       var r = R * (1 - 0.82 * Math.pow(f, 1.15));
       var tx = Math.cos(th), ty = Math.sin(th);
@@ -295,6 +320,7 @@
       ctx.save();
       ctx.translate(x, y);
       ctx.rotate(th);
+      if (upSign < 0) ctx.scale(1, -1);   // keep the belly plates underneath
       ctx.beginPath();
       ctx.ellipse(0, 0, r * 1.02, r, 0, 0, 7);
       ctx.lineWidth = 1.4;
@@ -309,7 +335,11 @@
       ctx.restore();
     }
 
-    drawHead(hx, hy, angle, R * 1.25, t);
+    // taken from the same curve as the body, one short step apart, so the head
+    // sits on the neck and turns with it instead of riding the bare path
+    var h0 = bodyPoint(0, t);
+    var h1 = bodyPoint(Math.min(12, dx), t);
+    drawHead(h0.x, h0.y, Math.atan2(h0.y - h1.y, h0.x - h1.x), R * 1.25, t);
   }
 
   /* ---- the loop ---- */
