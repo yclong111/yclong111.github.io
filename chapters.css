@@ -867,6 +867,12 @@
   transition:clip-path .7s cubic-bezier(.7,0,.2,1);
 }
 .panel.open{ clip-path:circle(150vmax at var(--cx,50%) var(--cy,50%)); }
+/* `display:grid` above outranks the browser's own [hidden]{display:none}, so
+ * without this the closed panel never actually goes away: it stays clipped to
+ * the circle's size and leaves a grey disc over every pillar that was opened. */
+.panel[hidden]{ display:none; }
+/* and while it shrinks back, it must not catch taps meant for the page */
+.panel:not(.open){ pointer-events:none; }
 .panel-sheet{
   position:relative;
   width:min(76rem,100%);
