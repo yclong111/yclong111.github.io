@@ -76,7 +76,19 @@ It ends on its own line, set large under a short rule. The italic on *not* is
 the sentence's hinge - not ostracized for being foreign, ostracized for not
 being native - so keep it.
 
-**Chapters III-V share one template** - ghost numeral, chapter label, title,
+**Chapter II ends on a reveal.** What he worked out from it sits behind a
+"What I took from it" button, under the line it answers, and opens only when the
+reader asks. It animates with `grid-template-rows: 0fr -> 1fr`, which is the one
+way to transition to a height that is not known in advance. The chapter grows
+past one screen when open; that is expected.
+
+**Every chapter has a different shape, on purpose.** II is one passage with a
+photo beside it; III is numbered steps against a tall portrait; IV is the
+three-card grid; V is an uneven wall of pictures. Scrolling should not feel like
+the same slide four times. If another is ever added, give it a rhythm of its own
+rather than reusing one of these.
+
+**Chapters III and IV share one template** - ghost numeral, chapter label, title,
 lede, then three entries in a row, each a rule, a heading, a line and a plain
 picture frame. They have no artwork of their own. An earlier version gave each
 chapter a bespoke animated emblem (rotating petals, an orbit) that doubled as a
@@ -92,6 +104,14 @@ shows in every connector between chapters, cut off at both ends so it reads as
 one animal passing behind the page; and a full dragon arcs over the skyline on
 `china.html`. The canvas dragon in `transitions.js` was always there and is now
 part of the same idea.
+
+**It travels straight across and only across.** An earlier version steered
+toward wandering targets and banked around at the edges, which meant it looped,
+climbed and tangled itself over the writing. Its path is now a horizontal line -
+it cannot loop, because there is nothing to loop with - and the S-shape is the
+swimming wave laid on that line rather than a curve in the path. Direction only
+changes once the whole body is off screen: a visible reversal either flips the
+body to the far side of the head in one frame or swings the tail round like a rod.
 
 The live dragon is drawn on a canvas (`dragon.js`), not in SVG: it has to keep
 moving. Its spine is the sum of two travelling sine waves of different
