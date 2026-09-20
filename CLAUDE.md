@@ -81,14 +81,15 @@ to a row along the bottom, because the gap between Chapter I's right column and
 a side rail closes to a few pixels as the viewport narrows. If you widen the
 rail or the type, re-measure that gap before shipping.
 
-**The wheel page carries its copy under the title**, in one column, with the
-wheel centred below it. Title, a short rule, then the paragraph at a measured
-`min(62ch,44rem)` - it ran the full width once and read badly. It used to run a
-column of text down each side of the wheel with a taped polaroid under each;
-that was replaced by the single paragraph, and the side columns, their labels
-and the polaroid styling are gone - along with the `.story-flow` block that
-duplicated them for narrow screens, which is no longer needed now that the
-title and copy survive the mobile breakpoint.
+**The wheel page is one centred row: the writing left, the wheel right.** Both
+columns are anchored to their own gutter, so they bracket the screen with the
+whitespace in the middle. Two earlier versions were rejected: a column of text
+down each side of a centred wheel (with a taped polaroid under each), and then
+the title and copy stacked above a centred wheel, which left the whole top-right
+of the screen empty. The text column is capped at `38rem` so its measure stays
+readable no matter how wide the screen gets. Below 900px it stacks, writing
+first. The side columns, their labels and the polaroid styling are gone, along
+with the `.story-flow` block that duplicated that copy for narrow screens.
 
 The paragraph's dimming is done with `color:rgba(255,255,255,.7)`, NOT with
 `opacity`. An opacity on the paragraph makes a group its children cannot exceed,

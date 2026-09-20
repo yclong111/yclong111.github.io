@@ -111,18 +111,25 @@
   /* ---- foreground content ---- */
   .page{
     position:relative; z-index:1; height:100%;
-    display:grid; grid-template-rows:auto minmax(0,1fr); gap:clamp(.5rem,2vh,1.4rem);
-    padding:clamp(.9rem,2.8vh,1.9rem) clamp(1rem,3vw,2.6rem) clamp(.8rem,2.4vh,1.6rem);
+    /* One row, vertically centred: the writing on the left, the wheel on the
+     * right. It used to stack the title and copy above a centred wheel, which
+     * left the whole top-right of the screen empty. --gutter is chapters.css's,
+     * so these edges match every chapter below. */
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,auto);
+    column-gap:clamp(1.6rem,5vw,6rem);
+    align-items:center;
+    padding:clamp(1rem,3vh,2.2rem) var(--gutter);
     text-align:left;
   }
-  .page-head{ margin:clamp(.8rem,3.2vh,2.4rem) clamp(.8rem,2.8vw,2.8rem) 0; max-width:64rem; }
+  .page-head{ margin:0; max-width:38rem; justify-self:start; }
   .hero-rule{
     width:clamp(48px,7vw,104px); height:2px; margin:clamp(.8rem,2vh,1.3rem) 0 0;
     background:#fff; opacity:.55;
   }
   .hero-intro{
     margin:clamp(.9rem,2.2vh,1.5rem) 0 0;
-    max-width:min(62ch,44rem);   /* a readable measure; the old 74ch ran to ~930px */
+    max-width:100%;
     font-size:clamp(12.5px,min(1.22vw,2.15vh),20px);
     line-height:1.62;
     font-weight:400;
@@ -148,16 +155,13 @@
   h1, .title{
     margin:0;
     font-weight:900;
-    font-size:clamp(26px,3.7vw,54px);
+    font-size:clamp(28px,4.2vw,64px);
     line-height:1;
     letter-spacing:0.01em;
     color:#f5f5f5;
     text-shadow:0 0 12px rgba(255,255,255,.35);
   }
-  .stage-grid{
-    display:grid; place-items:center; place-content:center; min-height:0;
-    margin:0 clamp(.8rem,2.8vw,2.8rem); /* same inset as .page-head, so edges match the title */
-  }
+  .stage-grid{ display:grid; place-items:center; min-height:0; margin:0; justify-self:end; }
   .center-col{ align-self:center; display:flex; flex-direction:column; align-items:center; gap:1.7rem; text-align:center; }
   .click-hint{
     margin:0; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:#fff; opacity:.6;
@@ -192,8 +196,15 @@
 
 
   @media (max-width:900px){
-    .page-head{ margin-left:1.2rem; margin-right:1.2rem; }
-    .stage-grid{ margin:0 1.2rem; }
+    .page{
+      grid-template-columns:1fr;
+      grid-template-rows:auto minmax(0,1fr);
+      row-gap:clamp(1.2rem,4vh,2.4rem);
+      align-items:start;
+      padding:clamp(2rem,6vh,3.5rem) 1.4rem clamp(1rem,3vh,2rem);
+    }
+    .page-head{ max-width:none; }
+    .stage-grid{ align-self:center; }
     .hero-intro{ font-size:15px; line-height:1.55; max-width:none; }
   }
 
