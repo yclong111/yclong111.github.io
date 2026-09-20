@@ -28,14 +28,34 @@
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
 
+  /* ---- one slow pass across the screen ----
+   * The dragon crosses, leaves, and stays away for a while before coming back
+   * at a new height and speed. Left swimming permanently it would be wallpaper
+   * behind every paragraph on the site; arriving now and then, it reads as the
+   * same animal passing through. */
+  function rand(a, b) { return a + Math.random() * (b - a); }
+  var pass = null, restUntil = 0;
+
+  function bodyLen() { return Math.min(W * 1.06, 1500); }
+  function newPass(firstOne) {
+    return {
+      // the first pass is already on screen: the character is the opening
+      // statement and the dragon should be there with it, not en route
+      headX: firstOne ? W * 0.78 : -bodyLen() * rand(0.05, 0.3),
+      baseY: firstOne ? H * 0.3 : rand(0.15, 0.62) * H,
+      speed: rand(13, 26),          // px per second
+      phase: rand(0, Math.PI * 2),
+      drift: rand(-1, 1)
+    };
+  }
+
   /* ---- the spine ---- */
-  // It rides the upper band of the section: the character and the definition
-  // own the middle, and a body swimming through the paragraph is unreadable.
   function amp() { return Math.min(H * 0.13, 88); }
   function lam() { return Math.max(W * 0.58, 430); }
   function spineY(x, t) {
     var a = amp(), l = lam();
-    return H * 0.3
+    return pass.baseY
+      + pass.drift * H * 0.04 * Math.sin(t * 0.16 + pass.phase)
       + a * Math.sin((2 * Math.PI * x / l) + t * 0.85)
       + a * 0.3 * Math.sin((2 * Math.PI * x / (l * 0.43)) - t * 1.25);
   }
@@ -176,13 +196,27 @@
   }
 
   /* ---- one frame ---- */
-  function frame(t) {
+  function frame(t, dt) {
     ctx.clearRect(0, 0, W, H);
+
+    if (!pass) {
+      if (t < restUntil) return;
+      pass = newPass(false);
+    }
+    pass.headX += pass.speed * dt;
+
     var R = bodyR();
     var N = 64;
-    var span = Math.min(W * 1.06, 1500);
-    var headX = W * 0.82;
+    var span = bodyLen();
+    var headX = pass.headX;
     var dx = span / N;
+
+    // fully off the right edge: rest, then come back somewhere else
+    if (headX - span > W) {
+      pass = null;
+      restUntil = t + rand(7, 18);
+      return;
+    }
 
     // tail to head, so each segment overlaps the one behind it
     for (var i = N; i >= 1; i--) {
@@ -233,16 +267,21 @@
   }
 
   /* ---- the loop ---- */
-  var running = false, raf = 0, t0 = null;
+  var running = false, raf = 0, t0 = null, last = 0;
   function tick(now) {
-    if (t0 === null) t0 = now;
-    frame((now - t0) / 1000);
+    if (t0 === null) { t0 = now; last = 0; }
+    var t = (now - t0) / 1000;
+    // clamp: a backgrounded tab resumes with a huge gap, which would teleport
+    // the dragon halfway across the screen in one frame
+    var dt = Math.min(0.05, Math.max(0, t - last));
+    last = t;
+    frame(t, dt);
     raf = requestAnimationFrame(tick);
   }
   function start() {
     if (running) return;
     running = true;
-    if (reduced) { frame(0); return; }
+    if (reduced) { frame(0, 0); return; }
     raf = requestAnimationFrame(tick);
   }
   function stop() {
@@ -252,18 +291,12 @@
   }
 
   resize();
-  frame(0);
+  pass = newPass(true);
+  frame(0, 0);
 
-  // Only animate while it is actually on screen: this sits on the first
-  // screen, and leaving a canvas running for the whole scroll costs battery
-  // for something nobody is looking at.
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) { e.isIntersecting ? start() : stop(); });
-    }, { threshold: 0.01 }).observe(canvas);
-  } else {
-    start();
-  }
+  // The canvas covers the viewport now, so there is no "off screen" to observe
+  // against; tab visibility is the only thing worth pausing for.
+  start();
   document.addEventListener('visibilitychange', function () {
     document.hidden ? stop() : start();
   });
@@ -271,6 +304,6 @@
   var rt = 0;
   window.addEventListener('resize', function () {
     clearTimeout(rt);
-    rt = setTimeout(function () { resize(); if (!running || reduced) frame(0); }, 120);
+    rt = setTimeout(function () { resize(); if (!running || reduced) frame(0, 0); }, 120);
   });
 })();

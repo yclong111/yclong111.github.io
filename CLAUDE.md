@@ -86,13 +86,29 @@ one animal passing behind the page; and a full dragon arcs over the skyline on
 `china.html`. The canvas dragon in `transitions.js` was always there and is now
 part of the same idea.
 
-On that first screen the dragon is drawn live on a canvas (`dragon.js`), not in
-SVG: it has to keep moving. Its spine is the sum of two travelling sine waves of
-different wavelengths, so the body ripples instead of pulsing in lockstep, and
-every other part - segments, dorsal spines, legs, mane, whiskers, jaw - hangs off
-that one curve. It rides the upper band of the section (`H * 0.3`); centred, the
-body swims straight through the paragraph and the text becomes unreadable. The
-canvas only animates while it is on screen and pauses when the tab is hidden.
+The live dragon is drawn on a canvas (`dragon.js`), not in SVG: it has to keep
+moving. Its spine is the sum of two travelling sine waves of different
+wavelengths, so the body ripples instead of pulsing in lockstep, and every other
+part - segments, dorsal spines, legs, mane, whiskers, jaw - hangs off that one
+curve.
+
+**The canvas is `position:fixed` over the whole viewport**, so the dragon stays
+with the reader the whole way down rather than decorating one section. That is
+why NO section on index.html paints its own background: the page's black comes
+from `<body>`, the canvas sits above it at `z-index:0`, and every section's
+content sits above that. Give a section back a background and the dragon
+disappears underneath it.
+
+It crosses slowly (13-26 px/s), leaves, then rests 7-18 seconds before returning
+at a new height and speed - permanent swimming turns it into wallpaper behind
+every paragraph. The first pass starts already on screen, because the character
+is the opening statement and the dragon should be there with it. Frame deltas
+are clamped to 50ms: a backgrounded tab resumes with a huge gap and would
+teleport it across the screen in one frame. It pauses when the tab is hidden.
+
+The hero zoom still works over the top of it: the dark lobe is an opaque fill,
+so at full scale it covers the canvas, and it blends to the same `#0c0c0e` that
+`<body>` paints.
 
 The static symbols live in a `.dg-sprite` inside each document rather than an external
 file: external `<use>` content cannot be styled by the referencing page, and the
