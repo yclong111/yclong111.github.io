@@ -28,48 +28,104 @@
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
 
-  /* ---- one slow pass across the screen ----
-   * The dragon crosses, leaves, and stays away for a while before coming back
-   * at a new height and speed. Left swimming permanently it would be wallpaper
-   * behind every paragraph on the site; arriving now and then, it reads as the
-   * same animal passing through. */
+  /* ---- how it moves ----
+   * The head swims; the body follows the path the head actually took. That is
+   * the whole reason for the trail: if the body were simply drawn behind the
+   * head in its current facing, turning round would swing the tail across the
+   * screen like a rod, or flip it to the other side in a single frame. Sampled
+   * from a trail, a U-turn curls the way an animal's does.
+   *
+   * The undulation is a lateral offset applied on top of that path, not a wiggle
+   * in the path itself - otherwise the wavelength would be tied to speed, and a
+   * slow dragon would ripple in slow motion. */
   function rand(a, b) { return a + Math.random() * (b - a); }
-  var pass = null, restUntil = 0;
 
-  function bodyLen() { return Math.min(W * 1.06, 1500); }
-  function newPass(firstOne) {
-    return {
-      // the first pass is already on screen: the character is the opening
-      // statement and the dragon should be there with it, not en route
-      headX: firstOne ? W * 0.78 : -bodyLen() * rand(0.05, 0.3),
-      baseY: firstOne ? H * 0.3 : rand(0.15, 0.62) * H,
-      speed: rand(13, 26),          // px per second
-      phase: rand(0, Math.PI * 2),
-      drift: rand(-1, 1)
-    };
-  }
+  var hx, hy, angle, targetAngle, speed, retargetAt;
+  var trail = [];          // newest first, each with distance to the previous
+  var TURN_RATE = 0.62;    // rad/s - a wide bank, not a pivot
 
-  /* ---- the spine ---- */
-  function amp() { return Math.min(H * 0.13, 88); }
-  function lam() { return Math.max(W * 0.58, 430); }
-  function spineY(x, t) {
-    var a = amp(), l = lam();
-    return pass.baseY
-      + pass.drift * H * 0.04 * Math.sin(t * 0.16 + pass.phase)
-      + a * Math.sin((2 * Math.PI * x / l) + t * 0.85)
-      + a * 0.3 * Math.sin((2 * Math.PI * x / (l * 0.43)) - t * 1.25);
-  }
-  function angleAt(x, t) {
-    var d = 2;
-    return Math.atan2(spineY(x + d, t) - spineY(x - d, t), d * 2);
-  }
+  function span() { return Math.min(W * 1.06, 1500); }
+  function amp() { return Math.min(H * 0.12, 80); }
+  function lam() { return Math.max(W * 0.5, 380); }
   function bodyR() { return Math.max(11, Math.min(30, H * 0.075, W * 0.028)); }
 
-  function stroked(fill) {
-    ctx.fillStyle = fill === false ? 'transparent' : INK;
-    if (fill !== false) ctx.fill();
+  // every shape is the page's own black, outlined in the page's own paper
+  function stroked() {
+    ctx.fillStyle = INK;
+    ctx.fill();
     ctx.strokeStyle = LINE;
     ctx.stroke();
+  }
+
+  function aimSomewhereInside() {
+    var tx = rand(0.12, 0.88) * W;
+    var ty = rand(0.16, 0.66) * H;
+    targetAngle = Math.atan2(ty - hy, tx - hx);
+  }
+
+  function init() {
+    hx = W * 0.78;
+    hy = H * 0.3;
+    angle = 0;               // heading right, across the opening screen
+    targetAngle = angle;
+    speed = rand(30, 52);
+    retargetAt = rand(9, 16);
+    // lay a straight trail behind it so the body exists on the first frame
+    trail.length = 0;
+    var step = 6;
+    for (var d = 0; d <= span() + step; d += step) {
+      trail.push({ x: hx - d, y: hy, d: d === 0 ? 0 : step });
+    }
+  }
+
+  function halfOffScreen() {
+    var m = span() * 0.5;
+    return hx > W + m || hx < -m || hy > H + m || hy < -m;
+  }
+
+  function advance(t, dt) {
+    if (t > retargetAt) { aimSomewhereInside(); retargetAt = t + rand(9, 16); }
+    // Turn back once half of it has left the frame, rather than waiting for it
+    // to vanish and reappear somewhere else.
+    if (halfOffScreen()) { aimSomewhereInside(); retargetAt = t + rand(9, 16); }
+
+    var diff = Math.atan2(Math.sin(targetAngle - angle), Math.cos(targetAngle - angle));
+    var step = TURN_RATE * dt;
+    angle += Math.abs(diff) < step ? diff : (diff > 0 ? step : -step);
+
+    hx += Math.cos(angle) * speed * dt;
+    hy += Math.sin(angle) * speed * dt;
+
+    var prev = trail[0];
+    var d = prev ? Math.hypot(hx - prev.x, hy - prev.y) : 0;
+    if (d > 0.5) {
+      trail.unshift({ x: hx, y: hy, d: d });
+      var total = 0, keep = span() + 40;
+      for (var i = 0; i < trail.length; i++) {
+        total += trail[i].d;
+        if (total > keep) { trail.length = i + 1; break; }
+      }
+    }
+  }
+
+  // point on the trail at arc length s behind the head, with its tangent
+  function atDistance(s) {
+    var acc = 0;
+    for (var i = 1; i < trail.length; i++) {
+      var seg = trail[i].d;
+      if (acc + seg >= s) {
+        var f = seg > 0 ? (s - acc) / seg : 0;
+        var a = trail[i - 1], b = trail[i];
+        return {
+          x: a.x + (b.x - a.x) * f,
+          y: a.y + (b.y - a.y) * f,
+          th: Math.atan2(a.y - b.y, a.x - b.x)
+        };
+      }
+      acc += seg;
+    }
+    var last = trail[trail.length - 1] || { x: hx, y: hy };
+    return { x: last.x, y: last.y, th: angle };
   }
 
   /* ---- the head ---- */
@@ -198,42 +254,34 @@
   /* ---- one frame ---- */
   function frame(t, dt) {
     ctx.clearRect(0, 0, W, H);
-
-    if (!pass) {
-      if (t < restUntil) return;
-      pass = newPass(false);
-    }
-    pass.headX += pass.speed * dt;
+    advance(t, dt);
 
     var R = bodyR();
     var N = 64;
-    var span = bodyLen();
-    var headX = pass.headX;
-    var dx = span / N;
-
-    // fully off the right edge: rest, then come back somewhere else
-    if (headX - span > W) {
-      pass = null;
-      restUntil = t + rand(7, 18);
-      return;
-    }
+    var L = span();
+    var dx = L / N;
+    var A = amp(), lambda = lam();
 
     // tail to head, so each segment overlaps the one behind it
     for (var i = N; i >= 1; i--) {
-      var x = headX - i * dx;
-      if (x < -R * 5 || x > W + R * 5) continue;
-      var y = spineY(x, t);
-      var th = angleAt(x, t);
+      var s = i * dx;
+      var p = atDistance(s);
+      var th = p.th;
+      var nx = Math.sin(th), ny = -Math.cos(th);
+      // the swimming wave, riding on top of the path
+      var off = A * (1 - 0.25 * (i / N)) * Math.sin((2 * Math.PI * s / lambda) + t * 1.7);
+      var x = p.x + nx * off;
+      var y = p.y + ny * off;
+      if (x < -R * 6 || x > W + R * 6 || y < -R * 6 || y > H + R * 6) continue;
+
       var f = i / N;
       var r = R * (1 - 0.82 * Math.pow(f, 1.15));
-      var nx = Math.sin(th), ny = -Math.cos(th);
       var tx = Math.cos(th), ty = Math.sin(th);
 
       if (i === 14 || i === 15 || i === 36 || i === 37) {
         drawLeg(x - nx * r * 0.65, y - ny * r * 0.65, nx, ny, tx, ty, R, t, i);
       }
 
-      // dorsal spine
       if (i % 2 === 0 && r > 2) {
         ctx.beginPath();
         ctx.moveTo(x + nx * r * 0.85 - tx * r * 0.5, y + ny * r * 0.85 - ty * r * 0.5);
@@ -244,7 +292,6 @@
         stroked();
       }
 
-      // the segment itself
       ctx.save();
       ctx.translate(x, y);
       ctx.rotate(th);
@@ -252,7 +299,6 @@
       ctx.ellipse(0, 0, r * 1.02, r, 0, 0, 7);
       ctx.lineWidth = 1.4;
       stroked();
-      // a belly scale, to read as plated rather than smooth
       if (r > 5) {
         ctx.beginPath();
         ctx.arc(0, r * 0.28, r * 0.55, 0.35 * Math.PI, 0.65 * Math.PI);
@@ -263,7 +309,7 @@
       ctx.restore();
     }
 
-    drawHead(headX, spineY(headX, t), angleAt(headX, t), R * 1.25, t);
+    drawHead(hx, hy, angle, R * 1.25, t);
   }
 
   /* ---- the loop ---- */
@@ -291,7 +337,7 @@
   }
 
   resize();
-  pass = newPass(true);
+  init();
   frame(0, 0);
 
   // The canvas covers the viewport now, so there is no "off screen" to observe
@@ -304,6 +350,13 @@
   var rt = 0;
   window.addEventListener('resize', function () {
     clearTimeout(rt);
-    rt = setTimeout(function () { resize(); if (!running || reduced) frame(0, 0); }, 120);
+    rt = setTimeout(function () {
+      resize();
+      // the trail is in screen coordinates, so a resize invalidates it
+      init();
+      // resizing clears the canvas; redraw straight away rather than waiting
+      // for the next frame, which may never come if rAF is being throttled
+      frame(0, 0);
+    }, 120);
   });
 })();

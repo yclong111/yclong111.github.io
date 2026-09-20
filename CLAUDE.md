@@ -99,12 +99,23 @@ from `<body>`, the canvas sits above it at `z-index:0`, and every section's
 content sits above that. Give a section back a background and the dragon
 disappears underneath it.
 
-It crosses slowly (13-26 px/s), leaves, then rests 7-18 seconds before returning
-at a new height and speed - permanent swimming turns it into wallpaper behind
-every paragraph. The first pass starts already on screen, because the character
-is the opening statement and the dragon should be there with it. Frame deltas
-are clamped to 50ms: a backgrounded tab resumes with a huge gap and would
-teleport it across the screen in one frame. It pauses when the tab is hidden.
+It swims at 30-52 px/s, wanders toward a new point every 9-16 seconds, and turns
+back once half of it has left the frame rather than disappearing and reappearing
+elsewhere.
+
+**The body follows the path the head actually took.** `dragon.js` keeps a trail
+of head positions and samples each segment at a fixed arc length back along it.
+This is the whole reason the trail exists: with the body simply drawn behind the
+head in its current facing, turning round either swings the tail across the
+screen like a rod or flips it to the other side in a single frame. The
+undulation is a lateral offset applied on top of that path, not a wiggle in the
+path itself - in the path, its wavelength would be tied to speed and a slow
+dragon would ripple in slow motion.
+
+Frame deltas are clamped to 50ms: a backgrounded tab resumes with a huge gap and
+would teleport it across the screen in one frame. It pauses when the tab is
+hidden, and a resize redraws immediately, because resizing clears the canvas and
+the next frame may never arrive if rAF is throttled.
 
 The hero zoom still works over the top of it: the dark lobe is an opaque fill,
 so at full scale it covers the canvas, and it blends to the same `#0c0c0e` that
