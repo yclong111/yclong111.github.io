@@ -260,7 +260,7 @@
   min-height:100vh;
   min-height:100svh;
   display:grid;
-  grid-template-columns:minmax(0,1fr) minmax(0,2fr);
+  grid-template-columns:40% minmax(0,1fr);
   background:var(--ink);
   color:var(--paper);
   overflow:hidden;
@@ -277,14 +277,6 @@
   height:100%;
   object-fit:cover;
   object-position:52% 30%;
-}
-/* the photo dissolves into the page instead of ending on a hard vertical seam */
-.intro-photo::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  background:linear-gradient(to right,rgba(12,12,14,0) 62%,rgba(12,12,14,.85) 92%,var(--ink) 100%);
 }
 .intro-text{
   position:relative;
@@ -333,15 +325,26 @@
     grid-template-rows:minmax(0,42vh) auto;
   }
   .intro-photo img{ object-position:52% 26%; }
-  /* stacked, the photo hands off downward rather than sideways */
-  .intro-photo::after{
-    background:linear-gradient(to bottom,rgba(12,12,14,0) 58%,rgba(12,12,14,.9) 90%,var(--ink) 100%);
-  }
   .intro-text{
     padding:clamp(1.5rem,4vh,2.5rem) 1.4rem clamp(4rem,10vh,6rem);
   }
 }
 
+/* The opening is above the fold, so it plays on load rather than waiting for
+ * the scroll observer. Each element animates to its OWN resting opacity: the
+ * shared .rise helper ends at 1, which would have burned off the deliberate
+ * dimming on the bio and the scroll cue. */
+.intro-photo{ animation:intro-fade 1s ease-out .05s both; }
+.intro-name{ animation:intro-up .85s cubic-bezier(.2,.9,.3,1) .26s both; }
+.intro-bio{ animation:intro-up-dim .85s cubic-bezier(.2,.9,.3,1) .46s both; }
+.intro-cue{ animation:intro-up-faint .85s cubic-bezier(.2,.9,.3,1) .66s both; }
+
+@keyframes intro-fade{ from{ opacity:0; } to{ opacity:1; } }
+@keyframes intro-up{ from{ opacity:0; transform:translateY(24px); } to{ opacity:1; transform:none; } }
+@keyframes intro-up-dim{ from{ opacity:0; transform:translateY(24px); } to{ opacity:.74; transform:none; } }
+@keyframes intro-up-faint{ from{ opacity:0; transform:translateY(24px); } to{ opacity:.45; transform:none; } }
+
 @media (prefers-reduced-motion: reduce){
   .intro-cue::after{ animation:none; }
+  .intro-photo, .intro-name, .intro-bio, .intro-cue{ animation:none; }
 }

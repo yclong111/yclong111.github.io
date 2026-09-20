@@ -31,14 +31,21 @@ One page, one colour, read top to bottom:
 | V | Off the Clock | family, fun, current obsessions |
 | Coda | the wheel again | whole, and finally standing still |
 
-**The opening page** fills its left third with the portrait and puts the name
-and introduction on the right. The source photo is landscape and he stands just
+**The opening page** fills its left 40% with the portrait and puts the name and
+introduction on the right. The source photo is landscape and he stands just
 right of centre, so `object-position:52% 30%` is what keeps his face inside the
-strip as the column narrows - a plain centre crop loses him. The photo's right
-edge dissolves into the page with a gradient rather than ending on a seam, and
-below 1000px it stacks above the text and dissolves downward instead.
+strip as the column narrows - a plain centre crop loses him. The photo meets the
+page on a hard edge; a gradient dissolve was tried and rejected. Below 1000px it
+stacks above the text, still on a hard edge.
 
-**Everything is `#0c0c0e`.** Nothing alternates, nothing inverts. An earlier
+Its four elements animate in on load, not on scroll, because the opening is
+above the fold. Each has its own keyframes ending at its own resting opacity -
+the shared `.rise` helper ends at 1, which would burn off the deliberate dimming
+on the bio and the scroll cue.
+
+**Everything is `#0c0c0e`,** including the epigraph page and the mobile story
+block, which were `#000` until the opening page sat above them and made the
+seam visible. Nothing alternates, nothing inverts. An earlier
 version alternated dark and light panels down the page and was rejected: the
 only thing that should change as you scroll is the writing.
 
