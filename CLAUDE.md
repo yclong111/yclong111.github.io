@@ -82,11 +82,25 @@ a side rail closes to a few pixels as the viewport narrows. If you widen the
 rail or the type, re-measure that gap before shipping.
 
 **The wheel page carries its copy under the title**, in one column, with the
-wheel centred below it. It used to run a column of text down each side of the
-wheel with a taped polaroid under each; that was replaced by a single paragraph
-and the side columns, their labels and the polaroid styling are gone - along with
-the `.story-flow` block that duplicated them for narrow screens, which is no
-longer needed now that the title and copy survive the mobile breakpoint.
+wheel centred below it. Title, a short rule, then the paragraph at a measured
+`min(62ch,44rem)` - it ran the full width once and read badly. It used to run a
+column of text down each side of the wheel with a taped polaroid under each;
+that was replaced by the single paragraph, and the side columns, their labels
+and the polaroid styling are gone - along with the `.story-flow` block that
+duplicated them for narrow screens, which is no longer needed now that the
+title and copy survive the mobile breakpoint.
+
+The paragraph's dimming is done with `color:rgba(255,255,255,.7)`, NOT with
+`opacity`. An opacity on the paragraph makes a group its children cannot exceed,
+so the bold phrases could never read brighter than the body text around them. The
+bold phrases then animate from that same colour up to white, one after another,
+once the paragraph has landed.
+
+**The disc spins during a rest zone at the start of the pinned scroll**, and
+freezes once the zoom begins - frozen because `SAFE_POINT` is only stable while
+the disc is still. That zone was 15vh out of 165vh, which froze it almost as
+soon as the section pinned and made it look like it never span at all. It is
+40vh out of 190vh now. The zoom's own 150vh is unchanged.
 
 **The two halves of the wheel are pages, not rooms.** `us.html` and `china.html`
 are built from the same parts as the chapters - same type, same entries, same

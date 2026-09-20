@@ -31,7 +31,7 @@
   /* ---- scroll-zoom hero ---- */
   .hero-scroll{
     position:relative;
-    height:265vh; /* 100vh pinned + 15vh rest + 150vh of zoom */
+    height:290vh; /* 100vh pinned + 40vh rest + 150vh of zoom */
   }
   .hero-sticky{
     position:sticky;
@@ -115,17 +115,36 @@
     padding:clamp(.9rem,2.8vh,1.9rem) clamp(1rem,3vw,2.6rem) clamp(.8rem,2.4vh,1.6rem);
     text-align:left;
   }
-  .page-head{ margin:clamp(.8rem,3.2vh,2.4rem) clamp(.8rem,2.8vw,2.8rem) 0; }
-  .hero-intro{
-    margin:clamp(.9rem,2.2vh,1.6rem) 0 0;
-    max-width:min(74ch,100%);
-    font-size:clamp(12px,min(1.18vw,2.05vh),19px);
-    line-height:1.55;
-    color:#fff;
-    font-weight:400;
-    opacity:.78;
+  .page-head{ margin:clamp(.8rem,3.2vh,2.4rem) clamp(.8rem,2.8vw,2.8rem) 0; max-width:64rem; }
+  .hero-rule{
+    width:clamp(48px,7vw,104px); height:2px; margin:clamp(.8rem,2vh,1.3rem) 0 0;
+    background:#fff; opacity:.55;
   }
-  .hero-intro strong{ font-weight:800; opacity:1; }
+  .hero-intro{
+    margin:clamp(.9rem,2.2vh,1.5rem) 0 0;
+    max-width:min(62ch,44rem);   /* a readable measure; the old 74ch ran to ~930px */
+    font-size:clamp(12.5px,min(1.22vw,2.15vh),20px);
+    line-height:1.62;
+    font-weight:400;
+    /* Colour, not opacity: an opacity on the paragraph makes a group its
+     * children cannot exceed, so the bold could never read brighter than the
+     * body text around it. */
+    color:rgba(255,255,255,.7);
+    opacity:1;
+  }
+  .hero-intro strong{ font-weight:800; color:rgba(255,255,255,.7); }
+  /* the bold phrases come up out of the body text once the paragraph has landed */
+  .hero-intro.in strong{ animation:bold-in .9s ease-out both; }
+  .hero-intro.in strong:nth-of-type(1){ animation-delay:.55s; }
+  .hero-intro.in strong:nth-of-type(2){ animation-delay:.71s; }
+  .hero-intro.in strong:nth-of-type(3){ animation-delay:.87s; }
+  .hero-intro.in strong:nth-of-type(4){ animation-delay:1.03s; }
+  .hero-intro.in strong:nth-of-type(5){ animation-delay:1.19s; }
+  .hero-intro.in strong:nth-of-type(6){ animation-delay:1.35s; }
+  @keyframes bold-in{
+    from{ color:rgba(255,255,255,.7); text-shadow:none; }
+    to{ color:#fff; text-shadow:0 0 14px rgba(255,255,255,.3); }
+  }
   h1, .title{
     margin:0;
     font-weight:900;
@@ -144,7 +163,7 @@
     margin:0; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:#fff; opacity:.6;
   }
   .yy{ position:relative; }
-  .yy svg{ display:block; overflow:visible; animation:spin 22s linear infinite; width:clamp(180px,34vh,320px); height:clamp(180px,34vh,320px); }
+  .yy svg{ display:block; overflow:visible; animation:spin 22s linear infinite; width:clamp(200px,min(40vh,78vw),400px); height:clamp(200px,min(40vh,78vw),400px); }
   .half{ cursor:pointer; transition:filter .35s ease; transform-box:fill-box; transform-origin:center; outline:none; -webkit-tap-highlight-color:transparent; }
   .half:focus, .half:focus-visible{ outline:none; }
   .yy svg, .yy svg *{ outline:none; }
@@ -168,13 +187,14 @@
   @keyframes spin{ to{ transform:rotate(360deg); } }
   @media (prefers-reduced-motion: reduce){
     .yy svg{ animation:none; }
+    .hero-intro.in strong{ animation:none; color:#fff; }
   }
 
 
   @media (max-width:900px){
     .page-head{ margin-left:1.2rem; margin-right:1.2rem; }
     .stage-grid{ margin:0 1.2rem; }
-    .hero-intro{ font-size:15px; line-height:1.5; opacity:.82; }
+    .hero-intro{ font-size:15px; line-height:1.55; max-width:none; }
   }
 
   /* ---- stage 1 page (revealed after the zoom) ---- */
@@ -242,7 +262,8 @@
         <div class="page">
           <header class="page-head">
             <h1 id="heroTitle" class="pop-scroll">My Upbringing</h1>
-            <p class="hero-intro pop-scroll" style="--d:.12s">My childhood was <strong>far from static</strong>. Born and raised in the United States, I moved during two crucial moments of my life: first, when I was <strong>6</strong>, all the way to <strong>Shanghai, China</strong>. Then a second time when I was <strong>16</strong>, this time all the way <strong>back to the States</strong>. And while it definitely was hectic, those experiences also taught me some pretty <strong>unique cross-cultural perspectives</strong> early on in life.</p>
+            <div class="hero-rule pop-scroll" style="--d:.08s" aria-hidden="true"></div>
+            <p class="hero-intro pop-scroll" style="--d:.16s">My childhood was <strong>far from static</strong>. Born and raised in the United States, I moved during two crucial moments of my life: first, when I was <strong>6</strong>, all the way to <strong>Shanghai, China</strong>. Then a second time when I was <strong>16</strong>, this time all the way <strong>back to the States</strong>. And while it definitely was hectic, those experiences also taught me some pretty <strong>unique cross-cultural perspectives</strong> early on in life.</p>
           </header>
 
           <div class="stage-grid">
@@ -634,7 +655,10 @@
   var SAFE_RADIUS_UNITS = 41; // clearance from SAFE_POINT to the nearest non-dark pixel, in viewBox units (measured by sampling the rendered SVG)
   var SAFE_MARGIN = 0.5; // use only half the measured clearance: covers anti-aliasing/gradient softness at the boundary AND the rotateY twist, which foreshortens one side of the frame so it needs extra scale to still reach the edge
   var MAX_SCALE = 12; // recomputed from real measurements in updateOrigin(); this is just a safe fallback before the first measurement
-  var REST_FRACTION = 15 / 165; // 15vh of rest out of the 165vh pinned scroll
+  // 40vh of rest out of the 190vh of pinned scroll. It was 15vh, which froze
+  // the disc almost as soon as the section pinned - the spin was there, but
+  // nobody scrolled slowly enough to see it.
+  var REST_FRACTION = 40 / 190;
   var ZOOM_EASE = 2.2;  // >1 = slower start, faster finish
   var TURN_START = 0;   // deg (flat at rest so columns stay perfectly aligned)
   var TURN_END = 26;    // deg
