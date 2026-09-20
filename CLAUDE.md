@@ -5,22 +5,24 @@ no build step, no dependencies, no framework. GitHub Pages serves `main` directl
 https://yclong111.github.io, so a push is a deploy and takes a minute or two to appear.
 
 ```
-index.html       the whole site: prologue + chapters I-V + coda, one page
+index.html       the whole site: opening + prologue + chapters I-V + coda, one page
 chapters.css     chapters II-V, the chapter rail, the S connectors
 chapters.js      reveals, rail state, connector draw
 us.html          Chapter I, light half   (collage room, paper #f4f2f1)
 china.html       Chapter I, dark half    (collage room, paper #cc2229)
 scrapbook.css    collage styling, used only by us.html and china.html
 scrapbook.svg    sticker symbols referenced by <use href="scrapbook.svg#id">
+images/          photographs; yicheng.jpg is the opening portrait
 transitions.js   canvas animations played when a yin-yang half is clicked
 ```
 
 ## The shape of the site
 
-One page, one colour, read top to bottom in six movements:
+One page, one colour, read top to bottom:
 
 | | | |
 |---|---|---|
+| Opening | portrait, name, introduction | who is speaking |
 | Prologue | the Lahiri quote | sets the tension |
 | I | Two Worlds | upbringing; the yin-yang, and its two collage rooms |
 | II | Finding My Voice | high school: debate, sports, community |
@@ -28,6 +30,13 @@ One page, one colour, read top to bottom in six movements:
 | IV | The Work | college organisations, internships, what comes next |
 | V | Off the Clock | family, fun, current obsessions |
 | Coda | the wheel again | whole, and finally standing still |
+
+**The opening page** fills its left third with the portrait and puts the name
+and introduction on the right. The source photo is landscape and he stands just
+right of centre, so `object-position:52% 30%` is what keeps his face inside the
+strip as the column narrows - a plain centre crop loses him. The photo's right
+edge dissolves into the page with a gradient rather than ending on a seam, and
+below 1000px it stacks above the text and dissolves downward instead.
 
 **Everything is `#0c0c0e`.** Nothing alternates, nothing inverts. An earlier
 version alternated dark and light panels down the page and was rejected: the

@@ -249,3 +249,99 @@
   .rise.in{ animation:none; }
   .connector path{ stroke-dashoffset:0; transition:none; }
 }
+
+/* ---------------- opening page ----------------
+ * A photograph filling the left third, the name and the introduction on the
+ * right. The photo is landscape and he stands slightly right of centre, so the
+ * crop is anchored there rather than at the middle - object-position is what
+ * keeps his face in the strip as the column gets narrower. */
+.intro{
+  position:relative;
+  min-height:100vh;
+  min-height:100svh;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,2fr);
+  background:var(--ink);
+  color:var(--paper);
+  overflow:hidden;
+}
+.intro-photo{
+  position:relative;
+  margin:0;
+  height:100%;
+  overflow:hidden;
+}
+.intro-photo img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:52% 30%;
+}
+/* the photo dissolves into the page instead of ending on a hard vertical seam */
+.intro-photo::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(to right,rgba(12,12,14,0) 62%,rgba(12,12,14,.85) 92%,var(--ink) 100%);
+}
+.intro-text{
+  position:relative;
+  display:grid;
+  align-content:center;
+  gap:clamp(1.1rem,2.6vh,2rem);
+  padding:clamp(3rem,10vh,7rem) var(--gutter) clamp(4.5rem,12vh,8rem) clamp(2rem,4.5vw,5rem);
+}
+.intro-name{
+  margin:0;
+  font-weight:900;
+  font-size:clamp(34px,5.6vw,84px);
+  line-height:1;
+  letter-spacing:.01em;
+  text-shadow:0 0 18px rgba(255,255,255,.3);
+}
+.intro-bio{
+  margin:0;
+  max-width:46rem;
+  font-size:clamp(14px,min(1.45vw,2.5vh),22px);
+  line-height:1.62;
+  opacity:.74;
+}
+.intro-cue{
+  display:flex;
+  align-items:center;
+  gap:.7rem;
+  margin-top:clamp(.5rem,2vh,1.4rem);
+  font-size:11px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  opacity:.45;
+}
+.intro-cue::after{
+  content:"";
+  width:8px; height:8px;
+  border-right:2px solid currentColor;
+  border-bottom:2px solid currentColor;
+  transform:rotate(45deg);
+  animation:cue-bob 1.6s ease-in-out infinite;
+}
+
+@media (max-width:1000px){
+  .intro{
+    grid-template-columns:1fr;
+    grid-template-rows:minmax(0,42vh) auto;
+  }
+  .intro-photo img{ object-position:52% 26%; }
+  /* stacked, the photo hands off downward rather than sideways */
+  .intro-photo::after{
+    background:linear-gradient(to bottom,rgba(12,12,14,0) 58%,rgba(12,12,14,.9) 90%,var(--ink) 100%);
+  }
+  .intro-text{
+    padding:clamp(1.5rem,4vh,2.5rem) 1.4rem clamp(4rem,10vh,6rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .intro-cue::after{ animation:none; }
+}
