@@ -160,3 +160,12 @@ body::after{
   margin:0; object-fit:cover;
 }
 @media (max-width:900px){ .passage:has(.slot-photo){ grid-template-columns:1fr; } .passage .frame .slot-photo{ width:100%; max-height:none; } }
+
+/* china: the photo is centred on the gap between the two passages */
+.passages{ --pg:clamp(3.4rem,11vh,7rem); }
+.passage .frame.frame-mid{ align-self:end; height:0; }
+.frame-mid .slot-photo{ position:relative; transform:translateY(calc(-50% + var(--pg) / 2)); }
+@media (max-width:900px){
+  .passage .frame.frame-mid{ height:auto; }
+  .frame-mid .slot-photo{ transform:none; }
+}
