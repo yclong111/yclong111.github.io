@@ -73,7 +73,10 @@ body::after{
   display:grid;
   grid-template-columns:minmax(0,40rem) minmax(0,1fr);
   column-gap:clamp(1.6rem,6vw,7rem);
-  align-items:start;
+  /* stretch, not start: a fixed 4:3 frame is taller than a short paragraph,
+   * and the row took its height, leaving a blank block under the writing.
+   * The frame now takes the height of the writing beside it. */
+  align-items:stretch;
 }
 .passage-text .entry-rule{ margin-bottom:1.1rem; }
 .num{
@@ -90,8 +93,15 @@ body::after{
   color:rgba(245,245,244,.86);
 }
 .passage p:last-child{ margin-bottom:0; }
-.passage .frame{ justify-self:end; align-self:start; margin:0; width:100%; }
-.passage .frame .slot{ width:min(100%,46vh); margin-left:auto; }
+.passage .frame{
+  justify-self:end; align-self:stretch; margin:0; width:100%;
+  display:grid; grid-template-rows:minmax(0,1fr) auto; gap:.5rem;
+}
+.passage .frame .slot{
+  width:min(100%,46vh); margin-left:auto;
+  height:100%; aspect-ratio:auto;
+  min-height:clamp(110px,16vh,190px);
+}
 .passage .frame figcaption{ width:min(100%,46vh); margin-left:auto; }
 
 /* the turn: one line on its own, after the writing */
