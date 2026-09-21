@@ -28,7 +28,7 @@ One page, one colour, read top to bottom:
 | II | Not American Enough | coming back at sixteen, ostracized for the opposite reason |
 | III | So I Said Yes | four pillars of high school: debate, real-life experience, community, sports |
 | IV | The Present | CMU today: the fund, the academy, the chapter, the internships |
-| V | Some Other Things That Matter the World to Me | family, the 76ers, sci-fi movies, skiing: photo cards that flip over |
+| V | Some Other Things That Matter the World to Me | family, the 76ers, sci-fi movies, skiing: four real photo cards that flip over to his own words |
 | Why | Why Recalc | why this program (community, authenticity, inclusivity) |
 | Coda | the wheel again | whole, and finally standing still |
 
@@ -301,14 +301,19 @@ black via `body::after` in place.css.
 
 ## Still to do
 
-**Chapter V's cards flip.** Each `.flip` is a button holding two faces in one grid
-cell, so the card is exactly the size of its front. To add a photo, replace the
-`<span class="slot">Add a photo</span>` in that card's `.flip-front` with an
-`<img>`; the description goes in `.flip-text` on the `.flip-back`. All four
-descriptions are placeholders until the owner writes them.
+**Chapter V's cards flip, and all four are real.** Each `.flip` is a button holding
+two faces in one grid cell, so the card is as tall as the taller face. The photos are
+`images/family.jpg`, `sixers.jpg`, `source-code.jpg` and `ski.jpg`; each card takes its
+photo's own shape (`.flip-photo`, aspect ratios in chapters.css) and an inline
+`object-position`, so the family card (wide) keeps all four faces and the ski card
+keeps both skiers and the Matterhorn. The descriptions on the backs are his own
+words, verbatim ("3.5 years younger me" is his). Re-measure that no back overflows if
+the type or the column width changes: `.flip-back` scrolls if it must, and it should
+never have to. When adding a photo, bake its rotation in first - the 76ers shot arrived
+with an EXIF "rotate 90" flag - and downscale it (about 1200px on the long side).
 
-Every photo is a placeholder, and so is every word in chapters III-V: the ledes
-and all three entries in each. Chapter II is real copy.
+Every photo on the two city pages and in chapters II-IV is still a placeholder, and so is every word in chapters III-V: the ledes
+and all three entries in each. Chapter II is real copy, and Chapter V's photos and descriptions are real.
 
 **The bridge into finance runs through debate, and it is load-bearing.** Chapter
 II's reveal ends on "seizing every single opportunity my new school threw at

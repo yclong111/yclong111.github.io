@@ -1063,7 +1063,7 @@
   backface-visibility:hidden;
   -webkit-backface-visibility:hidden;
 }
-.flip-front{ grid-template-rows:minmax(0,1fr) auto; gap:.55rem; }
+.flip-front{ grid-template-rows:auto auto; align-content:start; gap:.55rem; } /* name sits right under the photo, even when the back is the taller face */
 .flip-front .slot{
   width:100%;
   display:grid;
@@ -1079,6 +1079,21 @@
 .flips .flip:nth-child(2) .slot{ aspect-ratio:1; }
 .flips .flip:nth-child(3) .slot{ aspect-ratio:4/5; }
 .flips .flip:nth-child(4) .slot{ aspect-ratio:1; }
+/* the real photos: each card takes its picture's own shape, so nothing important is cropped away
+ * (the family is wide, so it gets the widest card; the ski shot keeps the skiers and the mountain) */
+.flip-photo{
+  position:relative;
+  display:block;
+  width:100%;
+  overflow:hidden;
+  border:1px solid var(--rule);
+  background:#111114;
+}
+.flip-photo img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
+.flips .flip:nth-child(1) .flip-photo{ aspect-ratio:4/3; }
+.flips .flip:nth-child(2) .flip-photo{ aspect-ratio:3/4; }
+.flips .flip:nth-child(3) .flip-photo{ aspect-ratio:2/3; }
+.flips .flip:nth-child(4) .flip-photo{ aspect-ratio:3/4; }
 .flips .flip:nth-child(even){ margin-top:clamp(1rem,4vh,2.6rem); }
 .flip-name{
   font-size:clamp(12px,1.2vw,16px);
