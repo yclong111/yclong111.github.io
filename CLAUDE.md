@@ -29,7 +29,7 @@ One page, one colour, read top to bottom:
 | III | So I Said Yes | four pillars of high school: debate, real-life experience, community, sports |
 | IV | The Present | CMU today: the fund, the academy, the chapter, the internships |
 | V | Some Other Things That Matter the World to Me | family, the 76ers, sci-fi movies, skiing: photo cards that flip over |
-| Why | Why Recalc | why this program, beside why the yin and yang |
+| Why | Why Recalc | why this program (community, authenticity, inclusivity) |
 | Coda | the wheel again | whole, and finally standing still |
 
 **The opening page** fills its left 40% with the portrait and puts the name and
@@ -323,10 +323,14 @@ every argument chased far enough is an argument about the economy. Do not let
 III become a list of activities - it is evidence for the decision in II, which
 is why it opens on "So I said yes".
 
-The site closes on `#why`: why Recalc (his own words, verbatim - community, authenticity, then what he hopes to bring), beside a short note on
-why the yin and yang. It opens by explaining the character and closes by
-explaining the symbol. The wheel page and the two city pages are real copy. The structure is finished; the content is not.
-Chapter I is real everywhere: the wheel page, and both city pages now carry the owner's own words.
+The site closes on `#why`: why Recalc, in his own words, then the coda - the wheel
+again, still, with one closing line: "The Yin and Yang could not have been more
+different, yet somehow combine to make it work. My American and Chinese identities
+never meshed well, but together have helped shaped me into the person I am today."
+(verbatim - "helped shaped" is his). The short "why the yin and yang" note that used
+to sit beside the Recalc text was cut at his request; do not bring it back.
+The wheel page and the two city pages are real copy.
+Chapter I is real everywhere: the wheel page, and both city pages carry the owner's own words.
 
 Chapters II-V navigate nowhere - they are the whole of their own content. Only
 Chapter I's two halves have click transitions (the dragon and the cheesesteak).

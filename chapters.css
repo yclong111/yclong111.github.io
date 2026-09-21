@@ -269,6 +269,8 @@
 }
 .coda svg{ width:clamp(112px,16vh,160px); height:clamp(112px,16vh,160px); display:block; }
 .coda p{ margin:0; max-width:42ch; font-size:clamp(13px,1.3vw,18px); line-height:1.6; opacity:.62; }
+/* the closing line is two sentences now: give it room and a readable size */
+.coda .coda-line{ max-width:58ch; font-size:clamp(15px,1.55vw,22px); opacity:.74; }
 .coda .sig{ font-size:11px; letter-spacing:.3em; text-transform:uppercase; opacity:.4; }
 
 /* ---------------- narrow screens ---------------- */
@@ -708,25 +710,6 @@
   align-items:start;
   width:100%;
 }
-.close-note{
-  padding-top:clamp(.8rem,2vh,1.2rem);
-  border-top:1px solid var(--rule);
-}
-.close-note h3{
-  margin:0 0 .8rem;
-  font-size:clamp(12px,1.25vw,17px);
-  font-weight:900;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  opacity:.8;
-}
-.close-note p{
-  margin:0 0 .9em;
-  font-size:clamp(12px,min(1.1vw,1.9vh),16px);
-  line-height:1.6;
-  color:rgba(245,245,244,.62);
-}
-.close-note p:last-child{ margin-bottom:0; }
 
 @media (max-width:900px){
   .band, .band:nth-child(even){ grid-template-columns:1fr; }
@@ -921,7 +904,7 @@
 .recalc{ max-width:min(70ch,50rem); }
 .recalc p{ font-size:clamp(13px,min(1.2vw,2.05vh),18px); margin-bottom:.85em; }
 /* Recalc is the long one; give it most of the width and the note less */
-.chap-close .close-grid{ grid-template-columns:minmax(0,1.45fr) minmax(0,.75fr); }
+.chap-close .close-grid{ grid-template-columns:minmax(0,1fr); }
 .recalc-bring{ color:var(--paper) !important; }
 
 
