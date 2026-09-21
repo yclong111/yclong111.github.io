@@ -417,3 +417,4 @@ asked. Photos are still placeholders.
 - Photos added: us.html two frames (us-statue, us-kindergarten), china.html second frame (china-graduation), and a single tall `.pp-tall` photo in the #p-learned panel (learned-grad.jpg).
 - Photo spacing: overlapping/adjacent photos share `--ph-gap`, `--ph-overlap`, `--ph-drop`, `--ph-ring` (top of chapters.css); use them for any new photo spread.
 - us.html/china.html: real photos use `.slot-photo` at natural proportions (place.css bottom); China has one photo, no caption, no placeholder.
+- Chapter II: graduation photo (`.learn-stack`) sits right of the text with the What-I-learned blob overlapping its lower-left; the popup is text only. No placeholder photos remain anywhere.
