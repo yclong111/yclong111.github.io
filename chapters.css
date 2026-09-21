@@ -472,15 +472,15 @@
 .glyph{
   font-family:"Noto Serif SC","Songti SC","SimSun",serif;
   font-weight:600;
-  font-size:clamp(140px,26vh,320px);
+  font-size:clamp(168px,31vh,390px);
   line-height:1;
   color:var(--paper);
   text-shadow:0 0 30px rgba(255,255,255,.22);
 }
-.glyph-def{ position:relative; z-index:1; max-width:40rem; }
+.glyph-def{ position:relative; z-index:1; max-width:46rem; }
 .glyph-pron{
-  margin:0 0 .9rem;
-  font-size:clamp(12px,1.2vw,17px);
+  margin:0 0 1rem;
+  font-size:clamp(13px,1.35vw,19px);
   letter-spacing:.26em;
   text-transform:uppercase;
   opacity:.5;
@@ -489,7 +489,7 @@
 .glyph-senses{
   margin:0 0 clamp(1rem,2.6vh,1.7rem);
   padding:0 0 0 1.4em;
-  font-size:clamp(14px,min(1.4vw,2.4vh),22px);
+  font-size:clamp(16px,min(1.68vw,2.85vh),27px);
   line-height:1.45;
   font-weight:800;
 }
@@ -502,8 +502,8 @@
 .glyph-note{
   margin:0 0 1em;
   max-width:38rem;
-  font-size:clamp(12.5px,min(1.22vw,2.15vh),20px);
-  line-height:1.62;
+  font-size:clamp(14px,min(1.45vw,2.5vh),23px);
+  line-height:1.6;
   color:rgba(255,255,255,.7);
 }
 .glyph-note:last-child{ margin-bottom:0; }
