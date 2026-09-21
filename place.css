@@ -150,3 +150,13 @@ body::after{
 /* ---------------- the dragon on these pages ----------------
  * The name follows him onto both halves: riding over Shanghai, and a smaller
  * mark above the heading in Philadelphia. */
+
+/* real photos: shown at their own proportions, as large as the column allows, not
+ * squeezed into the height of the writing beside them */
+.passage:has(.slot-photo){ grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); }
+.passage .frame:has(.slot-photo){ align-self:start; grid-template-rows:auto; justify-items:end; }
+.passage .frame .slot-photo{
+  width:auto; height:auto; min-height:0; max-width:100%; max-height:min(78vh,42rem);
+  margin:0; object-fit:cover;
+}
+@media (max-width:900px){ .passage:has(.slot-photo){ grid-template-columns:1fr; } .passage .frame .slot-photo{ width:100%; max-height:none; } }
