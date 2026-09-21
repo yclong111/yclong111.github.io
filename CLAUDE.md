@@ -420,4 +420,3 @@ asked. Photos are still placeholders.
 - Chapter II: no photo, just the What-I-learned blob. us.html: kindergarten photo on 01, statue on 02, no captions.
 - Community panel has one photo (logo removed). Sports: both lower photos use pp-lift so they sit the same distance under the top photo.
 - china.html: the graduation photo (`.frame-mid`) is centred on the gap between passages 01 and 02 (zero-height frame + translateY; place.css bottom).
-- Every photo except the opening portrait gets a white line (`--ph-line`, 3px): `::after` overlay on `.pp/.np/.flip-photo`, a border on `img.slot-photo` (bottom of chapters.css). New photo wrappers need the same.
