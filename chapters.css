@@ -1208,3 +1208,9 @@
 @media (prefers-reduced-motion: reduce){
   .flip-inner{ transition:none; }
 }
+
+/* real photos in the two place pages' frames, and the single tall picture beside "What I learned" */
+.frame img.slot-photo{ display:block; width:min(100%,46vh); margin-left:auto; height:100%; min-height:clamp(110px,16vh,190px); object-fit:cover; }
+.panel-photos-one{ grid-template-columns:1fr; width:clamp(190px,21vw,300px); }
+.pp-tall{ aspect-ratio:3/4; }
+@media (max-width:640px){ .frame img.slot-photo{ aspect-ratio:3/2; height:auto; } }

@@ -414,3 +414,4 @@ asked. Photos are still placeholders.
 - Each pillar panel uses `.panel-photos` (2-col grid) with `.pp` figures: `pp-wide`, `pp-end`, `pp-start`, `pp-lift`/`pp-drop` for the stagger, `pp-card` for white-backed logos. Fit was tuned at 1280x720; keep panels within one screen.
 - `images/eyuan-paper.png` shows the owner's email address on the cover page.
 - Chapter V `.flips`: cards 2-4 are 86% width; photo midlines aligned with percent `margin-top` on `.flip:nth-child(n)` (desktop only). Re-check `.flip-back` scrollHeight vs clientHeight if card widths change.
+- Photos added: us.html two frames (us-statue, us-kindergarten), china.html second frame (china-graduation), and a single tall `.pp-tall` photo in the #p-learned panel (learned-grad.jpg).
