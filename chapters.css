@@ -11,6 +11,7 @@
   --ph-gap:clamp(.5rem,1vw,.85rem);      /* space between neighbouring photos */
   --ph-overlap:clamp(1rem,3vh,1.8rem);   /* how far a photo cuts into the one above */
   --ph-drop:clamp(.2rem,1.5vh,1rem);    /* how far a photo steps down instead */
+  --ph-line:3px;                         /* the white hairline round each photo */
   --ph-ring:clamp(4px,.5vw,6px);         /* the margin left around an overlapping photo */
   --ink:#0c0c0e;
   --paper:#f5f5f4;
@@ -1218,8 +1219,7 @@
 
 
 /* one thin white hairline around every photo, drawn over the picture so it never changes a size or a gap */
-.pp::after, .np::after, .flip-photo::after, .intro-photo::after{
-  content:""; position:absolute; inset:0; border:1px solid rgba(255,255,255,.88); pointer-events:none;
+.pp::after, .np::after, .flip-photo::after{
+  content:""; position:absolute; inset:0; border:var(--ph-line) solid rgba(255,255,255,.92); pointer-events:none;
 }
-.intro-photo{ position:relative; }
-.frame img.slot-photo{ border:1px solid rgba(255,255,255,.88); box-sizing:border-box; }
+.frame img.slot-photo{ border:var(--ph-line) solid rgba(255,255,255,.92); box-sizing:border-box; }
