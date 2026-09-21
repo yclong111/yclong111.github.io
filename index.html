@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&display=swap" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600&display=swap&text=%E9%BE%99" rel="stylesheet" />
-<link rel="stylesheet" href="chapters.css?v=d3c60966" />
+<link rel="stylesheet" href="chapters.css?v=a39904cd" />
 <style>
   :root{
     --bg:#07070a;
@@ -421,11 +421,12 @@
 
     <div class="prose-row">
       <div class="prose rise" style="--d:.14s">
-        <p>Coming back to the US as a rising junior, I thought I would finally feel most at
-        home. Instead I was ostracized once again &mdash; this time for <em>not</em> being
-        American enough.</p>
-        <p>Sure, I spoke perfect English. But I lacked the authenticity: the hip, the slang,
-        the customs and the references.</p>
+        <p>When I finally came back to the US, I was a rising junior in high school. While I
+        was forced to give up all the relationships and extracurriculars I had built up in
+        China, I was excited to be back. In a way, I even felt more at home.</p>
+        <p>But instead, I was in a way ostracized again, this time for <em>not</em> being
+        American enough. Sure, I spoke perfect English. But I lacked the authenticity: the
+        hip, the slang, the customs and the reference.</p>
       </div>
 
       <figure class="frame prose-photo rise" style="--d:.26s">
@@ -434,23 +435,31 @@
       </figure>
     </div>
 
-    <p class="prose-coda rise" style="--d:.34s">I was once again back at square one.</p>
+    <div class="prose-close">
+      <p class="prose-coda rise" style="--d:.34s">I was once again back at square one.</p>
 
-    <div class="learned rise" style="--d:.42s">
-      <button class="learned-toggle" type="button" aria-expanded="false" aria-controls="ch2-learned">
-        <span class="learned-mark" aria-hidden="true"></span>
-        <span class="learned-label">What I took from it</span>
+      <button class="orb learn-orb rise" style="--d:.44s" type="button" data-panel="p-learned"
+              aria-haspopup="dialog" aria-label="What I learned">
+        <span class="orb-face"><span class="orb-label">What I<br>learned</span></span>
       </button>
-      <div class="learned-body" id="ch2-learned">
-        <div class="learned-inner">
-          <p>I realized that while I would forever be the paradoxical outsider, what I could
-          do was focus on the things I did have control over: my character, the only thing
-          that truly defined me.</p>
-          <p>Rather than pitying myself, I worked to better myself, seizing every single
-          opportunity my new school threw at me. And in shifting my perspective, I realized
-          that even the cross-cultural perspective my past allowed me to bring to the
-          table &mdash; something I previously wasn't even aware I had &mdash; was in fact a
-          good thing.</p>
+    </div>
+
+    <div class="panel" id="p-learned" role="dialog" aria-modal="true" aria-labelledby="t-learned" hidden>
+      <div class="panel-sheet">
+        <button class="panel-close" type="button" aria-label="Close">&times;</button>
+        <div class="panel-body panel-body-wide">
+          <span class="panel-kicker">Chapter II</span>
+          <h3 class="panel-title" id="t-learned">What I learned</h3>
+          <div class="panel-text">
+            <p>I realized that while I would forever be the paradoxical outsider, what I could
+            do was focus on the things I did have control over: my character, the only thing
+            that truly defined me.</p>
+            <p>Rather than pitying myself, I worked to better myself, seizing every single
+            opportunity my new school threw at me. And in shifting my perspective, I realized
+            that even the cross-cultural perspective my past allowed me to bring to the
+            table &mdash; something I previously wasn&rsquo;t even aware I had &mdash; was in
+            fact a good thing.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -735,7 +744,7 @@
   </footer>
 
 <script src="dragon.js?v=a1868658"></script>
-<script src="chapters.js?v=4071324f"></script>
+<script src="chapters.js?v=9dac6e68"></script>
 <script src="transitions.js?v=2ad2897f"></script>
 <script>
 (function () {

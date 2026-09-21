@@ -80,16 +80,6 @@
     connectors.forEach(function (c) { c.classList.add('in'); });
   }
 
-  /* ---- the "what I took from it" reveal ---- */
-  document.querySelectorAll('.learned-toggle').forEach(function (btn) {
-    var wrap = btn.closest('.learned');
-    btn.addEventListener('click', function () {
-      var open = wrap.classList.toggle('open');
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-  });
-
-
   /* ---- chapter III: the ring, and its full-screen panels ----
    * hidden is removed before .open is added so the opacity transition has a
    * frame to run in; a display change and a transition in the same frame
