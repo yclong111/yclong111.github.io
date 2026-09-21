@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&display=swap" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600&display=swap&text=%E9%BE%99" rel="stylesheet" />
-<link rel="stylesheet" href="chapters.css?v=0605980b" />
+<link rel="stylesheet" href="chapters.css?v=40fc8e47" />
 <style>
   :root{
     --bg:#07070a;
@@ -407,7 +407,7 @@
     <a href="#ch2"><span class="rail-label">II &middot; Not American Enough</span><span class="tick"></span></a>
     <a href="#ch3"><span class="rail-label">III &middot; Exploration</span><span class="tick"></span></a>
     <a href="#ch4"><span class="rail-label">IV &middot; The Present</span><span class="tick"></span></a>
-    <a href="#ch5"><span class="rail-label">V &middot; Off the Clock</span><span class="tick"></span></a>
+    <a href="#ch5"><span class="rail-label">V &middot; What Matters</span><span class="tick"></span></a>
     <a href="#why"><span class="rail-label">Why Recalc</span><span class="tick"></span></a>
   </nav>
 
@@ -650,30 +650,64 @@
 
     <header class="chap-head rise">
       <span class="chap-num">Chapter V</span>
-      <h2 class="chap-title">Off the Clock</h2>
-      <p class="chap-lede">Placeholder lede. The part of the story that was never on a
-      r&eacute;sum&eacute; &mdash; the people it is all for, and what I do when none of it is
-      work.</p>
+      <h2 class="chap-title">Some Other Things That Matter the World to Me</h2>
     </header>
 
-    <div class="gallery">
-      <figure class="frame rise" style="--d:.12s">
-        <div class="slot">Add a photo</div>
-        <figcaption>Family &mdash; the people who crossed an ocean twice</figcaption>
-      </figure>
-      <figure class="frame rise" style="--d:.18s">
-        <div class="slot">Add a photo</div>
-        <figcaption>A free Saturday</figcaption>
-      </figure>
-      <figure class="frame rise" style="--d:.24s">
-        <div class="slot">Add a photo</div>
-        <figcaption>Still curious about</figcaption>
-      </figure>
-      <figure class="frame rise" style="--d:.3s">
-        <div class="slot">Add a photo</div>
-        <figcaption>Add a caption</figcaption>
-      </figure>
+    <div class="gallery flips">
+      <button class="flip rise" type="button" style="--d:0.12s" aria-pressed="false"
+              aria-label="My Family &mdash; show the story behind it">
+        <span class="flip-inner">
+          <span class="flip-face flip-front">
+            <span class="slot">Add a photo</span>
+            <span class="flip-name">My Family</span>
+          </span>
+          <span class="flip-face flip-back">
+            <span class="flip-name">My Family</span>
+            <span class="flip-text">Placeholder &mdash; a line or two about your family.</span>
+          </span>
+        </span>
+      </button>
+      <button class="flip rise" type="button" style="--d:0.18s" aria-pressed="false"
+              aria-label="The 76ers &mdash; show the story behind it">
+        <span class="flip-inner">
+          <span class="flip-face flip-front">
+            <span class="slot">Add a photo</span>
+            <span class="flip-name">The 76ers</span>
+          </span>
+          <span class="flip-face flip-back">
+            <span class="flip-name">The 76ers</span>
+            <span class="flip-text">Placeholder &mdash; why the Sixers.</span>
+          </span>
+        </span>
+      </button>
+      <button class="flip rise" type="button" style="--d:0.24s" aria-pressed="false"
+              aria-label="Sci-Fi Movies &mdash; show the story behind it">
+        <span class="flip-inner">
+          <span class="flip-face flip-front">
+            <span class="slot">Add a photo</span>
+            <span class="flip-name">Sci-Fi Movies</span>
+          </span>
+          <span class="flip-face flip-back">
+            <span class="flip-name">Sci-Fi Movies</span>
+            <span class="flip-text">Placeholder &mdash; the films, and what keeps you coming back to them.</span>
+          </span>
+        </span>
+      </button>
+      <button class="flip rise" type="button" style="--d:0.30s" aria-pressed="false"
+              aria-label="Skiing &mdash; show the story behind it">
+        <span class="flip-inner">
+          <span class="flip-face flip-front">
+            <span class="slot">Add a photo</span>
+            <span class="flip-name">Skiing</span>
+          </span>
+          <span class="flip-face flip-back">
+            <span class="flip-name">Skiing</span>
+            <span class="flip-text">Placeholder &mdash; where you ski, and what it gives you.</span>
+          </span>
+        </span>
+      </button>
     </div>
+    <p class="flip-hint rise" style="--d:.4s">Tap a photo to turn it over</p>
   </section>
   <div class="connector" aria-hidden="true">
     <svg viewBox="0 0 60 200"><use href="#dg-segment"/></svg>
@@ -738,7 +772,7 @@
   </footer>
 
 <script src="dragon.js?v=a1868658"></script>
-<script src="chapters.js?v=9dac6e68"></script>
+<script src="chapters.js?v=ff0ee28d"></script>
 <script src="transitions.js?v=2ad2897f"></script>
 <script>
 (function () {

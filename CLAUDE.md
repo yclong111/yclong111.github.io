@@ -28,7 +28,7 @@ One page, one colour, read top to bottom:
 | II | Not American Enough | coming back at sixteen, ostracized for the opposite reason |
 | III | So I Said Yes | four pillars of high school: debate, real-life experience, community, sports |
 | IV | The Present | CMU today: the fund, the academy, the chapter, the internships |
-| V | Off the Clock | family, fun, current obsessions |
+| V | Some Other Things That Matter the World to Me | family, the 76ers, sci-fi movies, skiing: photo cards that flip over |
 | Why | Why Recalc | why this program, beside why the yin and yang |
 | Coda | the wheel again | whole, and finally standing still |
 
@@ -101,7 +101,7 @@ past one screen when open; that is expected.
 
 **Every chapter has a different shape, on purpose.** II is one passage with a
 photo beside it; III is a ring of four circles that open full-screen panels; IV
-is a ledger of what is running right now; V is an uneven wall of pictures. Scrolling should not feel like
+is a ledger of what is running right now; V is an uneven wall of pictures that turn over, each with its story on the back. Scrolling should not feel like
 the same slide four times. If another is ever added, give it a rhythm of its own
 rather than reusing one of these.
 
@@ -300,6 +300,12 @@ skipped when the visitor prefers reduced motion, and the destination pages fade 
 black via `body::after` in place.css.
 
 ## Still to do
+
+**Chapter V's cards flip.** Each `.flip` is a button holding two faces in one grid
+cell, so the card is exactly the size of its front. To add a photo, replace the
+`<span class="slot">Add a photo</span>` in that card's `.flip-front` with an
+`<img>`; the description goes in `.flip-text` on the `.flip-back`. All four
+descriptions are placeholders until the owner writes them.
 
 Every photo is a placeholder, and so is every word in chapters III-V: the ledes
 and all three entries in each. Chapter II is real copy.

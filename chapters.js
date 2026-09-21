@@ -154,6 +154,14 @@
     });
   })();
 
+  /* ---- chapter V: photos that turn over to show their story ---- */
+  document.querySelectorAll('.flip').forEach(function (card) {
+    card.addEventListener('click', function () {
+      var on = card.classList.toggle('flipped');
+      card.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  });
+
   /* ---- chapter rail: mark whichever chapter owns the middle of the screen ---- */
   var links = Array.prototype.slice.call(document.querySelectorAll('.rail a'));
   var targets = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });

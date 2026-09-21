@@ -1045,3 +1045,94 @@
 @media (max-width:900px){
   .learn-orb{ justify-self:start; --base:clamp(170px,46vw,240px); }
 }
+
+
+/* ---------------- chapter V: photos that turn over ----------------
+ * Each picture is a card with the story on its back, so the wall stays a wall
+ * of pictures until someone asks. Both faces sit in the same grid cell, so the
+ * card is exactly the size of its front and the back can never be clipped by
+ * a guessed height. The uneven wall from before is kept: tall, square, tall,
+ * square, with the squares dropped a little. */
+.flips{ perspective:1600px; }
+.flip{
+  position:relative;
+  display:block;
+  width:100%;
+  padding:0;
+  background:none;
+  border:0;
+  color:inherit;
+  font:inherit;
+  text-align:left;
+  cursor:pointer;
+}
+.flip:focus{ outline:none; }
+.flip:focus-visible .flip-inner{ outline:2px solid var(--paper); outline-offset:6px; }
+.flip-inner{
+  display:grid;
+  transform-style:preserve-3d;
+  transition:transform .75s cubic-bezier(.4,.1,.2,1);
+}
+.flip.flipped .flip-inner{ transform:rotateY(180deg); }
+.flip-face{
+  grid-area:1 / 1;
+  display:grid;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+}
+.flip-front{ grid-template-rows:minmax(0,1fr) auto; gap:.55rem; }
+.flip-front .slot{
+  width:100%;
+  display:grid;
+  place-items:center;
+  border:1px solid var(--rule);
+  background:rgba(245,245,244,.03);
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  opacity:.6;
+}
+.flips .flip:nth-child(1) .slot{ aspect-ratio:3/4; }
+.flips .flip:nth-child(2) .slot{ aspect-ratio:1; }
+.flips .flip:nth-child(3) .slot{ aspect-ratio:4/5; }
+.flips .flip:nth-child(4) .slot{ aspect-ratio:1; }
+.flips .flip:nth-child(even){ margin-top:clamp(1rem,4vh,2.6rem); }
+.flip-name{
+  font-size:clamp(12px,1.2vw,16px);
+  font-weight:900;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+.flip-back{
+  transform:rotateY(180deg);
+  align-content:start;
+  gap:.9rem;
+  padding:clamp(1rem,2vw,1.6rem);
+  border:1px solid rgba(245,245,244,.5);
+  background:#17171b;
+  overflow:auto;
+}
+.flip-text{
+  font-size:clamp(13px,min(1.15vw,2vh),16px);
+  line-height:1.55;
+  color:rgba(245,245,244,.78);
+}
+.flip-hint{
+  position:relative;
+  z-index:1;
+  margin:clamp(1rem,3vh,1.8rem) 0 0;
+  font-size:11px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  opacity:.45;
+}
+
+@media (max-width:640px){
+  /* two columns leave a 170px square for a paragraph; one reads */
+  .flips{ grid-template-columns:1fr; }
+  .flips .flip .slot{ aspect-ratio:4/3 !important; }
+  .flips .flip:nth-child(even){ margin-top:0; }
+}
+@media (prefers-reduced-motion: reduce){
+  .flip-inner{ transition:none; }
+}
