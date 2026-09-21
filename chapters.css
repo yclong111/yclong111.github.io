@@ -1003,29 +1003,45 @@
  * button under the line that opened an accordion in place; it is a bubble now,
  * built from the same parts as the pillars in chapter III so the site has one
  * way of saying "there is more here". */
-.prose-close{
-  position:relative;
-  z-index:1;
-  display:grid;
-  grid-template-columns:minmax(0,1fr) auto;
-  gap:clamp(1.4rem,5vw,4.5rem);
-  align-items:center;
-  width:100%;
-}
+/* The blob sits where the photo used to, beside the writing. */
+.chap-prose .prose-row{ align-items:center; }
 /* .orb is absolutely placed on chapter III's field; here it sits in the grid */
 .learn-orb{
   /* .orb sizes itself from --base * --s, which only exist on chapter III's
    * field; supply them here rather than fighting the width declaration */
-  --base:clamp(104px,15vh,144px);
+  --base:clamp(190px,34vh,320px);
   --s:1;
   position:relative;
   left:auto; top:auto;
   transform:none;
   justify-self:end;
 }
-.learn-orb .orb-label{ line-height:1.25; }
+.learn-orb .orb-label{ line-height:1.3; font-size:clamp(12px,min(1.4vw,2.2vh),17px); }
+
+/* Not a circle: an uneven shape whose corners travel, so it reads as
+ * something alive rather than a button. Two animations on their own clocks -
+ * morph and drift - so the loop never lines up with itself. */
+.learn-orb .orb-face{
+  border-radius:52% 48% 43% 57% / 47% 52% 48% 53%;
+  box-shadow:0 0 44px rgba(245,245,244,.22);
+  animation:blob-morph 9s ease-in-out infinite alternate,
+            orb-float 6.5s ease-in-out infinite alternate;
+}
+.learn-orb:hover .orb-face, .learn-orb:focus-visible .orb-face{
+  transform:scale(1.04);
+  box-shadow:0 0 64px rgba(245,245,244,.46);
+}
+@keyframes blob-morph{
+  0%{   border-radius:52% 48% 43% 57% / 47% 52% 48% 53%; }
+  25%{  border-radius:63% 37% 54% 46% / 38% 59% 41% 62%; }
+  50%{  border-radius:44% 56% 36% 64% / 58% 39% 61% 42%; }
+  75%{  border-radius:57% 43% 62% 38% / 44% 63% 37% 56%; }
+  100%{ border-radius:48% 52% 57% 43% / 55% 45% 55% 45%; }
+}
+@media (prefers-reduced-motion: reduce){
+  .learn-orb .orb-face{ animation:none; }
+}
 
 @media (max-width:900px){
-  .prose-close{ grid-template-columns:1fr; justify-items:start; gap:1.4rem; }
-  .learn-orb{ justify-self:start; }
+  .learn-orb{ justify-self:start; --base:clamp(170px,46vw,240px); }
 }
