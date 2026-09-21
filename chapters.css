@@ -963,3 +963,74 @@
 /* Recalc is the long one; give it most of the width and the note less */
 .chap-close .close-grid{ grid-template-columns:minmax(0,1.45fr) minmax(0,.75fr); }
 .recalc-bring{ color:var(--paper) !important; }
+
+
+/* ---------------- the bridge out of chapter III ---------------- */
+.orbit-bridge{
+  position:relative;
+  z-index:1;
+  margin:clamp(.8rem,2.4vh,1.6rem) auto 0;
+  max-width:46rem;
+  text-align:center;
+  font-size:clamp(14px,min(1.45vw,2.4vh),22px);
+  font-weight:900;
+  line-height:1.3;
+  color:var(--paper);
+  text-shadow:0 0 14px rgba(255,255,255,.2);
+}
+
+/* the line a pillar turns on, inside its panel */
+.panel-line{
+  margin:1.1em 0 !important;
+  padding-left:clamp(.9rem,2vw,1.4rem);
+  border-left:2px solid var(--paper);
+  font-weight:900;
+  color:var(--paper) !important;
+  line-height:1.3;
+}
+
+/* ---------------- chapter IV: what is true right now ----------------
+ * A ledger rather than cards or steps: these are all running at the same
+ * time, so nothing about them is a sequence. Term on the left, what it
+ * actually involves on the right. */
+.chap-now .chap-head{ max-width:48rem; }
+.now-row{
+  position:relative;
+  z-index:1;
+  margin-top:clamp(1rem,3vh,2rem);
+  display:grid;
+  grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr);
+  gap:clamp(1.4rem,4vw,4rem);
+  align-items:start;
+  width:100%;
+}
+.ledger{ margin:0; display:grid; gap:clamp(.7rem,1.8vh,1.2rem); }
+.ledger-row{
+  display:grid;
+  grid-template-columns:minmax(0,.9fr) minmax(0,1.6fr);
+  gap:clamp(.8rem,2vw,1.8rem);
+  align-items:baseline;
+  padding-top:clamp(.6rem,1.6vh,1rem);
+  border-top:1px solid var(--rule);
+}
+.ledger dt{
+  margin:0;
+  font-size:clamp(12px,1.3vw,18px);
+  font-weight:900;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+.ledger dd{
+  margin:0;
+  font-size:clamp(12px,min(1.12vw,1.95vh),16px);
+  line-height:1.55;
+  color:rgba(245,245,244,.64);
+}
+.now-photo{ margin:0; }
+.now-photo .slot{ width:min(100%,32vh); aspect-ratio:4/5; }
+
+@media (max-width:900px){
+  .now-row{ grid-template-columns:1fr; }
+  .ledger-row{ grid-template-columns:1fr; gap:.3rem; }
+  .now-photo .slot{ width:min(100%,300px); aspect-ratio:4/3; }
+}

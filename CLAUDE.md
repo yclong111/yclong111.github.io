@@ -26,10 +26,9 @@ One page, one colour, read top to bottom:
 | Opening | portrait, name, introduction | who is speaking |
 | I | Two Worlds | opens on the Lahiri quote, then the yin-yang |
 | II | Not American Enough | coming back at sixteen, ostracized for the opposite reason |
-| III | So I Said Yes | four pillars of high school: debate, work, community, sports |
-| IV | The Pivot | debate led to finance |
-| V | The Work | college organisations, internships, what comes next |
-| VI | Off the Clock | family, fun, current obsessions |
+| III | So I Said Yes | four pillars of high school: debate, real-life experience, community, sports |
+| IV | The Present | CMU today: the fund, the academy, the chapter, the internships |
+| V | Off the Clock | family, fun, current obsessions |
 | Why | Why Recalc | why this program, beside why the yin and yang |
 | Coda | the wheel again | whole, and finally standing still |
 
@@ -102,8 +101,7 @@ past one screen when open; that is expected.
 
 **Every chapter has a different shape, on purpose.** II is one passage with a
 photo beside it; III is a ring of four circles that open full-screen panels; IV
-is a pulled-out sentence over numbered steps; V is the three-card grid; VI is an
-uneven wall of pictures. Scrolling should not feel like
+is a ledger of what is running right now; V is an uneven wall of pictures. Scrolling should not feel like
 the same slide four times. If another is ever added, give it a rhythm of its own
 rather than reusing one of these.
 
@@ -308,8 +306,13 @@ and all three entries in each. Chapter II is real copy.
 
 **The bridge into finance runs through debate, and it is load-bearing.** Chapter
 II's reveal ends on "seizing every single opportunity my new school threw at
-me"; Chapter III is what he seized; Chapter IV is what one of those things
-turned into. Debate taught him argumentation and storytelling, and then that
+me"; Chapter III is what he seized, and it closes on "all these experiences
+collectively led me to finance, which brings us to today", which hands straight
+to Chapter IV. There was once a separate Pivot chapter between them; it was cut
+because that bridge line does its job, and its best sentence - every argument
+chased far enough is an argument about the economy - now sits inside the Debate
+pillar, where it actually happened. The Work chapter was folded into The Present
+for the same reason. Debate taught him argumentation and storytelling, and then that
 every argument chased far enough is an argument about the economy. Do not let
 III become a list of activities - it is evidence for the decision in II, which
 is why it opens on "So I said yes".
