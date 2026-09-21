@@ -323,7 +323,7 @@ every argument chased far enough is an argument about the economy. Do not let
 III become a list of activities - it is evidence for the decision in II, which
 is why it opens on "So I said yes".
 
-The site closes on `#why`: why Recalc (his copy to write), beside a short note on
+The site closes on `#why`: why Recalc (his own words, verbatim - community, authenticity, then what he hopes to bring), beside a short note on
 why the yin and yang. It opens by explaining the character and closes by
 explaining the symbol. The wheel page and the two city pages are real copy. The structure is finished; the content is not.
 Chapter I is real everywhere: the wheel page, and both city pages now carry the owner's own words.
