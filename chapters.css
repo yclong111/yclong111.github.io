@@ -747,7 +747,9 @@
 .orbit{
   position:relative;
   z-index:1;
-  margin-top:clamp(.6rem,2vh,1.4rem);
+  /* clear of the lede above: the circles are placed by their centres, so the
+   * top one sits half its own height higher than its --y suggests */
+  margin-top:clamp(1.3rem,3.6vh,2.6rem);
   display:grid;
   justify-items:center;
   gap:clamp(.4rem,1.4vh,1rem);
