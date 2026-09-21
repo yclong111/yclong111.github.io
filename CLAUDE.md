@@ -415,3 +415,4 @@ asked. Photos are still placeholders.
 - `images/eyuan-paper.png` shows the owner's email address on the cover page.
 - Chapter V `.flips`: cards 2-4 are 86% width; photo midlines aligned with percent `margin-top` on `.flip:nth-child(n)` (desktop only). Re-check `.flip-back` scrollHeight vs clientHeight if card widths change.
 - Photos added: us.html two frames (us-statue, us-kindergarten), china.html second frame (china-graduation), and a single tall `.pp-tall` photo in the #p-learned panel (learned-grad.jpg).
+- Photo spacing: overlapping/adjacent photos share `--ph-gap`, `--ph-overlap`, `--ph-drop`, `--ph-ring` (top of chapters.css); use them for any new photo spread.
