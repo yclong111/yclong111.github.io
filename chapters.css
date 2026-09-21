@@ -997,20 +997,20 @@
 .now-row{
   position:relative;
   z-index:1;
-  margin-top:clamp(1rem,3vh,2rem);
+  margin-top:clamp(.7rem,2vh,1.4rem);
   display:grid;
   grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr);
   gap:clamp(1.4rem,4vw,4rem);
   align-items:start;
   width:100%;
 }
-.ledger{ margin:0; display:grid; gap:clamp(.7rem,1.8vh,1.2rem); }
+.ledger{ margin:0; display:grid; gap:clamp(.45rem,1.2vh,.85rem); }
 .ledger-row{
   display:grid;
   grid-template-columns:minmax(0,.9fr) minmax(0,1.6fr);
   gap:clamp(.8rem,2vw,1.8rem);
   align-items:baseline;
-  padding-top:clamp(.6rem,1.6vh,1rem);
+  padding-top:clamp(.45rem,1.1vh,.75rem);
   border-top:1px solid var(--rule);
 }
 .ledger dt{
