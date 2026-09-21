@@ -418,3 +418,4 @@ asked. Photos are still placeholders.
 - Photo spacing: overlapping/adjacent photos share `--ph-gap`, `--ph-overlap`, `--ph-drop`, `--ph-ring` (top of chapters.css); use them for any new photo spread.
 - us.html/china.html: real photos use `.slot-photo` at natural proportions (place.css bottom); China has one photo, no caption, no placeholder.
 - Chapter II: no photo, just the What-I-learned blob. us.html: kindergarten photo on 01, statue on 02, no captions.
+- Community panel has one photo (logo removed). Sports: both lower photos use pp-lift so they sit the same distance under the top photo.
