@@ -862,6 +862,13 @@
   display:grid;
   place-items:center;
   padding:clamp(1.2rem,5vh,3rem) var(--gutter);
+  /* A fixed, centred box clips anything taller than the screen with no way to
+   * reach it. Scroll inside the panel instead, and centre the sheet with auto
+   * margins, which collapse to zero once it overflows - place-items:center
+   * would push the top of an overflowing sheet out of reach. */
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  place-items:start center;
   background:#17171b;
   clip-path:circle(var(--r0,0px) at var(--cx,50%) var(--cy,50%));
   transition:clip-path .7s cubic-bezier(.7,0,.2,1);
@@ -875,6 +882,7 @@
 .panel:not(.open){ pointer-events:none; }
 .panel-sheet{
   position:relative;
+  margin:auto 0;
   width:min(76rem,100%);
   opacity:0;
   transform:translateY(16px);
@@ -909,7 +917,7 @@
 .panel-title{
   grid-column:1 / -1;
   margin:0 0 clamp(1.2rem,3.6vh,2.2rem);
-  font-size:clamp(40px,7.4vw,112px);
+  font-size:clamp(36px,6.2vw,96px);
   font-weight:900;
   line-height:.95;
   text-shadow:0 0 18px rgba(255,255,255,.26);
