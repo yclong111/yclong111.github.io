@@ -1151,7 +1151,6 @@
   display:block;
   width:100%;
   overflow:hidden;
-  border:1px solid var(--rule);
   background:#111114;
 }
 .flip-photo img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
@@ -1217,3 +1216,10 @@
 .frame img.slot-photo{ display:block; width:min(100%,46vh); margin-left:auto; height:100%; min-height:clamp(110px,16vh,190px); object-fit:cover; }
 @media (max-width:640px){ .frame img.slot-photo{ aspect-ratio:3/2; height:auto; } }
 
+
+/* one thin white hairline around every photo, drawn over the picture so it never changes a size or a gap */
+.pp::after, .np::after, .flip-photo::after, .intro-photo::after{
+  content:""; position:absolute; inset:0; border:1px solid rgba(255,255,255,.88); pointer-events:none;
+}
+.intro-photo{ position:relative; }
+.frame img.slot-photo{ border:1px solid rgba(255,255,255,.88); box-sizing:border-box; }
