@@ -873,8 +873,41 @@
   color:rgba(245,245,244,.8);
 }
 .panel-text p:last-child{ margin-bottom:0; }
-.panel-photo{ margin:0; }
-.panel-photo .slot{ width:clamp(170px,24vw,320px); }
+/* The pillars' pictures: a small spread beside the writing, in the same language as chapter IV's -
+ * plain frames, logos and paper on white label cards, and a picture that overlaps the one above it
+ * inside a ring the colour of the panel (#17171b), so the pair never lines up. */
+.panel-photos{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(.5rem,1vw,.85rem);
+  width:clamp(220px,27vw,380px);
+  align-items:start;
+}
+.pp{ margin:0; position:relative; background:#0f0f12; }
+.pp img{ display:block; width:100%; height:100%; object-fit:cover; }
+.pp-wide{ grid-column:1 / -1; }
+.pp-end{ grid-column:1 / -1; width:66%; justify-self:end; }
+.pp-end.pp-3x4{ width:54%; }
+.pp-start{ grid-column:1 / -1; width:48%; justify-self:start; }
+.pp-4x3{ aspect-ratio:4/3; }
+.pp-3x2{ aspect-ratio:3/2; }
+.pp-3x4{ aspect-ratio:3/4; }
+.pp-2x3{ aspect-ratio:3/4; }
+.pp-card{ background:#fff; display:grid; place-items:center; }
+.pp-card img{ object-fit:contain; }
+.pp-strip{ aspect-ratio:6.4/1; padding:.35rem .6rem; }
+.pp-paper{ aspect-ratio:1.5/1; }
+.pp-paper img{ object-fit:cover; object-position:50% 38%; }
+.pp-logo{ aspect-ratio:1/1; padding:.5rem; }
+.pp-lift{ margin-top:calc(clamp(1rem,3vh,1.8rem) * -1); z-index:1; box-shadow:0 0 0 clamp(4px,.5vw,6px) #17171b; }
+.pp-drop{ margin-top:clamp(.2rem,1.6vh,1rem); }
+.pp figcaption{
+  position:absolute; left:0; right:0; bottom:0;
+  padding:1.5rem .6rem .45rem;
+  background:linear-gradient(transparent, rgba(12,12,14,.82));
+  font-size:clamp(9px,.85vw,11px); letter-spacing:.2em; text-transform:uppercase;
+}
+.pp-paper figcaption{ color:#fff; }
 
 @media (max-width:640px){
   /* on a phone four floating circles collide; a loose 2x2 keeps them apart */
@@ -891,7 +924,7 @@
 }
 @media (max-width:900px){
   .panel-body{ grid-template-columns:1fr; row-gap:1.6rem; }
-  .panel-photo .slot{ width:min(100%,300px); }
+  .panel-photos{ width:min(100%,420px); }
 }
 
 @media (prefers-reduced-motion: reduce){
@@ -1123,6 +1156,18 @@
 .flips .flip:nth-child(3) .flip-photo{ aspect-ratio:2/3; }
 .flips .flip:nth-child(4) .flip-photo{ aspect-ratio:3/4; }
 .flips .flip:nth-child(even){ margin-top:clamp(1rem,4vh,2.6rem); }
+/* The wide family photo is the shortest picture, so it hung from the top of the row while the others
+ * reached down. The photos now share a midline: each card is dropped by the gap between its picture and
+ * the tallest one (percent margins resolve against the column, so they follow the layout at any width),
+ * with the old stagger kept on the even cards. The other three come in a little so the family leads. */
+.flips .flip:not(:first-child){ width:86%; justify-self:center; }
+@media (min-width:901px){
+  .flips{ --stagger:clamp(.5rem,1.6vh,1.1rem); }
+  .flips .flip:nth-child(1){ margin-top:27%; }
+  .flips .flip:nth-child(2){ margin-top:calc(7% + var(--stagger)); }
+  .flips .flip:nth-child(3){ margin-top:0; }
+  .flips .flip:nth-child(4){ margin-top:calc(7% + var(--stagger)); }
+}
 .flip-name{
   font-size:clamp(12px,1.2vw,16px);
   font-weight:900;
@@ -1158,6 +1203,7 @@
   .flips{ grid-template-columns:1fr; }
   .flips .flip .slot{ aspect-ratio:4/3 !important; }
   .flips .flip:nth-child(even){ margin-top:0; }
+  .flips .flip:not(:first-child){ width:100%; }
 }
 @media (prefers-reduced-motion: reduce){
   .flip-inner{ transition:none; }
