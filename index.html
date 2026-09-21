@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&display=swap" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600&display=swap&text=%E9%BE%99" rel="stylesheet" />
-<link rel="stylesheet" href="chapters.css?v=edebf396" />
+<link rel="stylesheet" href="chapters.css?v=6b61f3f7" />
 <style>
   :root{
     --bg:#07070a;
@@ -605,24 +605,24 @@
 
     <div class="now-row">
       <dl class="ledger">
-        <div class="ledger-row rise" style="--d:.12s">
+        <div class="ledger-row rise" data-k="tsf" style="--d:.12s">
           <dt>Tartan Student Fund</dt>
           <dd>I manage the Energy book as Portfolio Manager, leading a team of six analysts
           and pitching names on valuation rather than on a hunch.</dd>
         </div>
-        <div class="ledger-row rise" style="--d:.18s">
+        <div class="ledger-row rise" data-k="iba" style="--d:.18s">
           <dt>Investment Banking Academy</dt>
           <dd>I&rsquo;m further exploring the world of investment banking and finance through
           CMU&rsquo;s premier club to prepare students for IB.</dd>
         </div>
-        <div class="ledger-row rise" style="--d:.24s">
+        <div class="ledger-row rise" data-k="greek" style="--d:.24s">
           <dt>Alpha Kappa Psi and Phi Delta Theta</dt>
           <dd>Regardless if it&rsquo;s in a professional and social setting, I&rsquo;ve always
           been focused on joining a community that not just benefits me, but that I can also
           contribute to. I&rsquo;m constantly looking to expand my network and meet people, and
           I&rsquo;m a firm believer that everyone has something worth learning from.</dd>
         </div>
-        <div class="ledger-row rise" style="--d:.3s">
+        <div class="ledger-row rise" data-k="ball" style="--d:.3s">
           <dt>Club Basketball</dt>
           <dd>I&rsquo;m continuing my childhood love in college, still driven by that same
           drive to compete and become the best version of myself.</dd>
@@ -636,10 +636,25 @@
         </div>
       </dl>
 
-      <figure class="frame now-photo rise" style="--d:.36s">
-        <div class="slot">Add a photo</div>
-        <figcaption>On campus, or at the desk</figcaption>
-      </figure>
+      <div class="now-photos rise" style="--d:.2s">
+        <figure class="np np-logo" data-k="tsf">
+          <img src="images/tsf-logo.png" alt="Tartan Student Fund logo" loading="lazy" decoding="async" />
+        </figure>
+        <figure class="np np-logo" data-k="iba">
+          <img src="images/iba-logo.png" alt="TFG Investment Banking Academy logo" loading="lazy" decoding="async" />
+        </figure>
+        <figure class="np np-wide" data-k="tsf">
+          <img src="images/group.jpg" alt="A group of students in formal wear posing in front of a projected crest" loading="lazy" decoding="async" />
+        </figure>
+        <figure class="np np-tall np-lift" data-k="greek">
+          <img src="images/phi-delta-theta.jpg" alt="Five friends on the front steps of the Phi Delta Theta house" loading="lazy" decoding="async" style="object-position:50% 78%" />
+          <figcaption>Phi Delta Theta</figcaption>
+        </figure>
+        <figure class="np np-tall np-drop" data-k="ball">
+          <img src="images/basketball.jpg" alt="Club basketball teammates posing together in a gym" loading="lazy" decoding="async" style="object-position:50% 88%" />
+          <figcaption>Club basketball</figcaption>
+        </figure>
+      </div>
     </div>
   </section>
   <div class="connector" aria-hidden="true">

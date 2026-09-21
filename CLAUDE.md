@@ -312,7 +312,18 @@ the type or the column width changes: `.flip-back` scrolls if it must, and it sh
 never have to. When adding a photo, bake its rotation in first - the 76ers shot arrived
 with an EXIF "rotate 90" flag - and downscale it (about 1200px on the long side).
 
-Every photo on the two city pages and in chapters II-IV is still a placeholder, and so is every word in chapters III-V: the ledes
+**Chapter IV's photos are a spread beside the ledger** (`.now-photos` in chapters.css): the two
+org logos on top as white label cards, the group shot full width under them, then two
+portraits that overlap its lower edge inside a page-coloured ring, the second dropped so
+the pair never lines up. Each ledger row carries a `data-k` (`tsf`, `iba`, `greek`, `ball`)
+and so does each picture; hovering a row fades every picture that is not its own (with
+`:has()`, and with opacity - brightness left the separator ring showing as a darker box).
+Internships has no picture and dims nothing. The basketball frame is square, not tall,
+because the players only fill the bottom of that photo. The group shot is uncaptioned on
+purpose: which club it belongs to was not stated. The logos are palette PNGs (about 30 KB);
+the HEIC was converted and its rotation baked in.
+
+Every photo on the two city pages and in chapters II-III is still a placeholder, and so is every word in chapters III-V: the ledes
 and all three entries in each. Chapter II is real copy, and Chapter V's photos and descriptions are real.
 
 **The bridge into finance runs through debate, and it is load-bearing.** Chapter

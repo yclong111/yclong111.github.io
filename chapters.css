@@ -946,7 +946,7 @@
   z-index:1;
   margin-top:clamp(.7rem,2vh,1.4rem);
   display:grid;
-  grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr);
+  grid-template-columns:minmax(0,1.22fr) minmax(0,.78fr);
   gap:clamp(1.4rem,4vw,4rem);
   align-items:start;
   width:100%;
@@ -973,13 +973,41 @@
   line-height:1.55;
   color:rgba(245,245,244,.64);
 }
-.now-photo{ margin:0; }
-.now-photo .slot{ width:min(100%,32vh); aspect-ratio:4/5; }
+/* The photos: a small editorial spread on the right of the ledger. The two logos sit on top as
+ * white label cards, the group shot runs full width beneath them, and two portraits overlap its
+ * lower edge - the second dropped a little, so the pair never lines up. Hover an entry on the left
+ * and its pictures stay lit while the rest dim. */
+.now-photos{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(.55rem,1.1vw,.9rem);
+  align-items:start;
+}
+.np{ margin:0; position:relative; transition:opacity .4s ease; }
+.np img{
+  display:block; width:100%; height:100%; object-fit:cover;
+}
+.np-logo{ background:#fff; aspect-ratio:2.6/1; display:grid; place-items:center; padding:.4rem .55rem; }
+.np-logo img{ object-fit:contain; }
+.np-wide{ grid-column:1 / -1; aspect-ratio:1.58/1; }
+.np-tall{ aspect-ratio:3/4; z-index:1; box-shadow:0 0 0 clamp(4px,.55vw,7px) var(--ink); }
+.np-lift{ margin-top:calc(clamp(1.1rem,3.2vh,2.1rem) * -1); }
+.np-drop{ margin-top:clamp(.2rem,1.4vh,1rem); aspect-ratio:1/1; } /* the players fill the bottom of a tall frame; a squarer crop keeps them, not the wall */
+.np figcaption{
+  position:absolute; left:0; right:0; bottom:0;
+  padding:1.6rem .6rem .5rem;
+  background:linear-gradient(transparent, rgba(12,12,14,.82));
+  font-size:clamp(9px,.85vw,11px); letter-spacing:.2em; text-transform:uppercase;
+}
+.now-row:has(.ledger-row[data-k="tsf"]:hover) .np:not([data-k="tsf"]),
+.now-row:has(.ledger-row[data-k="iba"]:hover) .np:not([data-k="iba"]),
+.now-row:has(.ledger-row[data-k="greek"]:hover) .np:not([data-k="greek"]),
+.now-row:has(.ledger-row[data-k="ball"]:hover) .np:not([data-k="ball"]){ opacity:.28; } /* opacity, not brightness: the black separator ring then fades into the page instead of showing as a darker box */
 
 @media (max-width:900px){
   .now-row{ grid-template-columns:1fr; }
   .ledger-row{ grid-template-columns:1fr; gap:.3rem; }
-  .now-photo .slot{ width:min(100%,300px); aspect-ratio:4/3; }
+  .now-photos{ margin-top:.6rem; }
 }
 
 /* The closing line, with the reveal beside it on the right. It used to be a
